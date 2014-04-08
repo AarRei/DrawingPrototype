@@ -35,7 +35,7 @@ public class MessageReceiveThread extends Thread{
 						System.out.println("<"+(String) unitsJson.get("user")+">: "+(String) unitsJson.get("text"));
 						break;
 					case "LINE":
-						System.out.println(fromServer);
+						new ReceivingDrawer(unitsJson, win).start();
 					default:
 						break;
 				}

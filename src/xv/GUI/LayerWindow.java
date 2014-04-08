@@ -26,7 +26,6 @@ public class LayerWindow extends JFrame{
 	JScrollPane listScroller;
 	
 	public LayerWindow(Canvas canvas, ListenerHandler listener){
-		System.out.println("bepis");
 		this.canvas = canvas;
 		int x = 200, y = 500;
 

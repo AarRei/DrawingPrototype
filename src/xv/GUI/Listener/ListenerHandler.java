@@ -183,7 +183,7 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		// TODO Auto-generated method stub
 		mouseDown = true;
 		System.out.println("mousedown");
-		String message ="{\"action\": \"LINE\",\"user\": \""+win.net.username+"\",\"layer_id\": 0,\"points\": [";
+		message ="{\"action\": \"LINE\",\"user\": \""+win.net.username+"\",\"layer_id\": 0,\"points\": [";
 		drawing.start();
 		System.out.println("timer start");
 		Thread t = new Drawer(win,this);
