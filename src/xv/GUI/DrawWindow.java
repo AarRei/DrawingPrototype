@@ -15,6 +15,7 @@ import xv.Canvas.Component.Drawer;
 import xv.Canvas.Component.Painter;
 import xv.GUI.Listener.ListenerHandler;
 import xv.Network.Client.ClientMain;
+import xv.Tools.PenSettings;
 
 public class DrawWindow extends JFrame{
 	
@@ -23,6 +24,7 @@ public class DrawWindow extends JFrame{
 	
 	public DrawPanel drawPanel;
 	public LayerWindow layerWindow;
+	public ToolWindow toolWindow;
 	public ChatWindow chatWindow;
 	ListenerHandler listener = new ListenerHandler(this);
 	JMenuBar menu = new JMenuBar();
@@ -30,6 +32,8 @@ public class DrawWindow extends JFrame{
 			network = new JMenu("Network");
 	public JMenuItem exit = new JMenuItem("Exit");
 	public JMenuItem connect = new JMenuItem("Connect...");
+	
+	public PenSettings pen = new PenSettings();
 	
 	public DrawWindow(Canvas canvas){
 		
@@ -46,6 +50,7 @@ public class DrawWindow extends JFrame{
 		
 		this.canvas = canvas;
 		layerWindow = new LayerWindow(canvas,listener);
+		toolWindow = new ToolWindow(this);
 		drawPanel = new DrawPanel(canvas);
 		int x = 1280, y=720;
 		

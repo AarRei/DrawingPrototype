@@ -1,0 +1,22 @@
+{
+	"action": "CHAT",
+	"user": "<Name>",
+	"text": "<Inhalt>"
+}
+
+{
+	"action": "LINE",
+	"user": "<Name>",
+	"layer_id": n,
+	"color": {
+		"R": r,
+		"G": g,
+		"B": b,
+		"A": a
+	},
+	"points": [
+		{"x": x, "y": y},
+		{"x": x, "y": y},
+		{"x": x, "y": y}
+	]
+}

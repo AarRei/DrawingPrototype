@@ -27,6 +27,9 @@ public class ReceivingDrawer extends Thread {
 
 		JSONParser parser = new JSONParser();
 		Object test = null;
+		
+        JSONObject color = (JSONObject) json_line.get("color");
+        
 		try {
 			test = parser.parse(json_line.get("points").toString());
 		} catch (ParseException e) {
@@ -35,11 +38,12 @@ public class ReceivingDrawer extends Thread {
 		JSONArray points = (JSONArray) test;
 		Graphics2D g2;
 		g2 = win.canvas.layerList.get(0).createGraphics();
+		Long r=(Long)color.get("R"), g=(Long)color.get("G"), b=(Long)color.get("B"), a=(Long)color.get("A");
+		g2.setColor(new Color(r.intValue(), g.intValue(),b.intValue(),a.intValue()));
 		for(int i = 0; i < points.size()-1;i++){
 			JSONObject temp = (JSONObject)points.get(i);
 			JSONObject temp2 = (JSONObject)points.get(i+1);
 			Long x1 = (Long)temp.get("x"), y1=(Long)temp.get("y"), x2=(Long)temp2.get("x"), y2=(Long)temp2.get("y");
-			g2.setColor(Color.BLACK);
 			g2.drawLine(x1.intValue(),y1.intValue(),x2.intValue(),y2.intValue());
 		}
 		g2.dispose();

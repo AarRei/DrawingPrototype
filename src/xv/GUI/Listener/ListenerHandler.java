@@ -182,14 +182,15 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		// (x - center_x)^2 + (y - center_y)^2 < radius^2
 		// TODO Auto-generated method stub
 		mouseDown = true;
-		System.out.println("mousedown");
-		message ="{\"action\": \"LINE\",\"user\": \""+win.net.username+"\",\"layer_id\": 0,\"points\": [";
+		message ="{\"action\": \"LINE\",\"user\": \""+((win.net==null)?"user":win.net.username)+"\",\"layer_id\": 0, \"color\": {"
+				+ "\"R\": "+win.pen.getColor().getRed()+","
+				+ "\"G\": "+win.pen.getColor().getGreen()+","
+				+ "\"B\": "+win.pen.getColor().getBlue()+","
+				+ "\"A\": "+win.pen.getColor().getAlpha()+"},\"points\": [";
 		drawing.start();
-		System.out.println("timer start");
 		Thread t = new Drawer(win,this);
 		t.setDaemon( true );
 	    t.start();
-		System.out.println("thread start");
 	}
 
 	@Override
@@ -197,11 +198,11 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		// TODO Auto-generated method stub
 		mouseDown = false;
 		drawing.stop();
+		message = message.substring(0, message.length()-1);
+		message += "]}";
+		
 		if(win.net != null){
-			message = message.substring(0, message.length()-1);
-			message += "]}";
 			win.net.sendMessage(message);
-
 		}
 		win.drawPanel.repaint();
 		

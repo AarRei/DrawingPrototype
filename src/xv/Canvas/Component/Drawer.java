@@ -33,7 +33,7 @@ public class Drawer extends Thread {
 				else
 					g2 = win.canvas.layerList.get(0).createGraphics();
 				
-				g2.setColor(Color.BLACK);
+				g2.setColor(win.pen.getColor());
 				//g2.fillOval(win.canvas.layerList.get(0).pointList.get(0).width-5, win.canvas.layerList.get(0).pointList.get(0).height-5, 10, 10);
 				if(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.size()>=2){
 					g2.drawLine(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(0).width, win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(0).height, 
