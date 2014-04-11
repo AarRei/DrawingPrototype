@@ -33,3 +33,9 @@
 	"user": "<Name>",
 	"layer_id": n
 }
+
+{
+	"action": "CRTE",
+	"width": w,
+	"height": h
+}

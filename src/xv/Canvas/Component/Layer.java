@@ -13,8 +13,8 @@ public class Layer extends BufferedImage{
 	
 	String name;
 
-	public Layer(String name){
-		super(1280, 720, BufferedImage.TYPE_INT_ARGB);
+	public Layer(int width, int height, String name){
+		super(width, height, BufferedImage.TYPE_INT_ARGB);
 		this.name = name;
 	}
 	

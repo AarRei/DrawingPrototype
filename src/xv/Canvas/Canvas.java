@@ -13,15 +13,18 @@ public class Canvas {
 	
 	int selectedLayer = 0;
 	int layernumber = 0;
+	int width, height;
 
-	public Canvas(){
-		layerList.add(new Layer("Layer 0"));
+	public Canvas(int width, int height){
+		this.width = width;
+		this.height = height;
+		layerList.add(new Layer(width,height,"Layer 0"));
 		layernumber++;
 		//layerList.get(0).setRGB(200, 200, 0xffff0000);
 	}
 	
 	public void addLayer(){
-		layerList.add(new Layer("Layer "+layernumber));
+		layerList.add(new Layer(width, height,"Layer "+layernumber));
 		layernumber++;
 	}
 	

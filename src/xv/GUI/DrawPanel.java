@@ -10,19 +10,25 @@ import javax.swing.JPanel;
 import xv.Canvas.Canvas;
 
 public class DrawPanel extends JPanel{
-	BufferedImage buffer = new BufferedImage(1280, 720, BufferedImage.TYPE_INT_ARGB);
-	BufferedImage chess	= new BufferedImage(1280, 720, BufferedImage.TYPE_INT_ARGB);
+	BufferedImage buffer;
+	BufferedImage chess;
 	Canvas canvas;
 	
-	public DrawPanel(Canvas canvas){
+	int width, height;
+	
+	public DrawPanel(int width, int height ,Canvas canvas){
+		this.width = width;
+		this.height = height;
+		buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		chess = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		chessBG();
 		this.canvas = canvas;
 	}
 	
 	public void chessBG(){
 		Graphics2D g2 = chess.createGraphics();
-		for(int i = 0; i < 64; i++){
-			for(int j = 0; j < 36; j++){
+		for(int i = 0; i < width/20+1; i++){
+			for(int j = 0; j < height/20+1 ; j++){
 				if(i%2 == 0 && j%2 == 0){
 					g2.setColor(Color.WHITE);
 					g2.fillRect(0+i*20, 0+j*20, 0+i*20+20,0+j*20+20);
@@ -57,7 +63,7 @@ public class DrawPanel extends JPanel{
 		
 		g2.dispose();
 
-		g.drawImage(buffer, 0, 0, 1280, 720, 0, 0, 1280, 720, this);
+		g.drawImage(buffer, 0, 0, width, height, 0, 0, width, height, this);
 	}
 	
 }

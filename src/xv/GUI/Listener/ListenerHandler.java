@@ -33,6 +33,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import xv.Canvas.Component.Drawer;
+import xv.GUI.CanvasCreationDialog;
 import xv.GUI.DrawWindow;
 import xv.GUI.NetworkConnectionDialog;
 
@@ -115,13 +116,15 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 			win.drawPanel.repaint();
 		}*/
 		
-		if(e.getSource().equals(win.exit)){
+		else if(e.getSource().equals(win.exit)){
 			System.exit(0);
 		}else if(e.getSource().equals(win.connect)){
 			new NetworkConnectionDialog(win);
+		}else if(e.getSource().equals(win.newc)){
+			new CanvasCreationDialog(win);
 		}
 		
-		if(e.getSource().equals(win.layerWindow.btn_add)){
+		else if(e.getSource().equals(win.layerWindow.btn_add)){
 			win.canvas.addLayer();
 			win.layerWindow.fillList();
 		}else if (e.getSource().equals(win.layerWindow.btn_remove)){
@@ -258,7 +261,6 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	public void componentResized(ComponentEvent e) {
 		// TODO Auto-generated method stub
 		win.drawPanel.setBounds(e.getComponent().getWidth()/2-win.drawPanel.getWidth()/2, e.getComponent().getHeight()/2-win.drawPanel.getHeight()/2, win.drawPanel.getWidth(), win.drawPanel.getHeight());
-		;
 	}
 
 	@Override

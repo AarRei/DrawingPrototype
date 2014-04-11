@@ -10,7 +10,6 @@ public class Painter extends Thread {
 	public Painter(DrawWindow win, ListenerHandler listener) {
 		this.win = win;
 		this.listener = listener;
-		System.out.println("thread constructor");
 	}
 	
 	/*while ((count = in.read(buffer)) > 0) {

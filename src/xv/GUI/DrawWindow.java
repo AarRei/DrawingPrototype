@@ -33,50 +33,40 @@ public class DrawWindow extends JFrame{
 	JMenuBar menu = new JMenuBar();
 	JMenu file = new JMenu("File"),
 			network = new JMenu("Network");
+	public JMenuItem newc = new JMenuItem("New...");
 	public JMenuItem exit = new JMenuItem("Exit");
 	public JMenuItem connect = new JMenuItem("Connect...");
 	
 	public PenSettings pen = new PenSettings();
 	JPanel backgroundPanel = new JPanel();
 	JScrollPane scrollPane;
+
+	int x = 1280, y=720;
 	
-	public DrawWindow(Canvas canvas){
+	public DrawWindow(){
 		
 		setJMenuBar(menu);
-		
+
+		file.add(newc);
 		file.add(exit);
 		network.add(connect);
-		
+
+		newc.addActionListener(listener);
 		exit.addActionListener(listener);
 		connect.addActionListener(listener);
 		
 		menu.add(file);
 		menu.add(network);
 		
-		this.canvas = canvas;
-		layerWindow = new LayerWindow(canvas,listener);
-		toolWindow = new ToolWindow(this);
-		drawPanel = new DrawPanel(canvas);
-		int x = 1280, y=720;
-		
 		//this.setLayout(null);
 		
 		backgroundPanel.setBackground(new Color(52,52,52));
 		//backgroundPanel.setSize(x, y);
-		backgroundPanel.setLayout(null);
-		
-		drawPanel.setSize(x, y);
-		// gamePanel.setPreferredSize(new Dimension(852,480));
-		drawPanel.setBackground(new Color(255, 255, 255));
-		drawPanel.addMouseListener(listener);
-		drawPanel.addMouseMotionListener(listener);
+		backgroundPanel.setLayout(null);		
 
 		scrollPane = new JScrollPane(backgroundPanel);
 		//scrollPane.setSize(x, y);
 
-		backgroundPanel.add(drawPanel);
-		backgroundPanel.addComponentListener(listener);
-		backgroundPanel.setPreferredSize(new Dimension(x, y));
 		
 		this.add(scrollPane);
 		
@@ -93,6 +83,25 @@ public class DrawWindow extends JFrame{
 		this.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2-x/2, Toolkit.getDefaultToolkit().getScreenSize().height/2-y/2);
 		this.setSize(x + 6, y + 28 + 21); //6 windows border, 28 windows frame, 21 Menu Bar
 		this.setVisible(true);
+	}
+	
+	public void createCanvas(int width, int height){
+		canvas = new Canvas(width,height);
+		layerWindow = new LayerWindow(canvas,listener);
+		toolWindow = new ToolWindow(this);
+		
+		drawPanel = new DrawPanel(width,height,canvas);
+
+		drawPanel.addMouseListener(listener);
+		drawPanel.addMouseMotionListener(listener);
+		drawPanel.setSize(width, height);
+		drawPanel.setBackground(new Color(255, 255, 255));
+
+		backgroundPanel.addComponentListener(listener);
+
+		backgroundPanel.setPreferredSize(new Dimension(width, height));
+		
+		backgroundPanel.add(drawPanel);
 	}
 	
 	public void establishConnection(String host, int port, String username){

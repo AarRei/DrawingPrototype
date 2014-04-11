@@ -26,8 +26,7 @@ public class Main {
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
-		Canvas c = new Canvas();
-		DrawWindow d = new DrawWindow(c);
+		DrawWindow d = new DrawWindow();
 		/*
 		try {
 			if(args.length > 0){

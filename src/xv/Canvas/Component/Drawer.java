@@ -14,7 +14,6 @@ public class Drawer extends Thread {
 	public Drawer(DrawWindow win, ListenerHandler listener) {
 		this.win = win;
 		this.listener = listener;
-		System.out.println("thread constructor");
 	}
 	
 	/*while ((count = in.read(buffer)) > 0) {
@@ -22,9 +21,7 @@ public class Drawer extends Thread {
 		}*/
 	
 	public void run() {
-		System.out.println("run");
 		try {
-			System.out.println("try");
 			Graphics2D g2;
 			while (listener.isMouseDown() || win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.size()>=2) {
 				//System.out.println(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.size());
