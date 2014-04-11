@@ -102,6 +102,10 @@ public class DrawWindow extends JFrame{
 		backgroundPanel.setPreferredSize(new Dimension(width, height));
 		
 		backgroundPanel.add(drawPanel);
+		
+		drawPanel.setBounds(backgroundPanel.getWidth()/2-drawPanel.getWidth()/2, backgroundPanel.getHeight()/2-drawPanel.getHeight()/2, drawPanel.getWidth(), drawPanel.getHeight());
+		repaint();
+
 	}
 	
 	public void establishConnection(String host, int port, String username){
