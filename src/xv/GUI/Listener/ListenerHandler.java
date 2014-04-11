@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
@@ -34,7 +36,7 @@ import xv.Canvas.Component.Drawer;
 import xv.GUI.DrawWindow;
 import xv.GUI.NetworkConnectionDialog;
 
-public class ListenerHandler extends MouseMotionAdapter implements MouseListener, KeyListener, ActionListener, ChangeListener, CaretListener, MouseMotionListener, ItemListener, AdjustmentListener {
+public class ListenerHandler extends MouseMotionAdapter implements MouseListener, KeyListener, ActionListener, ChangeListener, CaretListener, MouseMotionListener, ItemListener, AdjustmentListener, ComponentListener {
 
 	DrawWindow win;
 	Timer drawing = new Timer(1000/200,this);
@@ -233,16 +235,43 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		// TODO Auto-generated method stub
 
 	}
+	
+	@Override
+	public void adjustmentValueChanged(AdjustmentEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void componentHidden(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		win.drawPanel.setBounds(e.getComponent().getWidth()/2-win.drawPanel.getWidth()/2, e.getComponent().getHeight()/2-win.drawPanel.getHeight()/2, win.drawPanel.getWidth(), win.drawPanel.getHeight());
+		;
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	public ImageIcon makeImageIcon(String relative_path) {
 		URL imgURL = getClass().getResource(relative_path);
 		return new ImageIcon(imgURL);
 	}
 
-	@Override
-	public void adjustmentValueChanged(AdjustmentEvent e) {
-		// TODO Auto-generated method stub
 
-	}
 
 }

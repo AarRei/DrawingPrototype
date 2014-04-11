@@ -82,6 +82,7 @@ public class ChatWindow extends JFrame{
 		this.setTitle("Chat");
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setResizable(false);
+		this.setAlwaysOnTop(true);
 		this.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2+1280/2, Toolkit.getDefaultToolkit().getScreenSize().height/2-y/2);
 		this.setSize(x + 6, y + 28);
 		this.setVisible(true);

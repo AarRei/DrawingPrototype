@@ -56,6 +56,7 @@ public class LayerWindow extends JFrame{
 		//pack();
 		
 		this.setTitle("Layers");
+		this.setAlwaysOnTop(true);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setResizable(false);
 		this.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2+1280/2, Toolkit.getDefaultToolkit().getScreenSize().height/2-y/2);
