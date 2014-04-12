@@ -55,7 +55,7 @@ public class DrawPanel extends JPanel{
 		//Hintergrund Schachmuster
 		g2.drawImage(chess, 0, 0, this);
 
-		for(int i = 0;i < canvas.layerList.size();i++){
+		for(int i = canvas.layerList.size()-1;i >= 0 ;i--){
 			g2.drawImage(canvas.layerList.get(i), 0, 0, this);
 		}
 		

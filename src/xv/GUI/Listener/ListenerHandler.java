@@ -38,6 +38,7 @@ import xv.Canvas.Component.Drawer;
 import xv.GUI.CanvasCreationDialog;
 import xv.GUI.DrawWindow;
 import xv.GUI.NetworkConnectionDialog;
+import xv.Network.Server.GUI.ServerConfigWindow;
 
 public class ListenerHandler extends MouseMotionAdapter implements MouseListener, KeyListener, ActionListener, ChangeListener, CaretListener, MouseMotionListener, ItemListener, AdjustmentListener, ComponentListener, MouseWheelListener {
 
@@ -125,10 +126,15 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 			new NetworkConnectionDialog(win);
 		}else if(e.getSource().equals(win.newc)){
 			new CanvasCreationDialog(win);
+		}else if(e.getSource().equals(win.host)){
 		}
 		
 		else if(e.getSource().equals(win.layerWindow.btn_add)){
 			win.canvas.addLayer();
+			win.net.sendMessage("{\"action\": \"ADDL\","
+					+ "\"user\": \""+win.net.username+"\","
+					+ "\"layer_id\": 0,"
+					+ "\"layer_position\": 0}");
 			win.layerWindow.fillList();
 		}else if (e.getSource().equals(win.layerWindow.btn_remove)){
 			if(win.layerWindow.list.getSelectedIndex() != -1){

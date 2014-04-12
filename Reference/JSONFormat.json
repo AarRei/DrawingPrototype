@@ -5,6 +5,13 @@
 }
 
 {
+	"action": "SVCF",
+	"width": w,
+	"height": h,
+	"webcolors": false
+}
+
+{
 	"action": "LINE",
 	"user": "<Name>",
 	"layer_id": n,

@@ -37,6 +37,7 @@ public class DrawWindow extends JFrame{
 	public JMenuItem newc = new JMenuItem("New...");
 	public JMenuItem exit = new JMenuItem("Exit");
 	public JMenuItem connect = new JMenuItem("Connect...");
+	public JMenuItem host = new JMenuItem("Host Server...");
 	
 	public PenSettings pen = new PenSettings();
 	public JPanel backgroundPanel = new JPanel();
@@ -53,10 +54,12 @@ public class DrawWindow extends JFrame{
 		file.add(newc);
 		file.add(exit);
 		network.add(connect);
+		network.add(host);
 
 		newc.addActionListener(listener);
 		exit.addActionListener(listener);
 		connect.addActionListener(listener);
+		host.addActionListener(listener);
 		
 		menu.add(file);
 		menu.add(window);

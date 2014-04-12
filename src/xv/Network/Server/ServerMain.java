@@ -1,12 +1,11 @@
 package xv.Network.Server;
 
+import xv.Network.Server.GUI.ServerConfigWindow;
+
 public class ServerMain {
 	
 	public static void main(String[] args) {
-		if(args.length > 0)
-			new Server(Integer.parseInt(args[0]));
-		else
-			new Server(7777);
+		new ServerConfigWindow();
 	}
 	
 }

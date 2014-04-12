@@ -36,6 +36,17 @@ public class MessageReceiveThread extends Thread{
 						break;
 					case "LINE":
 						new ReceivingDrawer(unitsJson, win).start();
+						break;
+					case "ADDL":
+						if(!((String) unitsJson.get("user")).equals(win.net.username)){
+							win.canvas.addLayer();
+							win.layerWindow.fillList();
+						}
+						break;
+					case "SVCF":
+						Long w = (Long)unitsJson.get("width"), h = (Long)unitsJson.get("height");
+						win.createCanvas(w.intValue(), h.intValue());
+						break;
 					default:
 						break;
 				}

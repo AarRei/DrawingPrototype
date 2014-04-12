@@ -28,9 +28,22 @@ public class Server {
 	// private HashMap<String, ClientThread> clientList;
 	public List<ClientThread> clientList = Collections.synchronizedList(new ArrayList<ClientThread>());
 	public List<String> messageList = Collections.synchronizedList(new ArrayList<String>());
+	public List<String> actionList = Collections.synchronizedList(new ArrayList<String>());
 
-	public Server(int port) {
+	public Server(int port, boolean webcolor, int width, int height) {
 		// clientList = new HashMap<>();
+		String serversettings = "{\"action\": \"SVCF\","
+				+ "\"width\": "+width+","
+				+ "\"height\": "+height+","
+				+ "\"webcolors\": "+Boolean.toString(webcolor)+"}";
+		/*String firstlayer = "{\"action\": \"ADDL\","
+				+ "\"user\": \"Host\","
+				+ "\"layer_id\": 0,"
+				+ "\"layer_position\": 0}";*/
+		
+		actionList.add(serversettings);
+		//actionList.add(firstlayer);
+		
 		openServer(port);
 	}
 
@@ -40,12 +53,12 @@ public class Server {
 		try (ServerSocket serverSocket = new ServerSocket(portNumber);
 				
 		) {
-			Thread message = new MessageThread(clientList,messageList);
+			Thread message = new MessageThread(clientList,messageList,actionList);
 			message.setDaemon( true );
 			message.start();
 			while(true){
 				Socket clientSocket = serverSocket.accept();
-				Thread t = new ClientThread(clientSocket,messageList);
+				Thread t = new ClientThread(clientSocket,messageList,actionList);
 				t.setDaemon( true );
 			    t.start();
 			    clientList.add((ClientThread)t);
