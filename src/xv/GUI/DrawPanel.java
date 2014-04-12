@@ -13,10 +13,12 @@ public class DrawPanel extends JPanel{
 	BufferedImage buffer;
 	BufferedImage chess;
 	Canvas canvas;
+	DrawWindow win;
 	
 	int width, height;
 	
-	public DrawPanel(int width, int height ,Canvas canvas){
+	public DrawPanel(int width, int height ,Canvas canvas,DrawWindow win){
+		this.win = win;
 		this.width = width;
 		this.height = height;
 		buffer = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
@@ -63,7 +65,7 @@ public class DrawPanel extends JPanel{
 		
 		g2.dispose();
 
-		g.drawImage(buffer, 0, 0, width, height, 0, 0, width, height, this);
+		g.drawImage(buffer, 0, 0,(int) (width*win.zoom), (int) (height*win.zoom), 0, 0, width, height, this);
 	}
 	
 }

@@ -20,6 +20,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,7 +39,7 @@ import xv.GUI.CanvasCreationDialog;
 import xv.GUI.DrawWindow;
 import xv.GUI.NetworkConnectionDialog;
 
-public class ListenerHandler extends MouseMotionAdapter implements MouseListener, KeyListener, ActionListener, ChangeListener, CaretListener, MouseMotionListener, ItemListener, AdjustmentListener, ComponentListener {
+public class ListenerHandler extends MouseMotionAdapter implements MouseListener, KeyListener, ActionListener, ChangeListener, CaretListener, MouseMotionListener, ItemListener, AdjustmentListener, ComponentListener, MouseWheelListener {
 
 	DrawWindow win;
 	Timer drawing = new Timer(1000/200,this);
@@ -48,6 +50,7 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	int increment = 0;
 	
 	private boolean mouseDown = false;
+	private boolean controlDown = false;
 
 	public boolean isMouseDown() {
 		return mouseDown;
@@ -79,8 +82,8 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 				
 				PointerInfo a = MouseInfo.getPointerInfo();
 				Point b = a.getLocation();
-				int x = (int) b.getX()-win.drawPanel.getLocationOnScreen().x;
-				int y = (int) b.getY()-win.drawPanel.getLocationOnScreen().y;
+				int x = (int)((int) (b.getX()-win.drawPanel.getLocationOnScreen().x)/win.zoom);
+				int y = (int)((int) (b.getY()-win.drawPanel.getLocationOnScreen().y)/win.zoom);
 				
 				win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.add(new Dimension(x, y));
 				message+="{\"x\": "+x+", \"y\": "+y+"},";
@@ -151,11 +154,17 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		/*if (e.getKeyCode() == KeyEvent.VK_A) {
 			left = true;
 		}*/
+		if(e.getKeyCode()== KeyEvent.VK_CONTROL){
+			controlDown = true;
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+		if(e.getKeyCode()== KeyEvent.VK_CONTROL){
+			controlDown = false;
+		}
 	}
 
 	@Override
@@ -260,7 +269,7 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	@Override
 	public void componentResized(ComponentEvent e) {
 		// TODO Auto-generated method stub
-		win.drawPanel.setBounds(e.getComponent().getWidth()/2-win.drawPanel.getWidth()/2, e.getComponent().getHeight()/2-win.drawPanel.getHeight()/2, win.drawPanel.getWidth(), win.drawPanel.getHeight());
+		win.centerCanvas();
 	}
 
 	@Override
@@ -268,12 +277,48 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent e) {
+		// TODO Auto-generated method stub
+		if(e.isControlDown()){
+			if(e.getWheelRotation() > 0){
+				//down - zoom out
+				if(win.zoom >0.15){
+					if(win.zoom > 4)
+						win.zoom -= 0.4;
+					else if(win.zoom > 2)
+						win.zoom -= 0.2;
+					else
+						win.zoom -= 0.1;
+					win.drawPanel.setSize((int)(win.x * win.zoom),(int)( win.y*win.zoom));
+					win.backgroundPanel.setPreferredSize(new Dimension((int)(win.x * win.zoom), (int)( win.y*win.zoom)));
+					win.scrollPane.repaint();
+					win.centerCanvas();
+					win.repaint();
+				}
+			}else if(e.getWheelRotation() < 0){
+				//up - zoom in
+				if(win.zoom > 4)
+					win.zoom += 0.4;
+				else if(win.zoom > 2)
+					win.zoom += 0.2;
+				else
+					win.zoom += 0.1;
+				
+				win.drawPanel.setSize((int)(win.x * win.zoom),(int)( win.y*win.zoom));
+				win.backgroundPanel.setPreferredSize(new Dimension((int)(win.x * win.zoom), (int)( win.y*win.zoom)));
+				win.scrollPane.repaint();
+				win.centerCanvas();
+				win.repaint();
+			}
+			
+		}
+	}
 
 	public ImageIcon makeImageIcon(String relative_path) {
 		URL imgURL = getClass().getResource(relative_path);
 		return new ImageIcon(imgURL);
 	}
-
-
 
 }

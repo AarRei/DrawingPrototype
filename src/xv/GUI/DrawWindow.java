@@ -32,16 +32,19 @@ public class DrawWindow extends JFrame{
 	ListenerHandler listener = new ListenerHandler(this);
 	JMenuBar menu = new JMenuBar();
 	JMenu file = new JMenu("File"),
+			window = new JMenu("Window"),
 			network = new JMenu("Network");
 	public JMenuItem newc = new JMenuItem("New...");
 	public JMenuItem exit = new JMenuItem("Exit");
 	public JMenuItem connect = new JMenuItem("Connect...");
 	
 	public PenSettings pen = new PenSettings();
-	JPanel backgroundPanel = new JPanel();
-	JScrollPane scrollPane;
+	public JPanel backgroundPanel = new JPanel();
+	public JScrollPane scrollPane;
 
-	int x = 1280, y=720;
+	public int x = 1280, y=720;
+	
+	public double zoom = 1;
 	
 	public DrawWindow(){
 		
@@ -56,6 +59,7 @@ public class DrawWindow extends JFrame{
 		connect.addActionListener(listener);
 		
 		menu.add(file);
+		menu.add(window);
 		menu.add(network);
 		
 		//this.setLayout(null);
@@ -76,6 +80,7 @@ public class DrawWindow extends JFrame{
 		Thread t = new Painter(this,listener);
 		t.setDaemon( true );
 	    t.start();
+	    
 		
 		this.setTitle("ExtraVisual");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE); //TODO: Custom close operation (close socket, kill stuff)
@@ -86,11 +91,13 @@ public class DrawWindow extends JFrame{
 	}
 	
 	public void createCanvas(int width, int height){
+		x = width;
+		y = height;
 		canvas = new Canvas(width,height);
 		layerWindow = new LayerWindow(canvas,listener);
 		toolWindow = new ToolWindow(this);
 		
-		drawPanel = new DrawPanel(width,height,canvas);
+		drawPanel = new DrawPanel(width,height,canvas,this);
 
 		drawPanel.addMouseListener(listener);
 		drawPanel.addMouseMotionListener(listener);
@@ -103,9 +110,15 @@ public class DrawWindow extends JFrame{
 		
 		backgroundPanel.add(drawPanel);
 		
-		drawPanel.setBounds(backgroundPanel.getWidth()/2-drawPanel.getWidth()/2, backgroundPanel.getHeight()/2-drawPanel.getHeight()/2, drawPanel.getWidth(), drawPanel.getHeight());
+	    backgroundPanel.addMouseWheelListener(listener);
+
+	    centerCanvas();
 		repaint();
 
+	}
+	
+	public void centerCanvas(){
+		drawPanel.setBounds(backgroundPanel.getWidth()/2-drawPanel.getWidth()/2, backgroundPanel.getHeight()/2-drawPanel.getHeight()/2, drawPanel.getWidth(), drawPanel.getHeight());
 	}
 	
 	public void establishConnection(String host, int port, String username){
