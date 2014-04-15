@@ -42,6 +42,8 @@ public class DrawWindow extends JFrame{
 	public PenSettings pen = new PenSettings();
 	public JPanel backgroundPanel = new JPanel();
 	public JScrollPane scrollPane;
+	
+	public boolean webcolors;
 
 	public int x = 1280, y=720;
 	

@@ -131,10 +131,12 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		
 		else if(e.getSource().equals(win.layerWindow.btn_add)){
 			win.canvas.addLayer();
-			win.net.sendMessage("{\"action\": \"ADDL\","
-					+ "\"user\": \""+win.net.username+"\","
-					+ "\"layer_id\": 0,"
-					+ "\"layer_position\": 0}");
+			if(win.net != null){
+				win.net.sendMessage("{\"action\": \"ADDL\","
+						+ "\"user\": \""+win.net.username+"\","
+						+ "\"layer_id\": 0,"
+						+ "\"layer_position\": 0}");
+			}
 			win.layerWindow.fillList();
 		}else if (e.getSource().equals(win.layerWindow.btn_remove)){
 			if(win.layerWindow.list.getSelectedIndex() != -1){

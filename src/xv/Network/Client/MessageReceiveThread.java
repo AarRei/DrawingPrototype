@@ -44,6 +44,8 @@ public class MessageReceiveThread extends Thread{
 						}
 						break;
 					case "SVCF":
+						win.webcolors = (Boolean)unitsJson.get("webcolors");
+						System.out.println(Boolean.toString(win.webcolors));
 						Long w = (Long)unitsJson.get("width"), h = (Long)unitsJson.get("height");
 						win.createCanvas(w.intValue(), h.intValue());
 						break;

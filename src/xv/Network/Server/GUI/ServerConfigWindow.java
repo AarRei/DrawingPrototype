@@ -44,7 +44,7 @@ public class ServerConfigWindow extends JFrame implements ActionListener{
 		
 		//pack();
 		
-		this.setTitle("Layers");
+		this.setTitle("Server Setup");
 		this.setAlwaysOnTop(true);
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setResizable(false);

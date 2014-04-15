@@ -10,6 +10,8 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
 
 public class ToolWindow extends JFrame implements ActionListener{
 	JButton btn_color = new JButton("Color");
@@ -46,7 +48,28 @@ public class ToolWindow extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource().equals(btn_color)){
-			win.pen.setColor(JColorChooser.showDialog(this, "Palette", win.pen.getColor()));
+			if(win.net != null){
+				if(win.webcolors = false){
+					win.pen.setColor(JColorChooser.showDialog(this, "Palette", win.pen.getColor()));
+				}
+				else{
+					JColorChooser cc = new JColorChooser();
+					AbstractColorChooserPanel[] panels = cc.getChooserPanels();
+		            for (AbstractColorChooserPanel accp : panels) {
+		                if (!accp.getDisplayName().equals("Swatches")) {
+		                   /* AbstractColorChooserPanel[] finalp = {accp};
+		                    cc.setChooserPanels(finalp);
+		                    break;*/
+		                	cc.removeChooserPanel(accp);
+		                }
+		            }
+		            JOptionPane.showMessageDialog(null,cc);
+		           // win.pen.setColor(cc.showDialog(this, "Palette", win.pen.getColor()));
+				}
+			}else{
+				win.pen.setColor(JColorChooser.showDialog(this, "Palette", win.pen.getColor()));
+			}
+			
 		}
 	}
 }
