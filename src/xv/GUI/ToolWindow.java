@@ -49,7 +49,7 @@ public class ToolWindow extends JFrame implements ActionListener{
 		// TODO Auto-generated method stub
 		if(e.getSource().equals(btn_color)){
 			if(win.net != null){
-				if(win.webcolors = false){
+				if(win.webcolors == false){
 					win.pen.setColor(JColorChooser.showDialog(this, "Palette", win.pen.getColor()));
 				}
 				else{
@@ -63,7 +63,7 @@ public class ToolWindow extends JFrame implements ActionListener{
 		                	cc.removeChooserPanel(accp);
 		                }
 		            }
-		            JOptionPane.showMessageDialog(null,cc);
+		            win.pen.setColor(JColorChooser.showDialog(this, "Palette", win.pen.getColor()));
 		           // win.pen.setColor(cc.showDialog(this, "Palette", win.pen.getColor()));
 				}
 			}else{

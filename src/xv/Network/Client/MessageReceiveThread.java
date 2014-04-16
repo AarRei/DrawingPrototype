@@ -39,7 +39,8 @@ public class MessageReceiveThread extends Thread{
 						break;
 					case "ADDL":
 						if(!((String) unitsJson.get("user")).equals(win.net.username)){
-							win.canvas.addLayer();
+							Long id = (Long)unitsJson.get("layer_position");
+							win.canvas.addLayer(id.intValue());
 							win.layerWindow.fillList();
 						}
 						break;

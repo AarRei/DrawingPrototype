@@ -13,9 +13,9 @@ public class NetworkConnectionDialog extends JDialog implements ActionListener{
 	
 	DrawWindow win;
 	
-	JTextField host = new JTextField(), 
-			port = new JTextField(), 
-			name = new JTextField();
+	JTextField host = new JTextField("127.0.0.1"), 
+			port = new JTextField("7777"), 
+			name = new JTextField("User");
 	JLabel hostL = new JLabel("Host"), portL = new JLabel("Port"), nameL = new JLabel("Username");
 	JButton ok = new JButton("Connect");
 	

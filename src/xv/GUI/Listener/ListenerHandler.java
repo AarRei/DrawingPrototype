@@ -130,16 +130,18 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		}
 		
 		else if(e.getSource().equals(win.layerWindow.btn_add)){
-			win.canvas.addLayer();
+			int selected= win.layerWindow.list.getSelectedIndex();
+			win.canvas.addLayer(selected);
+			win.layerWindow.list.setSelectedIndex(selected);
 			if(win.net != null){
 				win.net.sendMessage("{\"action\": \"ADDL\","
 						+ "\"user\": \""+win.net.username+"\","
 						+ "\"layer_id\": 0,"
-						+ "\"layer_position\": 0}");
+						+ "\"layer_position\": "+win.layerWindow.list.getSelectedIndex()+"}");
 			}
 			win.layerWindow.fillList();
 		}else if (e.getSource().equals(win.layerWindow.btn_remove)){
-			if(win.layerWindow.list.getSelectedIndex() != -1){
+			if(win.layerWindow.list.getSelectedIndex() != -1 && win.canvas.layerList.size()>1){
 				win.canvas.removeLayer(win.layerWindow.list.getSelectedIndex());
 				win.layerWindow.fillList();
 				win.drawPanel.repaint();
@@ -204,7 +206,7 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		// (x - center_x)^2 + (y - center_y)^2 < radius^2
 		// TODO Auto-generated method stub
 		mouseDown = true;
-		message ="{\"action\": \"LINE\",\"user\": \""+((win.net==null)?"user":win.net.username)+"\",\"layer_id\": 0, \"color\": {"
+		message ="{\"action\": \"LINE\",\"user\": \""+((win.net==null)?"user":win.net.username)+"\",\"layer_id\": "+win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId()+", \"color\": {"
 				+ "\"R\": "+win.pen.getColor().getRed()+","
 				+ "\"G\": "+win.pen.getColor().getGreen()+","
 				+ "\"B\": "+win.pen.getColor().getBlue()+","

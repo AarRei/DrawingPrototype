@@ -16,11 +16,11 @@ import xv.Network.Server.Server;
 public class ServerConfigWindow extends JFrame implements ActionListener{
 	
 	JLabel lb_port = new JLabel("Port");
-	JTextField txt_port = new JTextField();
+	JTextField txt_port = new JTextField("7777");
 	JLabel lb_width = new JLabel("Width");
-	JTextField txt_width = new JTextField();
+	JTextField txt_width = new JTextField("700");
 	JLabel lb_height = new JLabel("Height");
-	JTextField txt_height = new JTextField();
+	JTextField txt_height = new JTextField("700");
 	JButton btn_ok = new JButton("Ok");
 	JCheckBox cb_webcolors = new JCheckBox("Allow only webcolors.");
 	

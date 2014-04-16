@@ -36,8 +36,9 @@ public class ReceivingDrawer extends Thread {
 			e.printStackTrace(); 
 		}
 		JSONArray points = (JSONArray) test;
+		Long p=(Long)json_line.get("layer_id");
 		Graphics2D g2;
-		g2 = win.canvas.layerList.get(0).createGraphics();
+		g2 = win.canvas.layerIDList.get(p.intValue()).createGraphics();
 		Long r=(Long)color.get("R"), g=(Long)color.get("G"), b=(Long)color.get("B"), a=(Long)color.get("A");
 		g2.setColor(new Color(r.intValue(), g.intValue(),b.intValue(),a.intValue()));
 		for(int i = 0; i < points.size()-1;i++){
