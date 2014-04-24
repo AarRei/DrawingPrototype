@@ -14,8 +14,6 @@ public class ServerMain {
 		}else if(args[0].equals("-nogui")){
 			//java -jar Server.jar -nogui -7777 -wc/nowc -1280 -720
 			if(args.length < 5){
-				new Server(Integer.parseInt(args[1].substring(1)), (args[2].equals("-wc"))?true:false,  Integer.parseInt(args[3].substring(1)), Integer.parseInt(args[4].substring(1)));
-			}else{
 				int port, width, height;
 				boolean webcolors;
 				System.out.println("Which port do you want the server to run on?");
@@ -33,8 +31,9 @@ public class ServerMain {
 					webcolors = false;
 				}
 				
-				new Server(port,webcolors,width,height);
-				
+				new Server(port,webcolors,width,height);				
+			}else{
+				new Server(Integer.parseInt(args[1].substring(1)), (args[2].equals("-wc"))?true:false,  Integer.parseInt(args[3].substring(1)), Integer.parseInt(args[4].substring(1)));
 			}
 		}else{
 			new ServerConfigWindow();
