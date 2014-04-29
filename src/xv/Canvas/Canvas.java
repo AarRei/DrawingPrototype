@@ -19,6 +19,7 @@ public class Canvas {
 		this.height = height;
 		layerList.add(new Layer(width,height,"Layer 0", layernumber));
 		layerIDList.add(layerList.get(0));
+		layerList.get(0).xiaolinwu(x0, y0, x1, y1, color);
 		layernumber++;
 		//layerList.get(0).setRGB(200, 200, 0xffff0000);
 	}

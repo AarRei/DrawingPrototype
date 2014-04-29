@@ -3,6 +3,8 @@ package xv.GUI;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -15,7 +17,7 @@ import javax.swing.ListSelectionModel;
 import xv.Canvas.Canvas;
 import xv.GUI.Listener.ListenerHandler;
 
-public class LayerWindow extends JFrame{
+public class LayerWindow extends JFrame implements MouseListener{
 	
 	Canvas canvas;
 	public JList list;
@@ -39,6 +41,7 @@ public class LayerWindow extends JFrame{
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		//list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		list.setVisibleRowCount(-1);
+		list.setSelectedIndex(0);
 		
 		listScroller = new JScrollPane(list);
 		listScroller.setSize(new Dimension(200, 400));
@@ -48,6 +51,8 @@ public class LayerWindow extends JFrame{
 		
 		btn_remove.setBounds(100, 410, 100, 25);
 		btn_remove.addActionListener(listener);
+		
+		list.addMouseListener(this);
 		
 		add(listScroller);
 		add(btn_add);
@@ -68,5 +73,35 @@ public class LayerWindow extends JFrame{
 		listModel.clear();
 		for(int i = 0; i < canvas.layerList.size();i++)
 			listModel.add(i,canvas.layerList.get(i).getName());
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		canvas.setSelectedLayer(list.getSelectedIndex());
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -127,12 +127,13 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		}else if(e.getSource().equals(win.newc)){
 			new CanvasCreationDialog(win);
 		}else if(e.getSource().equals(win.host)){
+		}else if(e.getSource().equals(win.backg)){
+			win.drawPanel.repaint();
 		}
 		
 		else if(e.getSource().equals(win.layerWindow.btn_add)){
 			int selected= win.layerWindow.list.getSelectedIndex();
 			win.canvas.addLayer(selected);
-			win.layerWindow.list.setSelectedIndex(selected);
 			if(win.net != null){
 				win.net.sendMessage("{\"action\": \"ADDL\","
 						+ "\"user\": \""+win.net.username+"\","
@@ -140,10 +141,19 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 						+ "\"layer_position\": "+win.layerWindow.list.getSelectedIndex()+"}");
 			}
 			win.layerWindow.fillList();
+			win.layerWindow.list.setSelectedIndex(selected);
+			win.canvas.setSelectedLayer(win.layerWindow.list.getSelectedIndex());
 		}else if (e.getSource().equals(win.layerWindow.btn_remove)){
 			if(win.layerWindow.list.getSelectedIndex() != -1 && win.canvas.layerList.size()>1){
+				int selected= win.layerWindow.list.getSelectedIndex();
 				win.canvas.removeLayer(win.layerWindow.list.getSelectedIndex());
 				win.layerWindow.fillList();
+				if(selected > win.canvas.layerList.size()-1)
+					win.layerWindow.list.setSelectedIndex(selected-1);
+				else
+					win.layerWindow.list.setSelectedIndex(selected);
+				win.canvas.setSelectedLayer(win.layerWindow.list.getSelectedIndex());
+					
 				win.drawPanel.repaint();
 			}
 		}else if(win.chatWindow != null){

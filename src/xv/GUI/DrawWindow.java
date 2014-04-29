@@ -6,11 +6,13 @@ import java.awt.Toolkit;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 
 import xv.Canvas.Canvas;
@@ -32,10 +34,12 @@ public class DrawWindow extends JFrame{
 	ListenerHandler listener = new ListenerHandler(this);
 	JMenuBar menu = new JMenuBar();
 	JMenu file = new JMenu("File"),
+			view = new JMenu("View"),
 			window = new JMenu("Window"),
 			network = new JMenu("Network");
 	public JMenuItem newc = new JMenuItem("New...");
 	public JMenuItem exit = new JMenuItem("Exit");
+	public JCheckBox backg = new JCheckBox("Display Background Grid");
 	public JMenuItem connect = new JMenuItem("Connect...");
 	public JMenuItem host = new JMenuItem("Host Server...");
 	
@@ -55,15 +59,20 @@ public class DrawWindow extends JFrame{
 
 		file.add(newc);
 		file.add(exit);
+		view.add(backg);
 		network.add(connect);
 		network.add(host);
+		
+		backg.setSelected(true);
 
 		newc.addActionListener(listener);
 		exit.addActionListener(listener);
+		backg.addActionListener(listener);
 		connect.addActionListener(listener);
 		host.addActionListener(listener);
 		
 		menu.add(file);
+		menu.add(view);
 		menu.add(window);
 		menu.add(network);
 		
