@@ -85,9 +85,16 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 				Point b = a.getLocation();
 				int x = (int)((int) (b.getX()-win.drawPanel.getLocationOnScreen().x)/win.zoom);
 				int y = (int)((int) (b.getY()-win.drawPanel.getLocationOnScreen().y)/win.zoom);
-				
-				win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.add(new Dimension(x, y));
-				message+="{\"x\": "+x+", \"y\": "+y+"},";
+				if(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.size() == 0){
+					win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.add(new Dimension(x, y));
+					message+="{\"x\": "+x+", \"y\": "+y+"},";
+				}else if(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.size()-1).width == x &&
+						win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.size()-1).height == y){	
+					//do nothing
+				}else{
+					win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.add(new Dimension(x, y));
+					message+="{\"x\": "+x+", \"y\": "+y+"},";
+				}
 
 				//System.out.println(win.canvas.layerList.get(0).pointList.size());
 				

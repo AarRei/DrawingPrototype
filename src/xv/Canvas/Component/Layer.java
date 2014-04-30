@@ -20,6 +20,7 @@ public class Layer extends BufferedImage{
 		super(width, height, BufferedImage.TYPE_INT_ARGB);
 		this.id = id;
 		this.name = name;
+		int a = 4, b = 6;
 	}
 	
 	public void bresenham(int x1, int y1, int x2, int y2, Color color){
@@ -75,85 +76,92 @@ public class Layer extends BufferedImage{
 	}
 	
 	private int round (float x){
-		return ipart(x + 0.5f);
+		return (int) ((float)x + 0.5f);
 	}
 	
 	private float fpart(float x){
-		return x - (int) x;
+		return x - (float) ipart(x);
 	}
 	
 	private float rfpart(float x){
-		return 1 - fpart(x);
+		return 1.0f - fpart(x);
 	}
 	
 	public void xiaolinwu(int x0, int y0, int x1, int y1, Color color){
-		boolean steep = Math.abs(y1 -y0) > Math.abs(x1-x0);
-		if(steep){
-			int temp = x0;
-			x0 = y0;
-			y0 = temp;
-			
-			temp = x1;
-			x1 = y1;
-			y1 = temp;
-		}
-		if(x0 > x1){
-			int temp = x0;
-			x0 = x1;
-			x1 = temp;
-			
-			temp = y0;
-			y0 = y1;
-			y1 = temp;
-		}
-		
-		int dx = x1 - x0;
-		int dy = y1 - y0;
-		if(x1 == x0)
-			return;
-		float gradient = dy / dx;
-		
-		//Anfangspunkt
-		float xend = round(x0);
-		float yend = y0 +gradient *(xend - x0);
-		float xgap = rfpart(x0 + 0.5f);
-		int xpxl1 = (int)xend;
-		int ypxl1 = ipart(yend);
-		
-		if(steep){
-			plot(ypxl1, xpxl1, rfpart(yend)*xgap, color);
-			plot(ypxl1+1, xpxl1, fpart(yend)*xgap, color);
-		}else{
-			plot(xpxl1, ypxl1, rfpart(yend)*xgap, color);
-			plot(xpxl1, ypxl1+1, fpart(yend)*xgap, color);
-		}
-		float intery = yend + gradient;
-		
-		//Endpunkt
-		xend = round(x1);
-		yend = y1 + gradient *(xend - x1);
-		xgap = rfpart(x1 + 0.5f);
-		int xpxl2 = (int) xend;
-		int ypxl2 = ipart(yend);
-		if(steep){
-			plot(ypxl2, xpxl2, rfpart(yend)*xgap, color);
-			plot(ypxl2+1, xpxl2, fpart(yend)*xgap, color);
-		}else{
-			plot(xpxl2, ypxl2, rfpart(yend)*xgap, color);
-			plot(xpxl2, ypxl2+1, fpart(yend)*xgap, color);
-		}
-		
-		//hauptschleife
-		for(int x = xpxl1 + 1;x < xpxl2;x++){
-			if(steep){
-				plot(ipart(intery), x, rfpart(intery),color);
-				plot(ipart(intery)+1, x, fpart(intery),color);
-			}else{
-				plot(x, ipart(intery),rfpart(intery), color);
-				plot(x, ipart(intery)+1,fpart(intery), color);
+
+		float dx = (float)x1 - (float)x0;
+		float dy = (float)y1 - (float)y0;
+		if(Math.abs(dx)>Math.abs(dy)){
+			if(x1 < x0){
+				int temp = x0;
+				x0 = x1;
+				x1 = temp;
+				
+				temp = y0;
+				y0 = y1;
+				y1 = temp;
 			}
-			intery = intery + gradient;
+			float gradient = dy/dx;
+			float xend = round(x0);
+			float yend = y0 + gradient*(xend - x0);
+			float xgap = rfpart(x0 + 0.5f);
+			int xpxl1 = (int)xend;
+			int ypxl1 = ipart(yend);
+			//plot(xpxl1, ypxl1, rfpart(yend)*xgap, color);
+			//plot(xpxl1, ypxl1+1, fpart(yend)*xgap, color);
+			float intery = yend +gradient;
+			
+			xend = round(x1);
+			yend = y1 + gradient*(xend - x1);
+			xgap = fpart(x1+0.5f);
+			int xpxl2 = (int)xend;
+			int ypxl2 = ipart(yend);
+			//plot(xpxl2, ypxl2, rfpart(yend)*xgap, color);
+			//plot(xpxl2, ypxl2+1, fpart(yend)*xgap, color);
+			
+			int x;
+			for(x = xpxl1 + 1; x <= xpxl2 /*- 1*/;x++){
+				plot(x, ipart(intery),rfpart(intery),color);
+				plot(x, ipart(intery)+1,fpart(intery),color);
+				intery += gradient;
+			}
+		}else{
+			if(y1 < y0){
+				int temp = y0;
+				y0 = y1;
+				y1 = temp;
+				
+				temp = x0;
+				x0 = x1;
+				x1 = temp;
+			}
+			float gradient = dx/dy;
+			float yend = round(y0);
+			float xend = x0 + gradient*(yend - y0);
+			float ygap = rfpart(y0 + 0.5f);
+			int ypxl1 = (int)yend;
+			int xpxl1 = ipart(xend);
+			//plot(xpxl1, ypxl1, rfpart(xend)*ygap, color);
+			//plot(xpxl1, ypxl1+1, fpart(xend)*ygap, color);
+			float interx = xend +gradient;
+			
+			yend = round(y1);
+			xend = x1 + gradient * (yend -y1);
+			ygap = fpart(y1+0.5f);
+			int ypxl2 = (int)yend;
+			int xpxl2 = ipart(xend);
+			//plot(xpxl2, ypxl2, rfpart(xend)*ygap, color);
+			//plot(xpxl2, ypxl2+1, fpart(xend)*ygap, color);
+			
+			int y;
+			for(y = ypxl1 + 1; y <=ypxl2 /*- 1*/; y++){
+				plot(ipart(interx),y,rfpart(interx),color);
+				plot(ipart(interx)+1,y,fpart(interx),color);
+				interx += gradient;
+			}
+			
 		}
+		
 	}
 	
 	public String getName() {

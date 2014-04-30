@@ -1,5 +1,6 @@
 package xv.Canvas;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +20,7 @@ public class Canvas {
 		this.height = height;
 		layerList.add(new Layer(width,height,"Layer 0", layernumber));
 		layerIDList.add(layerList.get(0));
-		//layerList.get(0).xiaolinwu(x0, y0, x1, y1, color);
+		//layerList.get(0).xiaolinwu(20, 20, 20, 200, Color.BLACK);
 		layernumber++;
 		//layerList.get(0).setRGB(200, 200, 0xffff0000);
 	}
