@@ -192,11 +192,19 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		if(e.getKeyCode()== KeyEvent.VK_CONTROL){
 			controlDown = false;
 		}
+		if(e.getKeyCode()== KeyEvent.VK_PLUS){
+			System.out.println("MÖÖP");
+			win.pen.setThickness(win.pen.getThickness()+1);
+		}
+		if(e.getKeyCode()== KeyEvent.VK_MINUS){
+			if(win.pen.getThickness() > 1)
+				win.pen.setThickness(win.pen.getThickness()-1);
+		}
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
-
+		
 		// TODO Auto-generated method stub
 
 	}

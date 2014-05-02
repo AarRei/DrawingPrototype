@@ -36,7 +36,7 @@ public class Drawer extends Thread {
 					/*g2.drawLine(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(0).width, win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(0).height, 
 							win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(1).width, win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(1).height);*/
 					win.canvas.layerList.get(win.canvas.getSelectedLayer()).bresenham(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(0).width, win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(0).height, 
-							win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(1).width, win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(1).height, win.pen.getColor());
+							win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(1).width, win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(1).height,win.pen.getThickness() ,win.pen.getColor());
 					win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.remove(0);
 				}
 				//win.canvas.layerList.get(0).pointList.remove(0);

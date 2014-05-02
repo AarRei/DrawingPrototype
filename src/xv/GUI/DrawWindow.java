@@ -81,6 +81,7 @@ public class DrawWindow extends JFrame{
 		backgroundPanel.setBackground(new Color(52,52,52));
 		//backgroundPanel.setSize(x, y);
 		backgroundPanel.setLayout(null);		
+		addKeyListener(listener);
 
 		scrollPane = new JScrollPane(backgroundPanel);
 		//scrollPane.setSize(x, y);
