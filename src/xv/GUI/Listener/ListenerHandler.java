@@ -328,6 +328,7 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 						win.zoom -= 0.1;
 					win.drawPanel.setSize((int)(win.x * win.zoom),(int)( win.y*win.zoom));
 					win.backgroundPanel.setPreferredSize(new Dimension((int)(win.x * win.zoom), (int)( win.y*win.zoom)));
+					win.backgroundPanel.revalidate();
 					win.scrollPane.repaint();
 					win.centerCanvas();
 					win.repaint();
@@ -343,6 +344,7 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 				
 				win.drawPanel.setSize((int)(win.x * win.zoom),(int)( win.y*win.zoom));
 				win.backgroundPanel.setPreferredSize(new Dimension((int)(win.x * win.zoom), (int)( win.y*win.zoom)));
+				win.backgroundPanel.revalidate();
 				win.scrollPane.repaint();
 				win.centerCanvas();
 				win.repaint();
