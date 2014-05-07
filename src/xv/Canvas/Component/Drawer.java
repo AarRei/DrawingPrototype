@@ -16,9 +16,9 @@ public class Drawer extends Thread {
 		this.listener = listener;
 	}
 	
-	/*while ((count = in.read(buffer)) > 0) {
-		  out.write(buffer, 0, count);
-		}*/
+//	while ((count = in.read(buffer)) > 0) {
+//		  out.write(buffer, 0, count);
+//	}
 	
 	public void run() {
 		try {
