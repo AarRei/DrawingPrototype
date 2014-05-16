@@ -16,22 +16,38 @@ import java.util.concurrent.ExecutionException;
 import xv.GUI.DrawWindow;
 import xv.Network.Server.ClientThread;
 
-/**
- * User: Aaron Date: 14.11.13 Time: 20:16
- */
 public class ClientMain {
 	
 	PrintWriter out;
 	public String username;
 	DrawWindow win;
 	
+	/**
+	 * Creates the ClientMain.
+	 * 
+	 * Creates the ClientMain object and calls connectToServer.
+	 * 
+	 * @param inetAddress hostname or host IP address
+	 * @param port port to which the client connects
+	 * @param username the desired username
+	 * @param win the parent DrawWindow
+	 */
     public ClientMain(InetAddress inetAddress, int port, String username, DrawWindow win) {
     	this.win = win;
         this.username = username;
         connectToServer(inetAddress,port);
     }
-
-    public void connectToServer(InetAddress ip,int port) {
+    
+    /**
+     * Establishes a connection to the Server.
+     * 
+     * Opens a socket to the Server with the given IP and port. Opens an input- and an output stream.
+     * Starts the MessageReceiveThread and transmits the username to the server.
+     * 
+     * @param ip IP address or hostname of the host
+     * @param port port to which the client connects
+     */
+    private void connectToServer(InetAddress ip,int port) {
 
         InetAddress hostName = ip;
         int portNumber = port;
@@ -68,11 +84,18 @@ public class ClientMain {
         }
     }
     
+    /**
+     * Sends a message to the Server.
+     * 
+     * Sends a message to the Server via the PrintWriter.
+     * 
+     * @param message the message to be send
+     */
     public void sendMessage(String message){
     	out.println(message);
     }
 
-    public void pingTest(String ip) throws Exception {
+    /*public void pingTest(String ip) throws Exception {
         String ipAddress = "127.0.0.1";
         InetAddress inet = InetAddress.getByName(ipAddress);
 
@@ -83,5 +106,5 @@ public class ClientMain {
 
         System.out.println("Sending Ping Request to " + ip);
         System.out.println(inet.isReachable(5000) ? "Host is reachable" : "Host is NOT reachable");
-    }
+    }*/
 }

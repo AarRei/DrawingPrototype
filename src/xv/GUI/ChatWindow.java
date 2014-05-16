@@ -29,6 +29,13 @@ public class ChatWindow extends JFrame{
 	public JTextField txt_send = new JTextField();
 	JScrollPane listScroller;
 	
+	/**
+	 * Constructs the ChatWindow.
+	 * 
+	 * Builds the ChatWindow and adds listener to send button.
+	 * 
+	 * @param listener the ListenerHandler
+	 */
 	public ChatWindow(ListenerHandler listener){
 		this.canvas = canvas;
 		int x = 300, y = 340;
@@ -87,7 +94,14 @@ public class ChatWindow extends JFrame{
 		this.setSize(x + 6, y + 28);
 		this.setVisible(true);
 	}
-
+	
+	/**
+	 * Adds a message.
+	 * 
+	 * Adds a message at the end of the chat.
+	 * 
+	 * @param message the message to be added
+	 */
 	public void addMessage(String message){
 		listModel.addElement(message);
 	}

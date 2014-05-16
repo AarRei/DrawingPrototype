@@ -17,6 +17,16 @@ public class DrawPanel extends JPanel{
 	
 	int width, height;
 	
+	/**
+	 * Constructor of the DrawPanel
+	 * 
+	 * Creates a DrawPanel with the given parameters.
+	 * 
+	 * @param width width of the canvas
+	 * @param height height of the canvas
+	 * @param canvas the canvas object containing the layers
+	 * @param win the parent DrawWindow
+	 */
 	public DrawPanel(int width, int height ,Canvas canvas,DrawWindow win){
 		this.win = win;
 		this.width = width;
@@ -27,7 +37,12 @@ public class DrawPanel extends JPanel{
 		this.canvas = canvas;
 	}
 	
-	public void chessBG(){
+	/**
+	 * Generates the background for the canvas.
+	 * 
+	 * The method chessBG generates the checkered image for the background of the canvas via Graphics2D.
+	 */
+	private void chessBG(){
 		Graphics2D g2 = chess.createGraphics();
 		for(int i = 0; i < width/20+1; i++){
 			for(int j = 0; j < height/20+1 ; j++){
@@ -47,12 +62,18 @@ public class DrawPanel extends JPanel{
 		g2.dispose();
 	}
 	
+	/**
+	 * Draws the content of the canvas on the panel.
+	 * 
+	 * The paint method draws the background image and the content of the layers onto the panel.
+	 */
+	
 	public void paint(Graphics g) {
 		Graphics2D g2 = buffer.createGraphics();
 
 		/* Hier Rendern */
 		
-		//Hintergrund Schachmuster
+		//Hintergrund Schachmuster oder weißer hintergrund als Alternative
 		if(win.backg.isSelected()){
 			g2.drawImage(chess, 0, 0, this);
 		}else{
@@ -64,7 +85,6 @@ public class DrawPanel extends JPanel{
 			g2.drawImage(canvas.layerList.get(i), 0, 0, this);
 		}
 		
-		//g2.drawImage(image, 400, 400, this);
 		
 		/* Hier nicht mehr Rendern */
 		

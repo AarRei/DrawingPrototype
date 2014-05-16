@@ -27,6 +27,15 @@ public class LayerWindow extends JFrame implements MouseListener{
 	public JButton btn_remove = new JButton("- Layer");
 	JScrollPane listScroller;
 	
+	/**
+	 * Constructs the LayerWindow
+	 * 
+	 * Builds the LayerWindow, creates and fills the layer list and adds listener to the buttons.
+	 * 
+	 * @param canvas the current working canvas
+	 * @param listener the ListenerHandler
+	 */
+	
 	public LayerWindow(Canvas canvas, ListenerHandler listener){
 		this.canvas = canvas;
 		int x = 200, y = 500;
@@ -69,6 +78,11 @@ public class LayerWindow extends JFrame implements MouseListener{
 		this.setVisible(true);
 	}
 	
+	/**
+	 * Fills the list with Layers.
+	 * 
+	 * Clears the list of all current Layers and fills it again. Used to update the list upon change.
+	 */
 	public void fillList(){
 		listModel.clear();
 		for(int i = 0; i < canvas.layerList.size();i++)

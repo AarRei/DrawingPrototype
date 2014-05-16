@@ -18,6 +18,13 @@ public class ToolWindow extends JFrame implements ActionListener{
 	JButton btn_color_alt = new JButton();
 	DrawWindow win;
 	
+	/**
+	 * Constructs the ToolWindow.
+	 * 
+	 * Builds the ToolWindow and adds listener to the buttons.
+	 * 
+	 * @param win the parent DrawWindow
+	 */
 	public ToolWindow(DrawWindow win){
 		this.win = win;
 		int x = 120, y = 50;

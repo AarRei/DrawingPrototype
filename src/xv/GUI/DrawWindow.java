@@ -53,6 +53,13 @@ public class DrawWindow extends JFrame{
 	
 	public double zoom = 1;
 	
+	/**
+	 * Constructor of the DrawWindow
+	 * 
+	 * Builds the DrawWindow. Adds the MenuBar and its elements. Adds the ScrollPane and the background panel. 
+	 * Sets listeners for all menu options and panels. Starts the painter thread.
+	 */
+	
 	public DrawWindow(){
 		
 		setJMenuBar(menu);
@@ -105,6 +112,16 @@ public class DrawWindow extends JFrame{
 		this.setVisible(true);
 	}
 	
+	/**
+	 * Creates the canvas object.
+	 * 
+	 * Creates the canvas object with a specified width and height. Furthermore the drawPanel, 
+	 * the tool window and the layer window are initialized and the drawPanel added to the background panel.
+	 * 
+	 * @param width width of the canvas
+	 * @param height height of the canvas
+	 */
+	
 	public void createCanvas(int width, int height){
 		x = width;
 		y = height;
@@ -132,10 +149,25 @@ public class DrawWindow extends JFrame{
 
 	}
 	
+	/**
+	 * Centers the drawPanel
+	 * 
+	 * The method centers the drawPanel within the bounds of the background panel.
+	 */
 	public void centerCanvas(){
 		drawPanel.setBounds(backgroundPanel.getWidth()/2-drawPanel.getWidth()/2, backgroundPanel.getHeight()/2-drawPanel.getHeight()/2, drawPanel.getWidth(), drawPanel.getHeight());
 	}
 	
+	/**
+	 * Establishes a connection to a server.
+	 * 
+	 * Initializes the ClientMain object with the passed parameters. Throws an UnknownHostException if unsuccessful. 
+	 * Also opens the chat window.
+	 * 
+	 * @param host the IP address or hostname of the host 
+	 * @param port the port to which the client connects
+	 * @param username the desired username
+	 */
 	public void establishConnection(String host, int port, String username){
 		try {
 			chatWindow = new ChatWindow(listener);
