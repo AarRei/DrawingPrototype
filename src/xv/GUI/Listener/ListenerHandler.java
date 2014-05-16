@@ -34,10 +34,15 @@ import javax.swing.event.CaretListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import xv.Canvas.Component.Drawer;
 import xv.GUI.CanvasCreationDialog;
 import xv.GUI.DrawWindow;
 import xv.GUI.NetworkConnectionDialog;
+import xv.Network.Client.ReceivingDrawer;
 import xv.Network.Server.GUI.ServerConfigWindow;
 
 public class ListenerHandler extends MouseMotionAdapter implements MouseListener, KeyListener, ActionListener, ChangeListener, CaretListener, MouseMotionListener, ItemListener, AdjustmentListener, ComponentListener, MouseWheelListener {
@@ -45,10 +50,6 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	DrawWindow win;
 	Timer drawing = new Timer(1000/200,this);
 	List<Dimension> pointList = Collections.synchronizedList(new ArrayList<Dimension>());
-	/**
-	 * List of actions.
-	 */
-	public List<String> actionList = Collections.synchronizedList(new ArrayList<String>());
 	/**
 	 * Message to be send to the server.
 	 */
@@ -148,28 +149,44 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		
 		else if(e.getSource().equals(win.layerWindow.btn_add) && layerAdded){
 			if(win.layerWindow.list.getSelectedIndex() != -1){
-				int selected= win.layerWindow.list.getSelectedIndex();
-				//win.canvas.addLayer(selected);
+				if(win.net == null){
+					int selected= win.layerWindow.list.getSelectedIndex();
+					win.canvas.addLayer(selected);
+					win.layerWindow.fillList();
+					win.layerWindow.list.setSelectedIndex(selected);
+					win.canvas.setSelectedLayer(win.layerWindow.list.getSelectedIndex());
+				}
+				
 				if(win.net != null){
 					win.net.sendMessage("{\"action\": \"ADDL\","
 							+ "\"user\": \""+win.net.username+"\","
 							+ "\"layer_id\": 0,"
 							+ "\"layer_position\": "+win.layerWindow.list.getSelectedIndex()+"}");
+					layerAdded = false;
+					win.layerWindow.fillList();
 				}
-				layerAdded = false;
-				win.layerWindow.fillList();
 				win.canvas.setSelectedLayer(win.layerWindow.list.getSelectedIndex());
 			}
 		}else if (e.getSource().equals(win.layerWindow.btn_remove) && layerRemoved){
 			if(win.layerWindow.list.getSelectedIndex() != -1 && win.canvas.layerList.size()>1){
+				int selected= win.layerWindow.list.getSelectedIndex();
 				if(win.net != null){
 					win.net.sendMessage("{\"action\": \"RMVL\","
 							+ "\"user\": \""+win.net.username+"\","
 							+ "\"layer_id\": 0,"
 							+ "\"layer_position\": "+win.layerWindow.list.getSelectedIndex()+"}");
-				}
-				layerRemoved = false;
-				win.layerWindow.fillList();					
+
+					win.layerWindow.fillList();
+					layerRemoved = false;
+				}else{
+					win.canvas.removeLayer(selected);
+					win.layerWindow.fillList();
+					if(selected > win.canvas.layerList.size()-1)
+						win.layerWindow.list.setSelectedIndex(selected-1);
+					else
+						win.layerWindow.list.setSelectedIndex(selected);
+					win.canvas.setSelectedLayer(win.layerWindow.list.getSelectedIndex());
+				}				
 				win.drawPanel.repaint();
 			}
 		}else if(win.chatWindow != null){
@@ -205,7 +222,30 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 				win.pen.setThickness(win.pen.getThickness()-1);
 		}
 		if(e.getKeyCode() == KeyEvent.VK_Z && e.isControlDown()){
-			
+			if(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).actionList.size() > 0){
+				Color clear = new Color(0,0,0,0);
+				for(int i = 0; i < win.drawPanel.width;i++){
+					for(int j = 0; j < win.drawPanel.height; j++){
+						win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).setRGB(i, j,clear.getRGB());
+					}
+				}
+				win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).actionList.remove(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).actionList.size()-1);
+				JSONParser parser = new JSONParser();
+		        Object unitsObj = null;
+		        
+		        JSONObject unitsJson;
+				for(String f : win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).actionList){
+					try {
+						unitsObj = parser.parse(f);
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					unitsJson  = (JSONObject) unitsObj;
+					new ReceivingDrawer(unitsJson, win).start();
+				}
+				win.drawPanel.repaint();
+			}
 		}
 	}
 
@@ -263,7 +303,8 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		message = message.substring(0, message.length()-1);
 		message += "]}";
 		
-		actionList.add(message);
+		System.out.println(win.layerWindow.list.getSelectedIndex());
+		win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).actionList.add(message);
 		if(win.net != null){
 			win.net.sendMessage(message);
 		}

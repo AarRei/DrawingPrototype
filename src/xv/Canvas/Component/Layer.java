@@ -11,6 +11,10 @@ import java.util.List;
 public class Layer extends BufferedImage{
 	
 	public List<Dimension> pointList = Collections.synchronizedList(new ArrayList<Dimension>());
+	/**
+	 * List of actions.
+	 */
+	public List<String> actionList = Collections.synchronizedList(new ArrayList<String>());
 	
 	String name;
 	int id;

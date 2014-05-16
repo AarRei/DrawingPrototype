@@ -33,9 +33,11 @@ public class ReceivingDrawer extends Thread {
 	 * Reads line data from the json_line object and draws a line in the specified format with the specified points.
 	 */
 	public void run() {
-		if (((String) json_line.get("user")).equals(win.net.username)) {
-			System.out.println("Own line");
-			return;
+		if(win.net != null){
+			if (((String) json_line.get("user")).equals(win.net.username)) {
+				System.out.println("Own line");
+				return;
+			}
 		}
 
 		JSONParser parser = new JSONParser();

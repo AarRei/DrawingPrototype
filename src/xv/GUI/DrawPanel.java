@@ -15,7 +15,7 @@ public class DrawPanel extends JPanel{
 	Canvas canvas;
 	DrawWindow win;
 	
-	int width, height;
+	public int width, height;
 	
 	/**
 	 * Constructor of the DrawPanel
