@@ -38,7 +38,8 @@
 {
 	"action": "RMVL",
 	"user": "<Name>",
-	"layer_id": n
+	"layer_id": n,
+	"layer_position": p
 }
 
 {

@@ -38,10 +38,26 @@ public class MessageReceiveThread extends Thread{
 						new ReceivingDrawer(unitsJson, win).start();
 						break;
 					case "ADDL":
-						if(!((String) unitsJson.get("user")).equals(win.net.username)){
-							Long id = (Long)unitsJson.get("layer_position");
-							win.canvas.addLayer(id.intValue());
-							win.layerWindow.fillList();
+						Long id = (Long)unitsJson.get("layer_position");
+						win.canvas.addLayer(id.intValue());
+						win.layerWindow.fillList();
+						if(((String) unitsJson.get("user")).equals(win.net.username)){
+							win.layerWindow.list.setSelectedIndex(id.intValue());
+							win.canvas.setSelectedLayer(win.layerWindow.list.getSelectedIndex());
+							win.listener.layerAdded = true;
+						}
+						break;
+					case "RMVL":
+						Long pos_r = (Long)unitsJson.get("layer_position");
+						win.canvas.removeLayer(pos_r.intValue());
+						win.layerWindow.fillList();
+						if(((String) unitsJson.get("user")).equals(win.net.username)){
+							if(pos_r.intValue() > win.canvas.layerList.size()-1)
+								win.layerWindow.list.setSelectedIndex(pos_r.intValue()-1);
+							else
+								win.layerWindow.list.setSelectedIndex(pos_r.intValue());
+							win.canvas.setSelectedLayer(win.layerWindow.list.getSelectedIndex());
+							win.listener.layerRemoved = true;
 						}
 						break;
 					case "SVCF":

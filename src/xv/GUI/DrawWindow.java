@@ -31,7 +31,7 @@ public class DrawWindow extends JFrame{
 	public LayerWindow layerWindow;
 	public ToolWindow toolWindow;
 	public ChatWindow chatWindow;
-	ListenerHandler listener = new ListenerHandler(this);
+	public ListenerHandler listener = new ListenerHandler(this);
 	JMenuBar menu = new JMenuBar();
 	JMenu file = new JMenu("File"),
 			view = new JMenu("View"),
