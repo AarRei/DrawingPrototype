@@ -45,7 +45,13 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	DrawWindow win;
 	Timer drawing = new Timer(1000/200,this);
 	List<Dimension> pointList = Collections.synchronizedList(new ArrayList<Dimension>());
-
+	/**
+	 * List of actions.
+	 */
+	public List<String> actionList = Collections.synchronizedList(new ArrayList<String>());
+	/**
+	 * Message to be send to the server.
+	 */
 	String message;
 	
 	int increment = 0;
@@ -185,6 +191,7 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	
 	/**
 	 * Testing of line thickness. Pressing + makes it thicker, - makes it thinner.
+	 * Undo function.
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
@@ -196,6 +203,9 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		if(e.getKeyCode()== KeyEvent.VK_MINUS){
 			if(win.pen.getThickness() > 1)
 				win.pen.setThickness(win.pen.getThickness()-1);
+		}
+		if(e.getKeyCode() == KeyEvent.VK_Z && e.isControlDown()){
+			
 		}
 	}
 
@@ -253,6 +263,7 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		message = message.substring(0, message.length()-1);
 		message += "]}";
 		
+		actionList.add(message);
 		if(win.net != null){
 			win.net.sendMessage(message);
 		}
