@@ -50,16 +50,33 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	
 	int increment = 0;
 	
+	/**
+	 * Shows if the left mouse button is currently being pressed.
+	 */
 	private boolean mouseDown = false;
-	private boolean controlDown = false;
+	/**
+	 * Shows if the added layer has already been received.
+	 */
 	public boolean layerAdded = true;
+	/**
+	 * Shows if the removed layer has already been received.
+	 */
 	public boolean layerRemoved = true;
 	
-
+	/**
+	 * Returns if the mouse button is currently pressed.
+	 * 
+	 * @return mouse button state
+	 */
 	public boolean isMouseDown() {
 		return mouseDown;
 	}
-
+	
+	/**
+	 * Creates a ListenerHandler object.
+	 * 
+	 * @param win parent DrawWindow
+	 */
 	public ListenerHandler(DrawWindow win) {
 		this.win = win;
 	}
@@ -76,7 +93,17 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 
 	}
 	
-
+	/**
+	 * Controls all actions.
+	 * 
+	 * Controls the actions of the elements in the menu bar.
+	 * 
+	 * Reacts to the pressing of the Layer Add and Layer Remove button.
+	 * 
+	 * Records the coordinates while drawing a line.
+	 * 
+	 * Reacts to the send button of the ChatWindow, by sending the message.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
@@ -98,38 +125,10 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 					win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.add(new Dimension(x, y));
 					message+="{\"x\": "+x+", \"y\": "+y+"},";
 				}
-
 				//System.out.println(win.canvas.layerList.get(0).pointList.size());
-				
-				
-				/*Graphics2D g2 = win.canvas.layerList.get(0).createGraphics();
-	
-				/* Hier Rendern */
-				/*
-				System.out.println(x+" "+y);
-				g2.setColor(Color.BLACK);
-				g2.fillOval(x-5, y-5, 10, 10);
-				
-				g2.dispose();
-				
-				win.drawPanel.repaint();*/
 			}
 		}
-		/*if(e.getSource().equals(drawer)){
-			Graphics2D g2 = win.canvas.layerList.get(0).createGraphics();
-			
-			/* Hier Rendern */
-			/*while(!win.canvas.layerList.get(0).pointList.isEmpty()){
-				g2.setColor(Color.BLACK);
-				g2.fillOval(win.canvas.layerList.get(0).pointList.get(0).width-5, win.canvas.layerList.get(0).pointList.get(0).height-5, 10, 10);
-				win.canvas.layerList.get(0).pointList.remove(0);
-				if(!mouseDown && win.canvas.layerList.get(0).pointList.isEmpty())
-					drawer.stop();
-			}
-			g2.dispose();
-			win.drawPanel.repaint();
-		}*/
-		
+				
 		else if(e.getSource().equals(win.exit)){
 			System.exit(0);
 		}else if(e.getSource().equals(win.connect)){
@@ -182,20 +181,14 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		/*if (e.getKeyCode() == KeyEvent.VK_A) {
-			left = true;
-		}*/
-		if(e.getKeyCode()== KeyEvent.VK_CONTROL){
-			controlDown = true;
-		}
 	}
-
+	
+	/**
+	 * Testing of line thickness. Pressing + makes it thicker, - makes it thinner.
+	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getKeyCode()== KeyEvent.VK_CONTROL){
-			controlDown = false;
-		}
 		if(e.getKeyCode()== KeyEvent.VK_PLUS){
 			System.out.println("M÷÷P");
 			win.pen.setThickness(win.pen.getThickness()+1);
@@ -230,6 +223,9 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 
 	}
 
+	/**
+	 * Starts the Drawer thread and establishes the message to be send to the server.
+	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// (x - center_x)^2 + (y - center_y)^2 < radius^2
@@ -246,6 +242,9 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	    t.start();
 	}
 
+	/**
+	 * Sends the message to the to the server, stops the Drawer thread and repaints the DrawPanel.
+	 */
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -258,22 +257,6 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 			win.net.sendMessage(message);
 		}
 		win.drawPanel.repaint();
-		
-		//Graphics2D g2 = win.canvas.layerList.get(0).createGraphics();
-		
-		/* Hier Rendern 
-		while(!win.canvas.layerList.get(0).pointList.isEmpty()){
-			g2.setColor(Color.BLACK);
-			//g2.fillOval(win.canvas.layerList.get(0).pointList.get(0).width-5, win.canvas.layerList.get(0).pointList.get(0).height-5, 10, 10);
-			if(win.canvas.layerList.get(0).pointList.size()>1)
-				g2.drawLine(win.canvas.layerList.get(0).pointList.get(0).width, win.canvas.layerList.get(0).pointList.get(0).height, win.canvas.layerList.get(0).pointList.get(1).width, win.canvas.layerList.get(0).pointList.get(1).height);
-			win.canvas.layerList.get(0).pointList.remove(0);
-			if(!mouseDown && win.canvas.layerList.get(0).pointList.isEmpty())
-				drawer.stop();
-		}
-		g2.dispose();
-		
-		win.drawPanel.repaint();*/
 		
 	}
 
@@ -317,6 +300,9 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		
 	}
 	
+	/**
+	 * Zoom test. Hold CTRL and spin the mouse wheel.
+	 */
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		// TODO Auto-generated method stub
@@ -356,7 +342,15 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 			
 		}
 	}
-
+	
+	/**
+	 * Creates an ImageIcon.
+	 * 
+	 * Gets an image file from a relative path and creates and returns an ImageIcon.
+	 * 
+	 * @param relative_path relative path of the image file
+	 * @return created ImageIcon
+	 */
 	public ImageIcon makeImageIcon(String relative_path) {
 		URL imgURL = getClass().getResource(relative_path);
 		return new ImageIcon(imgURL);

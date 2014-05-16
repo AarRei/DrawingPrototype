@@ -19,6 +19,11 @@ public class NetworkConnectionDialog extends JDialog implements ActionListener{
 	JLabel hostL = new JLabel("Host"), portL = new JLabel("Port"), nameL = new JLabel("Username");
 	JButton ok = new JButton("Connect");
 	
+	/**
+	 * Creates a NetworkConnectionDialog.
+	 * 
+	 * @param win parent DrawWindow
+	 */
 	public NetworkConnectionDialog(DrawWindow win){
 		this.win = win;
 		setLayout(new GridLayout(0,1));
@@ -35,7 +40,10 @@ public class NetworkConnectionDialog extends JDialog implements ActionListener{
 		setSize(250,200);
 		setVisible(true);
 	}
-
+	
+	/**
+	 * Calls the establishConnection method.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

@@ -16,6 +16,11 @@ public class CanvasCreationDialog extends JDialog implements ActionListener{
 	JLabel heightL = new JLabel("Height"), widthL = new JLabel("Width");
 	JButton ok = new JButton("Ok");
 	
+	/**
+	 * Creates the CanvasCreationDialog.
+	 * 
+	 * @param win parent DrawWindow
+	 */
 	public CanvasCreationDialog(DrawWindow win){
 		this.win = win;
 		setLayout(new GridLayout(0,1));
@@ -30,7 +35,10 @@ public class CanvasCreationDialog extends JDialog implements ActionListener{
 		setSize(250,150);
 		setVisible(true);
 	}
-
+	
+	/**
+	 * Calls createCanvas method with entered parameters.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

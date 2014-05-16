@@ -6,22 +6,29 @@ import xv.GUI.Listener.ListenerHandler;
 public class Painter extends Thread {
 	DrawWindow win;
 	ListenerHandler listener;
-
+	
+	/**
+	 * Creates a Painter thread.
+	 * 
+	 * @param win parent DrawWindow
+	 * @param listener the ListenerHandler
+	 */
 	public Painter(DrawWindow win, ListenerHandler listener) {
 		this.win = win;
 		this.listener = listener;
 	}
 	
-	/*while ((count = in.read(buffer)) > 0) {
-		  out.write(buffer, 0, count);
-		}*/
-	
+	/**
+	 * Repaints the DrawPanel.
+	 * 
+	 * Repaints the DrawPanel at 30 frames per second.
+	 */
 	public void run() {
 		try {
 			while (true) {
 				if(listener.isMouseDown())
 					win.drawPanel.repaint();
-				sleep(1000/60);
+				sleep(1000/30);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

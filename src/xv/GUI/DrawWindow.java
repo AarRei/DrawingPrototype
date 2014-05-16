@@ -12,11 +12,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 
 import xv.Canvas.Canvas;
-import xv.Canvas.Component.Drawer;
 import xv.Canvas.Component.Painter;
 import xv.GUI.Listener.ListenerHandler;
 import xv.Network.Client.ClientMain;
@@ -82,22 +80,14 @@ public class DrawWindow extends JFrame{
 		menu.add(view);
 		menu.add(window);
 		menu.add(network);
-		
-		//this.setLayout(null);
-		
+				
 		backgroundPanel.setBackground(new Color(52,52,52));
-		//backgroundPanel.setSize(x, y);
 		backgroundPanel.setLayout(null);		
 		addKeyListener(listener);
 
 		scrollPane = new JScrollPane(backgroundPanel);
-		//scrollPane.setSize(x, y);
-
 		
 		this.add(scrollPane);
-		
-		//this.add
-		// pack();
 
 		Thread t = new Painter(this,listener);
 		t.setDaemon( true );
@@ -106,7 +96,6 @@ public class DrawWindow extends JFrame{
 		
 		this.setTitle("ExtraVisual");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE); //TODO: Custom close operation (close socket, kill stuff)
-		//this.setResizable(false);
 		this.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2-x/2, Toolkit.getDefaultToolkit().getScreenSize().height/2-y/2);
 		this.setSize(x + 6, y + 28 + 21); //6 windows border, 28 windows frame, 21 Menu Bar
 		this.setVisible(true);

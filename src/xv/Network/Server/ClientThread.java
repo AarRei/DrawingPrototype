@@ -17,12 +17,27 @@ public class ClientThread extends Thread{
 	List<String> actionList;
 	public String username;
 	
+	/**
+	 * Creates a client thread.
+	 * 
+	 * Creates a client thread with the respective Socket.
+	 * 
+	 * @param socket socket of the client
+	 * @param list list of messages to be relayed
+	 * @param listA list of all actions
+	 */
 	public ClientThread(Socket socket, List<String> list, List<String> listA){
 		clientSocket = socket;
 		messageList = list;
 		actionList = listA;
 	}
 	
+	/**
+	 * Listens for messages from the client.
+	 * 
+	 * Initializes input- and output stream. Sends the client all received actions and listens 
+	 * for messages from the client.
+	 */
 	public void run() {
 		try {
 			out = new PrintWriter(clientSocket.getOutputStream(), true);

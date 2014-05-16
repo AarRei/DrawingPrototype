@@ -13,11 +13,30 @@ public class MessageReceiveThread extends Thread{
 	BufferedReader in;
 	DrawWindow win;
 	
+	/**
+	 * Creates the MessageReceiveThread.
+	 * 
+	 * Creates the MessageReceiveThread and sets the input stream.
+	 * 
+	 * @param in BufferedReader as input stream 
+	 * @param win parent DrawWindow
+	 */
 	public MessageReceiveThread(BufferedReader in,DrawWindow win){
 		this.win = win;
 		this.in = in;
 	}
 	
+	/**
+	 * Reads from the input stream.
+	 * 
+	 * Reads data from the input stream until it returns null (the connection is closed).
+	 * Converts received data into JSON Objects and handles the commands depending on the action type:
+	 * CHAT: chat message
+	 * LINE: line drawing action
+	 * ADDL: adding a layer
+	 * RMVL: removing a layer
+	 * SVCF: server configuration data
+	 */
 	public void run(){
 		String fromServer;
 		

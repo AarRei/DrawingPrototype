@@ -14,11 +14,24 @@ public class ReceivingDrawer extends Thread {
 	JSONObject json_line;
 	DrawWindow win;
 
+	/**
+	 * Creates a ReceivingDrawer.
+	 * 
+	 * Creates a ReceivingDrawer thread.
+	 * 
+	 * @param json_line the JSONObject containing the command
+	 * @param win parent DrawWindow
+	 */
 	public ReceivingDrawer(JSONObject json_line, DrawWindow win) {
 		this.json_line = json_line;
 		this.win = win;
 	}
 
+	/**
+	 * Draws a received line.
+	 * 
+	 * Reads line data from the json_line object and draws a line in the specified format with the specified points.
+	 */
 	public void run() {
 		if (((String) json_line.get("user")).equals(win.net.username)) {
 			System.out.println("Own line");

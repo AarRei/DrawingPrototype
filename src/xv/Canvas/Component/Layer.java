@@ -15,14 +15,35 @@ public class Layer extends BufferedImage{
 	String name;
 	int id;
 
-
+	/**
+	 * Creates a Layer.
+	 * 
+	 * Creates a Layer with a given width and height by calling the super method.
+	 * The BufferedImage type is set to ARGB.
+	 * 
+	 * @param width width of the canvas
+	 * @param height height of the canvas
+	 * @param name name of the layer
+	 * @param id id of the layer
+	 */
 	public Layer(int width, int height, String name, int id){
 		super(width, height, BufferedImage.TYPE_INT_ARGB);
 		this.id = id;
 		this.name = name;
-		int a = 4, b = 6;
 	}
 	
+	/**
+	 * Line algorithm by Bresenham
+	 * 
+	 * Draws a line onto the layer according to the line algorithm by Bresenham.
+	 * 
+	 * @param x1 x component of the source coordinate
+	 * @param y1 y component of the source coordinate
+	 * @param x2 x component of the destination coordinate
+	 * @param y2 y component of the destination coordinate
+	 * @param thickness thickness of the pen
+	 * @param color color of the pen
+	 */
 	public void bresenham(int x1, int y1, int x2, int y2, int thickness, Color color){
 		int dx, dy, sx, sy, err, e2;
 		dx = Math.abs(x2 -x1);
@@ -123,6 +144,17 @@ public class Layer extends BufferedImage{
 		return 1.0f - fpart(x);
 	}
 	
+	/**
+	 * Draws a line.
+	 * 
+	 * Test of the Xiaolin Wu line algorithm.
+	 * 
+	 * @param x0 source x
+	 * @param y0 source y
+	 * @param x1 destination x
+	 * @param y1 destination y
+	 * @param color pen color
+	 */
 	public void xiaolinwu(int x0, int y0, int x1, int y1, Color color){
 		float dx = (float)x1 - (float)x0;
 		float dy = (float)y1 - (float)y0;
@@ -205,6 +237,17 @@ public class Layer extends BufferedImage{
 		setRGB(x, y, new Color(color.getRed(),color.getGreen(), color.getBlue(), (int)(color.getAlpha() * (1-(c*2/3) ))).getRGB());
 	}
 	
+	/**
+	 * Draws a line (or not).
+	 * 
+	 * Test line algorithm by Gutpa Sproull.
+	 * 
+	 * @param x0 source x
+	 * @param y0 source y
+	 * @param x1 destination x
+	 * @param y1 destination y
+	 * @param color pen color
+	 */
 	public void guptasproull(int x0, int y0, int x1, int y1, Color color){
 		int addr = (y0*640*x0)*4;
 		int dx = x1 - x0;
@@ -269,92 +312,31 @@ public class Layer extends BufferedImage{
 		}while(u < uend);
 	}
 	
-	/*	public void guptasproull(int x0, int y0, int x1, int y1, Color color){
-		int addr = (y0*640*x0)*4;
-		int dx = x1 - x0;
-		int dy = y1 - y0;
-		
-		int du, dv, u, v, uincr, vincr;
-		
-		if(Math.abs(dx)>Math.abs(dy)){
-			du = Math.abs(dx);
-			dv = Math.abs(dy);
-			u = x1;
-			v = y1;
-			uincr = 4;
-			vincr = 640*4;
-			if(dx < 0)
-				uincr = -uincr;
-			if(dy < 0)
-				vincr = -vincr;
-		}else{
-			du = Math.abs(dy);
-			dv = Math.abs(dx);
-			u = y1;
-			v = x1;
-			uincr = 640*4;
-			vincr = 4;
-			if(dy < 0)
-				uincr = -uincr;
-			if(dx < 0)
-				vincr = -vincr;
-		}
-		int uend = u + 2 *du;
-		int d = (2 * dv) - du;
-		int incrS = 2 * dv;	
-		int incrD = 2 * (dv - du);	
-		int twovdu = 0;	
-		double invD = 1.0 / (2.0*Math.sqrt(du*du + dv*dv));   
-		double invD2du = 2.0 * (du*invD);  
-		do{
-			plotGS(addr, addr, twovdu*invD, color);
-			plotGS(addr, addr, invD2du - twovdu*invD, color);
-			plotGS(addr, addr, invD2du + twovdu*invD, color);
-			
-			if(d < 0){
-				twovdu = d + du;
-				d = d + incrS;
-			}else{
-				twovdu = d - du;
-				d = d + incrD;
-				v = v+1;
-				addr = addr + vincr;
-			}
-			u = u+1;
-			addr = addr + uincr;
-		}while(u < uend);
-	}*/
-	
+	/**
+	 * Returns the name of the layer.
+	 * 
+	 * @return layer name
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Sets the name of the layer.
+	 * 
+	 * @param name layer name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
+	/**
+	 * Returns the ID of the layer.
+	 * 
+	 * @return layer ID
+	 */
 	public int getId() {
 		return id;
 	}
-	/*
-	int x, y, dx, dy, e, i, dx2, dy2;
-		x = x1;
-		y = y1;
-		dx = x2 - x1;
-		dy = y2 - y1;
-		dx2 = 2 * dx;
-		dy2 = 2 * dy;
-		e = dy2 - dx;
-		for(i = 1; i < dx;i++){
-			setRGB(x, y, color.getRGB());
-			if(e >= 0){
-				y++;
-				e -= dx2;
-			}
-			x++;
-			e += dy2;
-		}
-		setRGB(x, y, color.getRGB());
-	 */
 
 }

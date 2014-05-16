@@ -7,12 +7,26 @@ public class MessageThread extends Thread{
 	public List<String> messageList;
 	public List<String> actionList;
 	
+	/**
+	 * Creates a MessageThread.
+	 * 
+	 * Creates a MessageThread with all relevant lists.
+	 * 
+	 * @param listC list of all clients
+	 * @param listS list of messages to be relayed
+	 * @param listA list of all actions
+	 */
 	public MessageThread(List<ClientThread> listC,List<String> listS, List<String> listA){
 		clientList = listC;
 		messageList = listS;
 		actionList = listA;
 	}
 	
+	/**
+	 * Sends the messages to the clients.
+	 * 
+	 * Sends all messages in the messageList to all currently connected clients.
+	 */
 	public void run(){
 		try {
 			while (true) {

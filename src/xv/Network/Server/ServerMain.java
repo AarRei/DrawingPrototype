@@ -4,10 +4,23 @@ import java.util.Scanner;
 
 import xv.Network.Server.GUI.ServerConfigWindow;
 
+/**
+ * 
+ * @author Sascha Rothkopf, Aaron Reiher
+ * @version 0.0.2
+ *
+ */
 public class ServerMain {
 
 	static Scanner scan = new Scanner(System.in);
 	
+	/**
+	 * Starts the program. 
+	 * 
+	 * Starts the program. Depending on the options it will start with GUI or without.
+	 * 
+	 * @param args options
+	 */
 	public static void main(String[] args) {
 		if(args.length == 0){
 			new ServerConfigWindow();
@@ -40,6 +53,11 @@ public class ServerMain {
 		}
 	}
 	
+	/**
+	 * Returns an Integer value.
+	 * 
+	 * return entered int
+	 */
 	public static int getInt(){
 		try{
 			return Integer.parseInt(scan.next());

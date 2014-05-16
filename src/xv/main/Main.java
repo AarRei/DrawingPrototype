@@ -10,12 +10,22 @@ import xv.Canvas.Canvas;
 import xv.GUI.DrawWindow;
 import xv.Network.Client.ClientMain;
 
+/**
+ * 
+ * @author Aaron Reiher, Sascha Rothkopf
+ * @version 0.0.2
+ *
+ */
 public class Main {
+	
+	/**
+	 * Declares and initializes the DrawWindow.
+	 * 
+	 * @param args starting options
+	 */
 	public static void main(String[]args){
 		try {
-            //
-            // Use the system look and feel for the swing application
-            //
+            // Verwenden des System-LookAndFeels
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -27,17 +37,5 @@ public class Main {
             e.printStackTrace();
         }
 		DrawWindow d = new DrawWindow();
-		/*
-		try {
-			if(args.length > 0){
-				ClientMain net = new ClientMain(InetAddress.getByName(args[0]),Integer.parseInt(args[1]));
-			}
-			else{
-				ClientMain net = new ClientMain(InetAddress.getByName("2a02:908:f640:5a00:224:1dff:fec0:b83f"),7777);
-			}
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 	}
 }

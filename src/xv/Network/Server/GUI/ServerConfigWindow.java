@@ -24,6 +24,9 @@ public class ServerConfigWindow extends JFrame implements ActionListener{
 	JButton btn_ok = new JButton("Ok");
 	JCheckBox cb_webcolors = new JCheckBox("Allow only webcolors.");
 	
+	/**
+	 * Creates a ServerConfigWindow.
+	 */
 	public ServerConfigWindow(){
 		int x = 300, y = 210;
 
@@ -52,7 +55,10 @@ public class ServerConfigWindow extends JFrame implements ActionListener{
 		this.setSize(x + 6, y + 28);
 		this.setVisible(true);
 	}
-
+	
+	/**
+	 * Starts a server with the entered parameters.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
