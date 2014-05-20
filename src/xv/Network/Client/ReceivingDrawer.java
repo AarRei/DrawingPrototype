@@ -39,6 +39,8 @@ public class ReceivingDrawer extends Thread {
 				return;
 			}
 		}
+		
+		int leftmost = 0, rightmost = 0, highest = 0, lowest = 0;
 
 		JSONParser parser = new JSONParser();
 		Object test = null;
@@ -56,6 +58,14 @@ public class ReceivingDrawer extends Thread {
 		g2 = win.canvas.layerIDList.get(p.intValue()).createGraphics();
 		Long r=(Long)color.get("R"), g=(Long)color.get("G"), b=(Long)color.get("B"), a=(Long)color.get("A");
 		g2.setColor(new Color(r.intValue(), g.intValue(),b.intValue(),a.intValue()));
+
+		JSONObject temporary = (JSONObject)points.get(0);
+		Long x = (Long)temporary.get("x"), y=(Long)temporary.get("y");
+		leftmost = x.intValue();
+		rightmost = x.intValue();
+		highest = y.intValue();
+		lowest = y.intValue();
+		
 		for(int i = 0; i < points.size()-1;i++){
 			JSONObject temp = (JSONObject)points.get(i);
 			JSONObject temp2 = (JSONObject)points.get(i+1);

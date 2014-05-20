@@ -39,7 +39,7 @@ public class Drawer extends Thread {
 					win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.remove(0);
 				}
 
-				sleep(1);
+				sleep(5);
 			}
 			win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.remove(0);
 		} catch (Exception e) {

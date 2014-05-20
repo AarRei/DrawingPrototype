@@ -50,12 +50,17 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	DrawWindow win;
 	Timer drawing = new Timer(1000/200,this);
 	List<Dimension> pointList = Collections.synchronizedList(new ArrayList<Dimension>());
+
+	PointerInfo a;
+	Point b;
 	/**
 	 * Message to be send to the server.
 	 */
 	String message;
 	
 	int increment = 0;
+	
+	public int leftmost = 0, rightmost = 0, highest = 0, lowest = 0;
 	
 	/**
 	 * Shows if the left mouse button is currently being pressed.
@@ -117,11 +122,20 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		
 		if(e.getSource().equals(drawing)){
 			if(mouseDown){
-				
-				PointerInfo a = MouseInfo.getPointerInfo();
-				Point b = a.getLocation();
+				a = MouseInfo.getPointerInfo();
+				b = a.getLocation();
 				int x = (int)((int) (b.getX()-win.drawPanel.getLocationOnScreen().x)/win.zoom);
 				int y = (int)((int) (b.getY()-win.drawPanel.getLocationOnScreen().y)/win.zoom);
+				
+				if(x < leftmost)
+					leftmost = x;
+				if(x > rightmost)
+					rightmost = x;
+				if(y < highest)
+					highest = y;
+				if(y > lowest)
+					lowest = y;
+				
 				if(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.size() == 0){
 					win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.add(new Dimension(x, y));
 					message+="{\"x\": "+x+", \"y\": "+y+"},";
@@ -280,12 +294,23 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	public void mousePressed(MouseEvent e) {
 		// (x - center_x)^2 + (y - center_y)^2 < radius^2
 		// TODO Auto-generated method stub
+
 		mouseDown = true;
 		message ="{\"action\": \"LINE\",\"user\": \""+((win.net==null)?"user":win.net.username)+"\",\"layer_id\": "+win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId()+", \"color\": {"
 				+ "\"R\": "+win.pen.getColor().getRed()+","
 				+ "\"G\": "+win.pen.getColor().getGreen()+","
 				+ "\"B\": "+win.pen.getColor().getBlue()+","
 				+ "\"A\": "+win.pen.getColor().getAlpha()+"},\"points\": [";
+		
+		a = MouseInfo.getPointerInfo();
+		b = a.getLocation();
+		int x = (int)((int) (b.getX()-win.drawPanel.getLocationOnScreen().x)/win.zoom);
+		int y = (int)((int) (b.getY()-win.drawPanel.getLocationOnScreen().y)/win.zoom);
+		leftmost = x;
+		rightmost = x;
+		highest = y;
+		lowest = y;
+		
 		drawing.start();
 		Thread t = new Drawer(win,this);
 		t.setDaemon( true );
