@@ -1,6 +1,7 @@
 {
 	"action": "CHAT",
 	"user": "<Name>",
+	"user_id": id,
 	"text": "<Inhalt>"
 }
 
@@ -29,17 +30,40 @@
 }
 
 {
+	"action": "LINE",
+	"user": "<Name>",
+	"user_id": id,
+	"layer_id": n,
+	"type": "<type>",
+	"settings": {
+		
+	},
+	"thickness": t,
+	"color": {
+		"R": r,
+		"G": g,
+		"B": b,
+		"A": a
+	},
+	"points": [
+		{"x": x, "y": y},
+		{"x": x, "y": y},
+		{"x": x, "y": y}
+	]
+}
+
+{
 	"action": "ADDL",
 	"user": "<Name>",
-	"layer_id": n,
+	"user_id": id,
 	"layer_position": p
 }
 
 {
 	"action": "RMVL",
 	"user": "<Name>",
-	"layer_id": n,
-	"layer_position": p
+	"user_id": id,
+	"layer_id": n
 }
 
 {

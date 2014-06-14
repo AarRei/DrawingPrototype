@@ -36,6 +36,7 @@ public class DrawWindow extends JFrame{
 			window = new JMenu("Window"),
 			network = new JMenu("Network");
 	public JMenuItem newc = new JMenuItem("New...");
+	public JMenuItem save = new JMenuItem("Save...");
 	public JMenuItem exit = new JMenuItem("Exit");
 	public JCheckBox backg = new JCheckBox("Display Background Grid");
 	public JMenuItem connect = new JMenuItem("Connect...");
@@ -63,6 +64,7 @@ public class DrawWindow extends JFrame{
 		setJMenuBar(menu);
 
 		file.add(newc);
+		file.add(save);
 		file.add(exit);
 		view.add(backg);
 		network.add(connect);
@@ -71,6 +73,7 @@ public class DrawWindow extends JFrame{
 		backg.setSelected(true);
 
 		newc.addActionListener(listener);
+		save.addActionListener(listener);
 		exit.addActionListener(listener);
 		backg.addActionListener(listener);
 		connect.addActionListener(listener);

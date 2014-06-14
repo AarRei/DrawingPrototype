@@ -22,11 +22,16 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import javax.swing.event.CaretEvent;
@@ -156,6 +161,8 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 			new NetworkConnectionDialog(win);
 		}else if(e.getSource().equals(win.newc)){
 			new CanvasCreationDialog(win);
+		}else if(e.getSource().equals(win.save)){
+			saveImage();
 		}else if(e.getSource().equals(win.host)){
 		}else if(e.getSource().equals(win.backg)){
 			win.drawPanel.repaint();
@@ -428,6 +435,33 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	 * @param relative_path relative path of the image file
 	 * @return created ImageIcon
 	 */
+	
+	private void saveImage(){
+		BufferedImage buffer = new BufferedImage(win.drawPanel.width, win.drawPanel.height, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2 = buffer.createGraphics();
+
+		/* Hier Rendern */
+				for(int i = win.canvas.layerList.size()-1;i >= 0 ;i--){
+			g2.drawImage(win.canvas.layerList.get(i), 0, 0, win);
+		}
+		
+		
+		/* Hier nicht mehr Rendern */
+		
+		g2.dispose();
+
+	    Date date = new Date();
+		try {
+            if (ImageIO.write(buffer, "png", new File("./Test"+date.toString().replace(':','-').substring(4, 19)+".png")))
+            {
+                System.out.println("-- saved");
+            }
+	    } catch (IOException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	    }
+	}
+	
 	public ImageIcon makeImageIcon(String relative_path) {
 		URL imgURL = getClass().getResource(relative_path);
 		return new ImageIcon(imgURL);

@@ -63,19 +63,19 @@ public class Layer extends BufferedImage{
 						if(thickness == 2){
 							setRGB(x1, y1-1, color.getRGB());
 						}
-						else if(thickness % 2 == 0){
+						else{
 							for(int i = 1; i <= (thickness-1)/2;i++ ){
 								setRGB(x1, y1-i, color.getRGB());
 								setRGB(x1, y1+i, color.getRGB());
+
+								setRGB(x1-i, y1, color.getRGB());
+								setRGB(x1+i, y1, color.getRGB());
 							}
-							setRGB(x1, y1-thickness / 2, color.getRGB());
-						}else{
-							for(int i = 1; i <= (thickness-1)/2;i++ ){
-								setRGB(x1, y1-i, color.getRGB());
-								setRGB(x1, y1+i, color.getRGB());
+							if(thickness % 2 == 0){
+								setRGB(x1, y1-thickness / 2, color.getRGB());
+								setRGB(x1 - thickness / 2, y1, color.getRGB());
 							}
-						}
-						
+						}						
 					}
 				}
 				if(x1 == x2 && y1 == y2){
@@ -97,17 +97,25 @@ public class Layer extends BufferedImage{
 				if(thickness != 1){
 					if(thickness == 2){
 						setRGB(x1, y1-1, color.getRGB());
+						setRGB(x1+1, y1, color.getRGB());
+						setRGB(x1+1, y1-1, color.getRGB());
 					}
 					else if(thickness % 2 == 0){
 						for(int i = 1; i <= (thickness-1)/2;i++ ){
 							setRGB(x1, y1-i, color.getRGB());
 							setRGB(x1, y1+i, color.getRGB());
+
+							setRGB(x1-i, y1, color.getRGB());
+							setRGB(x1+i, y1, color.getRGB());
 						}
 						setRGB(x1, y1-thickness / 2, color.getRGB());
 					}else{
 						for(int i = 1; i <= (thickness-1)/2;i++ ){
 							setRGB(x1, y1-i, color.getRGB());
 							setRGB(x1, y1+i, color.getRGB());
+
+							setRGB(x1-i, y1, color.getRGB());
+							setRGB(x1+i, y1, color.getRGB());
 						}
 					}
 					
@@ -236,10 +244,10 @@ public class Layer extends BufferedImage{
 		
 	}
 	
-	private void plotGS(int x, int y, double c, Color color){
+	/*private void plotGS(int x, int y, double c, Color color){
 		System.out.println((int)(color.getAlpha() * (1-(c*2/3) )));
 		setRGB(x, y, new Color(color.getRed(),color.getGreen(), color.getBlue(), (int)(color.getAlpha() * (1-(c*2/3) ))).getRGB());
-	}
+	}*/
 	
 	/**
 	 * Draws a line (or not).
@@ -252,7 +260,86 @@ public class Layer extends BufferedImage{
 	 * @param y1 destination y
 	 * @param color pen color
 	 */
+	private void IntensifyPixel(int x, int y, double c, Color color){
+		//double intensity = Filter(Math.round(Math.abs(c)));
+		System.out.println(c);
+		double intensity = Math.abs(c);
+		//System.out.println(intensity);
+		setRGB(x, y, new Color(color.getRed(),color.getGreen(), color.getBlue(), (int)(color.getAlpha() * intensity)).getRGB());
+	}
+	
 	public void guptasproull(int x0, int y0, int x1, int y1, Color color){
+		int dx = x1-x0; 
+		int dy = y1-y0; 
+		int d=2*dy-dx;
+		int incrE = 2*dy;
+		int incrNE = 2*(dy-dx);
+		int two_v_dx = 0;
+		double invDenom = 1.0/(2.0*Math.sqrt(dx*dx+dy*dy));
+		double two_dx_invDemon = 2.0*dx*invDenom;
+		int x = x0;
+		int y = y0;
+		IntensifyPixel(x,y,0,color);
+		IntensifyPixel(x,y+1,two_dx_invDemon,color);
+		IntensifyPixel(x,y-1,two_dx_invDemon,color);
+		while (x<x1) { 
+			if (d<0) {
+				two_v_dx = d+dx;
+				x++;
+			}else { 
+				two_v_dx = d-dx;
+				d += incrNE;
+				x++;
+				y++;
+			} 
+			IntensifyPixel(x,y,two_v_dx*invDenom,color);
+			IntensifyPixel(x,y+1,two_dx_invDemon - two_v_dx*invDenom,color);
+			IntensifyPixel(x,y-1,two_dx_invDemon + two_v_dx*invDenom,color);
+		}
+	}
+	
+	public void plotLineWidth(int x0, int y0, int x1, int y1, float wd, Color color) {
+		int dx = Math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
+		int dy = Math.abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
+		int err = dx - dy, e2, x2, y2; /* error value e_xy */
+		double ed = dx + dy == 0 ? 1 : Math.sqrt((double) dx * dx + (double) dy * dy);
+
+		for (wd = (wd + 1) / 2;;) { /* pixel loop */
+			int col = (int) (255*(Math.abs(err-dx+dy)/ed-wd+1));
+			setRGB(x0, y0, new Color(color.getRed(), color.getGreen(), color.getBlue(),(col < 0)?255:255-col).getRGB());
+			// setPixelColor(x0,y0,Math.max(0,255*(Math.abs(err-dx+dy)/ed-wd+1));
+			//System.out.println(255*(Math.abs(err-dx+dy)/ed-wd+1));
+			e2 = err;
+			x2 = x0;
+			if (2 * e2 >= -dx) { /* x step */
+				for (e2 += dy, y2 = y0; e2 < ed * wd && (y1 != y2 || dx > dy); e2 += dx){
+					// setPixelColor(x0, y2 += sy,
+					// Math.max(0,255*(Math.abs(e2)/ed-wd+1));
+					int temp = (int) (255 * (Math.abs(e2) / ed - wd + 1));
+					setRGB(x0, y2 += sy, new Color(color.getRed(), color.getGreen(), color.getBlue(),(temp < 0)?255:255-temp ).getRGB());
+				}
+				if (x0 == x1)
+					break;
+				e2 = err;
+				err -= dy;
+				x0 += sx;
+			}
+			if (2 * e2 <= dy) { /* y step */
+				for (e2 = dx - e2; e2 < ed * wd && (x1 != x2 || dx < dy); e2 += dy){
+					// setPixelColor(x2 += sx, y0,
+					// Math.max(0,255*(Math.abs(e2)/ed-wd+1));
+					int temp = (int) (255 * (Math.abs(e2) / ed - wd + 1));
+					setRGB(x2 += sx, y0, new Color(color.getRed(), color.getGreen(), color.getBlue(),(temp < 0)?255:255-temp ).getRGB());
+				}
+				if (y0 == y1)
+					break;
+				err += dx;
+				y0 += sy;
+			}
+		}
+	}
+
+	/*public void guptasproull(int x0, int y0, int x1, int y1, Color color){
 		int addr = (y0*640*x0)*4;
 		int dx = x1 - x0;
 		int dy = y1 - y0;
@@ -314,7 +401,7 @@ public class Layer extends BufferedImage{
 			u = u+1;
 			x0 = x0 + uincr;
 		}while(u < uend);
-	}
+	}*/
 	
 	/**
 	 * Returns the name of the layer.
