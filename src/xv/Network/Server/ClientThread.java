@@ -1,11 +1,18 @@
 package xv.Network.Server;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -48,6 +55,9 @@ public class ClientThread extends Thread{
 			// Initiate conversation with client
 			out.println(outputLine);
 			
+			/*String o = in.readLine();
+			System.out.println(o);*/
+			
 			inputLine = in.readLine();
 			if(inputLine.substring(0, 4).equals("JOIN")){
 				username = inputLine.substring(5,inputLine.length());
@@ -66,5 +76,4 @@ public class ClientThread extends Thread{
 			e.printStackTrace();
 		}
 	}
-	
 }

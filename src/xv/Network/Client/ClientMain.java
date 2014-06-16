@@ -1,5 +1,7 @@
 package xv.Network.Client;
 
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,6 +14,8 @@ import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousSocketChannel;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
+
+import javax.swing.ImageIcon;
 
 import xv.GUI.DrawWindow;
 import xv.Network.Server.ClientThread;
@@ -63,6 +67,14 @@ public class ClientMain {
             Thread t = new MessageReceiveThread(in,win);
 			t.setDaemon( true );
 		    t.start();
+		    
+		    /*ImageIcon icon = win.listener.makeImageIcon("/images/hunter.png");
+		    BufferedImage bi = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+		    Graphics g = bi.createGraphics();
+		    icon.paintIcon(null, g, 0,0);
+		    g.dispose();
+		    
+		    out.println(bi.toString());*/
 		    
 		    sendMessage("JOIN "+username);
 		    //sendMessage("{\"action\": \"JOIN\", \"username\": \""+username+"\"}");
