@@ -19,11 +19,13 @@ import xv.Canvas.Component.Painter;
 import xv.GUI.Listener.ListenerHandler;
 import xv.Network.Client.ClientMain;
 import xv.Tools.PenSettings;
+import xv.Tools.Tools;
 
 public class DrawWindow extends JFrame{
 	
 	public Canvas canvas;
 	public ClientMain net;
+	public Tools tools = new Tools();
 	
 	public DrawPanel drawPanel;
 	public LayerWindow layerWindow;
@@ -51,6 +53,7 @@ public class DrawWindow extends JFrame{
 	public int x = 1280, y=720;
 	
 	public double zoom = 1;
+	
 	
 	/**
 	 * Constructor of the DrawWindow

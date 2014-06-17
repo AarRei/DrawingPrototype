@@ -11,9 +11,14 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JToggleButton;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 
+import xv.Tools.Tools;
+
 public class ToolWindow extends JFrame implements ActionListener{
+	JToggleButton btn_pen = new JToggleButton("Pen");
+	JToggleButton btn_bezier = new JToggleButton("Bezier");
 	JButton btn_color = new JButton("Color");
 	JButton btn_color_alt = new JButton();
 	DrawWindow win;
@@ -27,16 +32,24 @@ public class ToolWindow extends JFrame implements ActionListener{
 	 */
 	public ToolWindow(DrawWindow win){
 		this.win = win;
-		int x = 120, y = 50;
+		int x = 120, y = 90;
 	
 		this.setLayout(null);
 		
-		btn_color.setBounds(0, 0, 60, 40);
+		btn_pen.setBounds(0, 0, 60, 40);
+		btn_pen.addActionListener(this);
+		
+		btn_bezier.setBounds(61, 0, 60, 40);
+		btn_bezier.addActionListener(this);
+		
+		btn_color.setBounds(0, 41, 60, 40);
 		btn_color.addActionListener(this);
 		
-		btn_color_alt.setBounds(61, 0, 60, 40);
+		btn_color_alt.setBounds(61, 41, 60, 40);
 		btn_color_alt.addActionListener(this);
 		
+		add(btn_pen);
+		add(btn_bezier);
 		add(btn_color);
 		add(btn_color_alt);
 		
@@ -77,6 +90,20 @@ public class ToolWindow extends JFrame implements ActionListener{
 				win.pen.setColor(JColorChooser.showDialog(this, "Palette", win.pen.getColor()));
 			}
 			
+		} else if(e.getSource().equals(btn_pen)) {
+			win.tools.setSelectedTool(Tools.PEN);
+			untoggel();
+			btn_pen.setSelected(true);
+		} else if(e.getSource().equals(btn_bezier)) {
+			win.tools.setSelectedTool(Tools.BEZIER);
+			untoggel();
+			btn_bezier.setSelected(true);
 		}
+	}
+	
+	private void untoggel(){
+		btn_pen.setSelected(false);
+		btn_bezier.setSelected(false);
+		win.drawPanel.repaint();
 	}
 }

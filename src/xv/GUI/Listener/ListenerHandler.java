@@ -49,13 +49,16 @@ import xv.GUI.DrawWindow;
 import xv.GUI.NetworkConnectionDialog;
 import xv.Network.Client.ReceivingDrawer;
 import xv.Network.Server.GUI.ServerConfigWindow;
+import xv.Tools.Bezier;
+import xv.Tools.Tools;
 
 public class ListenerHandler extends MouseMotionAdapter implements MouseListener, KeyListener, ActionListener, ChangeListener, CaretListener, MouseMotionListener, ItemListener, AdjustmentListener, ComponentListener, MouseWheelListener {
 
 	DrawWindow win;
 	Timer drawing = new Timer(1000/200,this);
 	List<Dimension> pointList = Collections.synchronizedList(new ArrayList<Dimension>());
-
+	public List<Bezier> bezierList = Collections.synchronizedList(new ArrayList<Bezier>());
+	
 	PointerInfo a;
 	Point b;
 	/**
@@ -88,6 +91,17 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	public boolean isMouseDown() {
 		return mouseDown;
 	}
+		
+	/**
+	 * Anzahl der Punkte
+	 */
+	private boolean newBezier = true;
+	
+	/**
+	 * 5 wenn neue Punkte hinzugefügt werden oder ein Punkt zum verschieben ausgewählt wird.
+	 * 1-4 wenn der jeweilige Punkt verschoben wird.
+	 */
+	private int moveflag = 5;
 	
 	/**
 	 * Creates a ListenerHandler object.
@@ -293,6 +307,8 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		// TODO Auto-generated method stub
 
 	}
+	
+	
 
 	/**
 	 * Starts the Drawer thread and establishes the message to be send to the server.
@@ -301,27 +317,41 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	public void mousePressed(MouseEvent e) {
 		// (x - center_x)^2 + (y - center_y)^2 < radius^2
 		// TODO Auto-generated method stub
-
-		mouseDown = true;
-		message ="{\"action\": \"LINE\",\"user\": \""+((win.net==null)?"user":win.net.username)+"\",\"layer_id\": "+win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId()+", \"color\": {"
-				+ "\"R\": "+win.pen.getColor().getRed()+","
-				+ "\"G\": "+win.pen.getColor().getGreen()+","
-				+ "\"B\": "+win.pen.getColor().getBlue()+","
-				+ "\"A\": "+win.pen.getColor().getAlpha()+"},\"points\": [";
-		
-		a = MouseInfo.getPointerInfo();
-		b = a.getLocation();
-		int x = (int)((int) (b.getX()-win.drawPanel.getLocationOnScreen().x)/win.zoom);
-		int y = (int)((int) (b.getY()-win.drawPanel.getLocationOnScreen().y)/win.zoom);
-		leftmost = x;
-		rightmost = x;
-		highest = y;
-		lowest = y;
-		
-		drawing.start();
-		Thread t = new Drawer(win,this);
-		t.setDaemon( true );
-	    t.start();
+		if(win.tools.getSelectedTool()==Tools.PEN){
+			mouseDown = true;
+			message ="{\"action\": \"LINE\",\"user\": \""+((win.net==null)?"user":win.net.username)+"\",\"layer_id\": "+win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId()+", \"color\": {"
+					+ "\"R\": "+win.pen.getColor().getRed()+","
+					+ "\"G\": "+win.pen.getColor().getGreen()+","
+					+ "\"B\": "+win.pen.getColor().getBlue()+","
+					+ "\"A\": "+win.pen.getColor().getAlpha()+"},\"points\": [";
+			
+			a = MouseInfo.getPointerInfo();
+			b = a.getLocation();
+			int x = (int)((int) (b.getX()-win.drawPanel.getLocationOnScreen().x)/win.zoom);
+			int y = (int)((int) (b.getY()-win.drawPanel.getLocationOnScreen().y)/win.zoom);
+			leftmost = x;
+			rightmost = x;
+			highest = y;
+			lowest = y;
+			
+			drawing.start();
+			Thread t = new Drawer(win,this);
+			t.setDaemon( true );
+		    t.start();
+		}else if(win.tools.getSelectedTool()==Tools.BEZIER){
+			a = MouseInfo.getPointerInfo();
+			b = a.getLocation();
+			if(newBezier) {
+				Bezier bezier = new Bezier();
+				bezier.setFirst((int) ((int) (b.getX()-win.drawPanel.getLocationOnScreen().x)/win.zoom),(int) (int) ((int) (b.getY()-win.drawPanel.getLocationOnScreen().y)/win.zoom));
+				newBezier = !newBezier;
+				bezierList.add(bezier);
+			} else {
+				bezierList.get(bezierList.size()-1).setSecond((int) ((int) (b.getX()-win.drawPanel.getLocationOnScreen().x)/win.zoom),(int) (int) ((int) (b.getY()-win.drawPanel.getLocationOnScreen().y)/win.zoom));
+				newBezier = !newBezier;
+			}
+			win.drawPanel.repaint();
+		}
 	}
 
 	/**
@@ -330,17 +360,19 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		mouseDown = false;
-		drawing.stop();
-		message = message.substring(0, message.length()-1);
-		message += "]}";
-		
-		System.out.println(win.layerWindow.list.getSelectedIndex());
-		win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).actionList.add(message);
-		if(win.net != null){
-			win.net.sendMessage(message);
+		if(win.tools.getSelectedTool()==Tools.PEN){
+			mouseDown = false;
+			drawing.stop();
+			message = message.substring(0, message.length()-1);
+			message += "]}";
+			
+			System.out.println(win.layerWindow.list.getSelectedIndex());
+			win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).actionList.add(message);
+			if(win.net != null){
+				win.net.sendMessage(message);
+			}
+			win.drawPanel.repaint();
 		}
-		win.drawPanel.repaint();
 		
 	}
 
