@@ -102,6 +102,7 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	 * 1-4 wenn der jeweilige Punkt verschoben wird.
 	 */
 	private int moveflag = 5;
+	private Bezier choosenBezier;
 	
 	/**
 	 * Creates a ListenerHandler object.
@@ -341,13 +342,25 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		}else if(win.tools.getSelectedTool()==Tools.BEZIER){
 			a = MouseInfo.getPointerInfo();
 			b = a.getLocation();
+			Point point = new Point((int) ((int) (b.getX()-win.drawPanel.getLocationOnScreen().x)/win.zoom),(int) (int) ((int) (b.getY()-win.drawPanel.getLocationOnScreen().y)/win.zoom));
 			if(newBezier) {
-				Bezier bezier = new Bezier();
-				bezier.setFirst((int) ((int) (b.getX()-win.drawPanel.getLocationOnScreen().x)/win.zoom),(int) (int) ((int) (b.getY()-win.drawPanel.getLocationOnScreen().y)/win.zoom));
-				newBezier = !newBezier;
-				bezierList.add(bezier);
+				for(Bezier b: bezierList)
+					for(int i=0;i<b.getNumpoints();i++)
+						for(int j=-5;j<6;j++)
+						for(int l=-5;l<6;l++)
+						if(point.equals(new Point(b.getPoints()[i].x+j, b.getPoints()[i].y+l))) {
+							moveflag = i;
+							choosenBezier = b;
+							break;
+						}
+				if(moveflag == 5) {
+					Bezier bezier = new Bezier();
+					bezier.setFirst(point.x, point.y);
+					newBezier = !newBezier;
+					bezierList.add(bezier);
+				}
 			} else {
-				bezierList.get(bezierList.size()-1).setSecond((int) ((int) (b.getX()-win.drawPanel.getLocationOnScreen().x)/win.zoom),(int) (int) ((int) (b.getY()-win.drawPanel.getLocationOnScreen().y)/win.zoom));
+				bezierList.get(bezierList.size()-1).setSecond(point.x, point.y);
 				newBezier = !newBezier;
 			}
 			win.drawPanel.repaint();
@@ -374,10 +387,27 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 			win.drawPanel.repaint();
 		}
 		
+		moveflag = 5;
+		
 	}
 
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub		
+		if(moveflag < 5) {
+			
+			int posX = e.getX();
+			int posY = e.getY();
+			
+			if(e.getX() < 0)
+				posX = 0;
+			if(e.getX() > win.drawPanel.width)
+				posX = win.drawPanel.width;
+			if(e.getY() < 0)
+				posY = 0;
+			if(e.getY() > win.drawPanel.height)
+				posY = win.drawPanel.height;
+			choosenBezier.getPoints()[moveflag].move(posX, posY);
+			win.drawPanel.repaint();
+		}	
 	}
 
 	@Override

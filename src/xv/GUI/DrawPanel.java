@@ -20,7 +20,7 @@ public class DrawPanel extends JPanel{
 	
 	public int width, height;
 	
-	private final double k = 0.0125;
+	private final double k = 0.0025;
 	
 	Layer workingLayer;
 	
@@ -95,20 +95,23 @@ public class DrawPanel extends JPanel{
 		
 		for(Bezier b: win.listener.bezierList) {
 			double t;
-			g2.setColor(Color.BLACK);
+			
 			for(int i=0;i<b.getNumpoints();i++) {
 				if(win.tools.getSelectedTool() == Tools.BEZIER) {
-					g2.fillOval(b.getPoints()[i].x-2, b.getPoints()[i].y-2,4,4);
+					g2.setColor(Color.BLACK);
+					g2.fillOval(b.getPoints()[i].x-5, b.getPoints()[i].y-5,7,7);
+					if(b.getNumpoints()>1 && i<(b.getNumpoints()-1) && i != 1) {	
+						g2.setColor(Color.gray);
+						g2.drawLine(b.getPoints()[i].x,b.getPoints()[i].y, b.getPoints()[i+1].x,b.getPoints()[i+1].y);
+						g2.setColor(win.pen.getColor());
+					}
 				}
-				if(b.getNumpoints()>1 && i<(b.getNumpoints()-1) && i != 1) {	
-					g2.setColor(Color.gray);
-					g2.drawLine(b.getPoints()[i].x,b.getPoints()[i].y, b.getPoints()[i+1].x,b.getPoints()[i+1].y);
-					g2.setColor(getForeground());
-				}
+				
 				if (b.getNumpoints() == 4) {
 					double x1, x2, y1, y2;
 					x1 = b.getPoints()[0].x;
 					y1 = b.getPoints()[0].y;
+					g2.setColor(win.pen.getColor());
 					for (t = k; t <= 1 + k; t += k) {
 						
 						// Bernstein polynomials
