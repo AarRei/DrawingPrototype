@@ -39,18 +39,23 @@ public class ToolWindow extends JFrame implements ActionListener{
 		
 		btn_pen.setBounds(0, 0, 60, 40);
 		btn_pen.addActionListener(this);
+		btn_pen.setFocusPainted(false);
 		
 		btn_bezier.setBounds(61, 0, 60, 40);
 		btn_bezier.addActionListener(this);
+		btn_bezier.setFocusPainted(false);
 		
 		btn_fill.setBounds(0, 41, 60, 40);
 		btn_fill.addActionListener(this);
+		btn_fill.setFocusPainted(false);
 		
 		btn_color.setBounds(0, 82, 60, 40);
 		btn_color.addActionListener(this);
+		btn_color.setFocusPainted(false);
 		
 		btn_color_alt.setBounds(61, 82, 60, 40);
 		btn_color_alt.addActionListener(this);
+		btn_color_alt.setFocusPainted(false);
 		
 		add(btn_pen);
 		add(btn_bezier);
@@ -115,6 +120,7 @@ public class ToolWindow extends JFrame implements ActionListener{
 	private void untoggel(){
 		btn_pen.setSelected(false);
 		btn_bezier.setSelected(false);
+		btn_fill.setSelected(false);
 		win.drawPanel.repaint();
 	}
 }

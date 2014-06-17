@@ -366,6 +366,15 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 				newBezier = !newBezier;
 			}
 			win.drawPanel.repaint();
+		}else if(win.tools.getSelectedTool()==Tools.FILL){
+			System.out.println("Hallo");
+			a = MouseInfo.getPointerInfo();
+			b = a.getLocation();
+			int x = (int)((int) (b.getX()-win.drawPanel.getLocationOnScreen().x)/win.zoom);
+			int y = (int)((int) (b.getY()-win.drawPanel.getLocationOnScreen().y)/win.zoom);
+			System.out.println("x: "+x+" y: "+y);
+			win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).fill(x, y, new Color(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getRGB(x, y)), win.pen.getColor());
+			win.drawPanel.repaint();
 		}
 	}
 

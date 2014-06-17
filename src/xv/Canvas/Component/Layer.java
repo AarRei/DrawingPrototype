@@ -350,6 +350,48 @@ public class Layer extends BufferedImage{
 			}
 		}
 	}
+	
+	public void fill(int x, int y, Color c, Color n){
+		//System.out.println("x: "+x+" y: "+y);
+		//if(new Color(getRGB(x, y)).equals(c)&& !c.equals(n)){
+			setRGB(x,y,n.getRGB());
+			
+			System.out.println(getRGB(x, y));
+			if(x+1 < getWidth() && new Color(getRGB(x+1, y)).equals(c)){
+				fill(x+1,y,c,n);
+			}
+			if(x-1 >= 0 && new Color(getRGB(x-1, y)).equals(c)){
+				fill(x-1,y,c,n);
+			}
+			if(y-1 >= 0 && new Color(getRGB(x, y-1)).equals(c)){
+				fill(x,y-1,c,n);
+			}
+			if(y+1 < getHeight() && new Color(getRGB(x, y+1)).equals(c)){
+				fill(x,y+1,c,n);
+			}
+		//}
+		System.out.println("recursion end");
+	}
+	
+//	public void fill(int x, int y, Color c, Color n){
+//		//System.out.println("x: "+x+" y: "+y);
+//		if(new Color(getRGB(x, y)).equals(c)&& !c.equals(n)){
+//			setRGB(x,y,n.getRGB());
+//			if(x+1 < getWidth()){
+//				fill(x+1,y,c,n);
+//			}
+//			if(x-1 >= 0){
+//				fill(x-1,y,c,n);
+//			}
+//			if(y-1 >= 0){
+//				fill(x,y-1,c,n);
+//			}
+//			if(y+1 < getHeight()){
+//				fill(x,y+1,c,n);
+//			}
+//		}
+//		System.out.println("recursion end");
+//	}
 
 	/*public void guptasproull(int x0, int y0, int x1, int y1, Color color){
 		int addr = (y0*640*x0)*4;
