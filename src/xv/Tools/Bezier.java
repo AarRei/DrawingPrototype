@@ -1,5 +1,6 @@
 package xv.Tools;
 
+import java.awt.Color;
 import java.awt.Point;
 
 public class Bezier {
@@ -9,13 +10,17 @@ public class Bezier {
 	 */
 	private Point[] points;
 	private int numpoints = 0;
+	private int layerId;
+	private Color color;
 	
-	public Bezier() {
+	public Bezier(int layerId) {
 		
-		points = new Point[4];		
+		points = new Point[4];
+		this.layerId = layerId;
+		this.color = Color.BLACK;
 		
 	}
-	
+
 	public void setFirst(int x, int y) {
 			
 		Point point = new Point(x,y);
@@ -48,10 +53,21 @@ public class Bezier {
 		return points;
 	}
 
-	public void setPoints(Point[] points) {
-		this.points = points;
+//	public void setPoints(Point[] points) {
+//		this.points = points;
+//	}
+	
+	public int getLayerId() {
+		return layerId;
+	}
+
+	public void setColor(Color c) {
+		this.color = c;
 	}
 	
+	public Color getColor() {
+		return this.color;
+	}
 	
 	
 		

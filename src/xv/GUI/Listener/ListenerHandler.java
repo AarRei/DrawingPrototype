@@ -354,7 +354,9 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 							break;
 						}
 				if(moveflag == 5) {
-					Bezier bezier = new Bezier();
+					System.out.println(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId());
+					Bezier bezier = new Bezier(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId());
+					bezier.setColor(win.pen.getColor());
 					bezier.setFirst(point.x, point.y);
 					newBezier = !newBezier;
 					bezierList.add(bezier);
@@ -406,6 +408,7 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 			if(e.getY() > win.drawPanel.height)
 				posY = win.drawPanel.height;
 			choosenBezier.getPoints()[moveflag].move(posX, posY);
+
 			win.drawPanel.repaint();
 		}	
 	}
