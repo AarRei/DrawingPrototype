@@ -5,7 +5,8 @@ public class Tools {
 	public static final int PEN = 0;
 	public static final int BRUSH = 1;
 	public static final int BEZIER = 2;
-	public static final int ERASER = 3;
+	public static final int FILL = 3;
+	public static final int ERASER = 4;
 
 	private int selectedTool = 0;
 

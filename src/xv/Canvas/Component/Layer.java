@@ -55,6 +55,9 @@ public class Layer extends BufferedImage{
 		sx = (x1 < x2)? 1 : -1;
 		sy = (y1 < y2)? 1 : -1;
 		err = dx - dy;
+		
+		int radius = thickness /2;
+		
 		if(x1 < 0 || x1 >= this.getWidth() || x2 < 0 || x2 >= this.getWidth() || y1 < 0 || y1 >= this.getHeight() || y2 < 0 || y2 >= this.getHeight()){ //thickness / 2
 			while(true){
 				if(x1 < this.getWidth() && x1 >= 0 && y1 < this.getHeight() && y1 >= 0){
@@ -64,6 +67,10 @@ public class Layer extends BufferedImage{
 							setRGB(x1, y1-1, color.getRGB());
 						}
 						else{
+							for(int y=-radius; y<=radius; y++)
+							    for(int x=-radius; x<=radius; x++)
+							        if(x*x+y*y <= radius*radius)
+							        	setRGB(x1+x, y1+y,color.getRGB());
 							for(int i = 1; i <= (thickness-1)/2;i++ ){
 								setRGB(x1, y1-i, color.getRGB());
 								setRGB(x1, y1+i, color.getRGB());
@@ -100,7 +107,11 @@ public class Layer extends BufferedImage{
 						setRGB(x1+1, y1, color.getRGB());
 						setRGB(x1+1, y1-1, color.getRGB());
 					}
-					else if(thickness % 2 == 0){
+					else{
+						for(int y=-radius; y<=radius; y++)
+						    for(int x=-radius; x<=radius; x++)
+						        if(x*x+y*y <= radius*radius)
+						        	setRGB(x1+x, y1+y,color.getRGB());
 						for(int i = 1; i <= (thickness-1)/2;i++ ){
 							setRGB(x1, y1-i, color.getRGB());
 							setRGB(x1, y1+i, color.getRGB());
@@ -108,16 +119,11 @@ public class Layer extends BufferedImage{
 							setRGB(x1-i, y1, color.getRGB());
 							setRGB(x1+i, y1, color.getRGB());
 						}
-						setRGB(x1, y1-thickness / 2, color.getRGB());
-					}else{
-						for(int i = 1; i <= (thickness-1)/2;i++ ){
-							setRGB(x1, y1-i, color.getRGB());
-							setRGB(x1, y1+i, color.getRGB());
-
-							setRGB(x1-i, y1, color.getRGB());
-							setRGB(x1+i, y1, color.getRGB());
+						if(thickness % 2 == 0){
+							setRGB(x1, y1-thickness / 2, color.getRGB());
+							setRGB(x1 - thickness / 2, y1, color.getRGB());
 						}
-					}
+					}	
 					
 				}
 				if(x1 == x2 && y1 == y2){
@@ -134,6 +140,12 @@ public class Layer extends BufferedImage{
 				}
 			}
 		}
+		if(thickness > 2)
+			for(int y=-radius; y<=radius; y++)
+				for(int x=-radius; x<=radius; x++)
+					if(x*x+y*y <= radius*radius)
+						setRGB(x1+x, y1+y,color.getRGB());
+		
 	}
 	
 	private void plot(int x, int y, float c, Color color){

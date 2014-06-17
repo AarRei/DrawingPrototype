@@ -19,6 +19,7 @@ import xv.Tools.Tools;
 public class ToolWindow extends JFrame implements ActionListener{
 	JToggleButton btn_pen = new JToggleButton("Pen");
 	JToggleButton btn_bezier = new JToggleButton("Bezier");
+	JToggleButton btn_fill = new JToggleButton("Fill");
 	JButton btn_color = new JButton("Color");
 	JButton btn_color_alt = new JButton();
 	DrawWindow win;
@@ -42,18 +43,24 @@ public class ToolWindow extends JFrame implements ActionListener{
 		btn_bezier.setBounds(61, 0, 60, 40);
 		btn_bezier.addActionListener(this);
 		
-		btn_color.setBounds(0, 41, 60, 40);
+		btn_fill.setBounds(0, 41, 60, 40);
+		btn_fill.addActionListener(this);
+		
+		btn_color.setBounds(0, 82, 60, 40);
 		btn_color.addActionListener(this);
 		
-		btn_color_alt.setBounds(61, 41, 60, 40);
+		btn_color_alt.setBounds(61, 82, 60, 40);
 		btn_color_alt.addActionListener(this);
 		
 		add(btn_pen);
 		add(btn_bezier);
+		add(btn_fill);
 		add(btn_color);
 		add(btn_color_alt);
 		
 		//pack();
+
+		btn_pen.setSelected(true);
 		
 		this.setTitle("Tools");
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
@@ -98,6 +105,10 @@ public class ToolWindow extends JFrame implements ActionListener{
 			win.tools.setSelectedTool(Tools.BEZIER);
 			untoggel();
 			btn_bezier.setSelected(true);
+		}else if(e.getSource().equals(btn_fill)) {
+			win.tools.setSelectedTool(Tools.FILL);
+			untoggel();
+			btn_fill.setSelected(true);
 		}
 	}
 	

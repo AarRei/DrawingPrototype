@@ -27,7 +27,10 @@ public class Painter extends Thread {
 		try {
 			while (true) {
 				if(listener.isMouseDown())
-					win.drawPanel.repaint(listener.leftmost-5, listener.highest-5, listener.rightmost-listener.leftmost+10,listener.lowest-listener.highest+10);
+					win.drawPanel.repaint(listener.leftmost-5-win.pen.getThickness()/2, 
+							listener.highest-5-win.pen.getThickness()/2, 
+							listener.rightmost-listener.leftmost+10+win.pen.getThickness(),
+							listener.lowest-listener.highest+10+win.pen.getThickness());
 				sleep(1000/30);
 			}
 		} catch (Exception e) {
