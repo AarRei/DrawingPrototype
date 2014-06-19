@@ -1,73 +1,121 @@
 {
-	"action": "CHAT",
-	"user": "<Name>",
-	"user_id": id,
-	"text": "<Inhalt>"
-}
-
-{
-	"action": "SVCF",
-	"width": w,
-	"height": h,
-	"webcolors": false
-}
-
-{
 	"action": "LINE",
 	"user": "<Name>",
-	"layer_id": n,
-	"color": {
-		"R": r,
-		"G": g,
-		"B": b,
-		"A": a
-	},
-	"points": [
-		{"x": x, "y": y},
-		{"x": x, "y": y},
-		{"x": x, "y": y}
-	]
-}
-
-{
-	"action": "LINE",
-	"user": "<Name>",
-	"user_id": id,
-	"layer_id": n,
+	"user_id": 0,
+	"layer_id": 0,
 	"type": "<type>",
 	"settings": {
 		
 	},
-	"thickness": t,
+	"thickness": 1,
 	"color": {
-		"R": r,
-		"G": g,
-		"B": b,
-		"A": a
+		"R": 255,
+		"G": 255,
+		"B": 255,
+		"A": 255
 	},
 	"points": [
-		{"x": x, "y": y},
-		{"x": x, "y": y},
-		{"x": x, "y": y}
+		{"x": 0, "y": 0},
+		{"x": 0, "y": 0},
+		{"x": 0, "y": 0}
 	]
 }
 
 {
 	"action": "ADDL",
 	"user": "<Name>",
-	"user_id": id,
-	"layer_position": p
+	"user_id": 0,
+	"layer_position": 0
 }
 
 {
 	"action": "RMVL",
 	"user": "<Name>",
-	"user_id": id,
-	"layer_id": n
+	"user_id": 0,
+	"layer_id": 0
 }
 
 {
-	"action": "CRTE",
-	"width": w,
-	"height": h
+	"action": "CHAT",
+	"user": "<Name>",
+	"user_id": 0,
+	"text": "<Inhalt>"
+}
+
+{
+	"action": "SVCF",
+	"width": 800,
+	"height": 600,
+	"webcolors": true
+}
+
+{
+	"action": "UNDO",
+	"user": "<Name>",
+	"user_id": 0,
+	"layer_id": 0
+}
+
+{
+	"action": "CLER",
+	"user": "<Name>",
+	"user_id": 0,
+	"layer_id": 0
+	"start_x": 0,
+	"start_y": 0,
+	"end_x": 0,
+	"end_y": 0
+}
+
+{
+	"action": "BEZR",
+	"user": "<Name>",
+	"user_id": 0,
+	"layer_id": 0,
+	"color": {
+		"R": 255,
+		"G": 255,
+		"B": 255,
+		"A": 255
+	},
+	"start_x": 0,
+	"start_y": 0,
+	"end_x": 0,
+	"end_y": 0,
+	"start_man_x": 0,
+	"start_man_y": 0,
+	"end_man_x": 0,
+	"end_man_y": 0
+}
+
+{
+	"action": "BEZC",
+	"user": "<Name>",
+	"user_id": 0,
+	"layer_id": 0,
+	"bezier_id": 0,
+	"start_x": 0,
+	"start_y": 0,
+	"end_x": 0,
+	"end_y": 0,
+	"start_man_x": 0,
+	"start_man_y": 0,
+	"end_man_x": 0,
+	"end_man_y": 0
+}
+
+{
+	"action": "MOUS",
+	"user": "<Name>",
+	"user_id": 0,
+	"mouse_x": 0,
+	"mouse_y": 0,
+	"mousedown": false
+}
+
+{
+	"action": "TOOL",
+	"user": "<Name>",
+	"user_id": 0,
+	"tool": "<Toolname>"
 }

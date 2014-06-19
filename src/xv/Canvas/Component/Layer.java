@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 public class Layer extends BufferedImage{
 	
@@ -373,23 +374,29 @@ public class Layer extends BufferedImage{
 //		System.out.println("recursion end");
 //	}
 	
-	public void fill(int x, int y, Color c, Color n){
+	public void fill(int initial_x, int initial_y, Color c, Color n){
 		//System.out.println("x: "+x+" y: "+y);
-		if(new Color(getRGB(x, y),true).equals(c)/*&& new Color(getRGB(x, y)).getAlpha() == c.getAlpha() */&& !c.equals(n)){
-			setRGB(x,y,n.getRGB());
-			if(x+1 < getWidth()){
-				fill(x+1,y,c,n);
-			}
-			if(x-1 >= 0){
-				fill(x-1,y,c,n);
-			}
-			if(y-1 >= 0){
-				fill(x,y-1,c,n);
-			}
-			if(y+1 < getHeight()){
-				fill(x,y+1,c,n);
-			}
-		}
+
+		Stack<Point> points = new Stack<>();
+	    points.add(new Point(initial_x, initial_y));
+
+	    while(!points.isEmpty()) {
+	        Point currentPoint = points.pop();
+	        int x = currentPoint.x;
+	        int y = currentPoint.y;
+
+	        if(new Color(getRGB(x, y),true).equals(c) && !c.equals(n)){
+				setRGB(x,y,n.getRGB());
+				if(x+1 < getWidth())
+					points.push(new Point(x+1, y));
+				if(x-1 >= 0)
+					points.push(new Point(x-1, y));
+	            if(y+1 < getHeight())
+	            	points.push(new Point(x, y+1));
+	            if(y-1 >= 0)
+	            	points.push(new Point(x, y-1));
+	        }
+	    }
 	}
 
 	/*public void guptasproull(int x0, int y0, int x1, int y1, Color color){
