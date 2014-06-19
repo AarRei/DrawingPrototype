@@ -26,7 +26,7 @@ import javax.swing.JScrollPane;
 
 public class LayerConfigWindow extends JDialog implements ActionListener {
 	
-	private String[] connected_users = {"User1", "User2", "User3"};
+	List<String> connected_users = new ArrayList<String>();
 	JLabel lbl_txt = new JLabel("Select users who will be able to edit the layer:");
 	JScrollPane userScroll;
 	JPanel toppanel = new JPanel();
@@ -34,10 +34,13 @@ public class LayerConfigWindow extends JDialog implements ActionListener {
 	JButton btn_cancel = new JButton("Cancel");
 	JPanel buttonpanel = new JPanel();
 	static Integer indexer = 0;
-    static List<JLabel> listOfLabels = new ArrayList<JLabel>();
     static List<JCheckBox> listOfCheckBox = new ArrayList<JCheckBox>();
 
 	public LayerConfigWindow() {
+		
+		connected_users.add("User1");
+		connected_users.add("User2");
+		connected_users.add("User3");
 		
 		this.setLayout(new BorderLayout(5, 5));
 		
@@ -55,26 +58,18 @@ public class LayerConfigWindow extends JDialog implements ActionListener {
         toppanel.add(lbl_txt, gbc1);
 		
         for(String name: connected_users) {
-	        listOfCheckBox.add(new JCheckBox());
-	        listOfLabels.add(new JLabel(name));
+	        listOfCheckBox.add(new JCheckBox(name));
 	        indexer++;
         }
 
         GridBagConstraints checkBoxConstraints = new GridBagConstraints();
-        GridBagConstraints labelConstraints = new GridBagConstraints();
         checkBoxConstraints.anchor = GridBagConstraints.NORTHWEST;
-        labelConstraints.anchor = GridBagConstraints.NORTHWEST;
-        labelConstraints.weightx = 1;
 
         for(int i = 0; i < indexer; i++)
         {
             checkBoxConstraints.gridx = 0;
             checkBoxConstraints.gridy = 1 + i;
-
-            labelConstraints.gridx = 1;
-            labelConstraints.gridy = 1 + i;
             
-            toppanel.add(listOfLabels.get(i), labelConstraints);
             toppanel.add(listOfCheckBox.get(i), checkBoxConstraints);
             
         }
@@ -97,10 +92,21 @@ public class LayerConfigWindow extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getSource().equals(btn_apply)) {
-			
+			System.out.println(getChecked());
+			this.dispose();
 		} else if(e.getSource().equals(btn_cancel)) {
 			this.dispose();
 		}
+	}
+	
+	public List<String> getChecked() {
+		List<String> users = new ArrayList<String>();
+		for(JCheckBox c: listOfCheckBox) {
+			if(c.isSelected()) {
+				users.add(c.getText());
+			}
+		}
+		return users;
 	}
 
 }
