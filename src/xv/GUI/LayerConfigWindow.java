@@ -75,7 +75,13 @@ public class LayerConfigWindow extends JDialog implements ActionListener {
         //panel.setBounds(5, 30, 100, 170);
         //toppanel.add(panel,gbc2);
         
-        //add(btn_apply, gbc3);
+        GridBagConstraints gbc3 = new GridBagConstraints();
+        gbc3.gridy = 3;
+        
+        GridBagConstraints gbc4 = new GridBagConstraints();
+        gbc4.gridy = 3;
+        
+        add(btn_apply, gbc3);
         
         add(toppanel);
         
