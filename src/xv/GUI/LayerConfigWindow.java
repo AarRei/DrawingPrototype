@@ -1,10 +1,14 @@
 package xv.GUI;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dialog;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -26,13 +30,16 @@ public class LayerConfigWindow extends JDialog implements ActionListener {
 	JLabel lbl_txt = new JLabel("Select users who will be able to edit the layer:");
 	JScrollPane userScroll;
 	JPanel toppanel = new JPanel();
-	JButton btn_apply = new JButton();
-	JButton btn_cancel = new JButton();
+	JButton btn_apply = new JButton("Apply");
+	JButton btn_cancel = new JButton("Cancel");
+	JPanel buttonpanel = new JPanel();
 	static Integer indexer = 0;
     static List<JLabel> listOfLabels = new ArrayList<JLabel>();
     static List<JCheckBox> listOfCheckBox = new ArrayList<JCheckBox>();
 
 	public LayerConfigWindow() {
+		
+		this.setLayout(new BorderLayout(5, 5));
 		
 		toppanel.setLayout(new GridBagLayout());
 		toppanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
@@ -44,7 +51,7 @@ public class LayerConfigWindow extends JDialog implements ActionListener {
         
         btn_apply.addActionListener(this);
         btn_cancel.addActionListener(this);
-        
+       
         toppanel.add(lbl_txt, gbc1);
 		
         for(String name: connected_users) {
@@ -72,22 +79,14 @@ public class LayerConfigWindow extends JDialog implements ActionListener {
             
         }
         
-        //panel.setBounds(5, 30, 100, 170);
-        //toppanel.add(panel,gbc2);
+        buttonpanel.add(btn_apply);
+        buttonpanel.add(btn_cancel);
         
-        GridBagConstraints gbc3 = new GridBagConstraints();
-        gbc3.gridy = 3;
-        
-        GridBagConstraints gbc4 = new GridBagConstraints();
-        gbc4.gridy = 3;
-        
-        add(btn_apply, gbc3);
-        
-        add(toppanel);
+        add(toppanel, BorderLayout.CENTER);
+        add(buttonpanel, BorderLayout.PAGE_END);
         
         pack();
-		
-		//this.setSize(x,y);
+
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		this.setVisible(true);
