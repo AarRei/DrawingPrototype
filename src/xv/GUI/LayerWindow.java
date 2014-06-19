@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -21,8 +22,9 @@ public class LayerWindow extends JFrame implements MouseListener{
 	public JList list;
 	DefaultListModel listModel;
 	
-	public JButton btn_add = new JButton("+ Layer");
-	public JButton btn_remove = new JButton("- Layer");
+	public JButton btn_add = new JButton();
+	public JButton btn_remove = new JButton();
+	public JButton btn_setting = new JButton();
 	JScrollPane listScroller;
 	
 	/**
@@ -53,17 +55,24 @@ public class LayerWindow extends JFrame implements MouseListener{
 		listScroller = new JScrollPane(list);
 		listScroller.setSize(new Dimension(200, 400));
 		
-		btn_add.setBounds(0, 410, 100, 25);
+		btn_add.setBounds(0, 410, 50, 50);
 		btn_add.addActionListener(listener);
+		btn_add.setIcon(new ImageIcon(getClass().getResource("/icons/Add.png")));
 		
-		btn_remove.setBounds(100, 410, 100, 25);
+		btn_remove.setBounds(75, 410, 50, 50);
 		btn_remove.addActionListener(listener);
+		btn_remove.setIcon(new ImageIcon(getClass().getResource("/icons/Delete.png")));
+		
+		btn_setting.setBounds(150, 410, 50, 50);
+		btn_setting.addActionListener(listener);
+		btn_setting.setIcon(new ImageIcon(getClass().getResource("/icons/Settings.png")));
 		
 		list.addMouseListener(this);
 		
 		add(listScroller);
 		add(btn_add);
 		add(btn_remove);
+		add(btn_setting);
 		
 		//pack();
 		
