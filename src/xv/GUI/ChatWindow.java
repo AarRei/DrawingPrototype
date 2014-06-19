@@ -9,6 +9,7 @@ import java.awt.event.KeyListener;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -25,8 +26,14 @@ public class ChatWindow extends JFrame{
 	public JList list;
 	DefaultListModel listModel;
 	
+	JScrollPane listScroller2;
+	public JList list2;
+	DefaultListModel listModel2;
+	
 	public JButton btn_send = new JButton("Send");
 	public JTextField txt_send = new JTextField();
+	JLabel lbl_connected = new JLabel("Connected User:");
+	JTextField txt_user = new JTextField();
 	JScrollPane listScroller;
 	
 	/**
@@ -38,7 +45,7 @@ public class ChatWindow extends JFrame{
 	 */
 	public ChatWindow(ListenerHandler listener){
 		this.canvas = canvas;
-		int x = 300, y = 340;
+		int x = 500, y = 340;
 
 		this.setLayout(null);
 		
@@ -75,14 +82,51 @@ public class ChatWindow extends JFrame{
 			}
 		});
 		
+		
+		listModel2 = new DefaultListModel();
+		
+		list2 = new JList(listModel2);
+		list2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		list2.setVisibleRowCount(-1);
+		
+		listScroller2 = new JScrollPane(list2);
+		listScroller2.setSize(new Dimension(200, 300));
+		listScroller2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		listModel2.addListDataListener(new ListDataListener() {
+			
+			@Override
+			public void intervalRemoved(ListDataEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void intervalAdded(ListDataEvent e) {
+				// TODO Auto-generated method stub
+				listScroller2.getVerticalScrollBar().setValue(350);
+				
+			}
+			
+			@Override
+			public void contentsChanged(ListDataEvent e) {
+				// TODO Auto-generated method stub
+			}
+		});
+		
 		btn_send.setBounds(220, 310, 80, 25);
 		btn_send.addActionListener(listener);
 		
 		txt_send.setBounds(0, 310, 215, 25);
 		
+		lbl_connected.setBounds(310, 0, 190, 30);
+		lbl_connected.setText("Connected user:");
+		listScroller2.setBounds(310, 30, 190, 270);
+		
 		add(listScroller);
 		add(btn_send);
 		add(txt_send);
+		add(listScroller2);
+		add(lbl_connected);
 		
 		//pack();
 		
@@ -104,5 +148,9 @@ public class ChatWindow extends JFrame{
 	 */
 	public void addMessage(String message){
 		listModel.addElement(message);
+	}
+	
+	public void addUser(String user){
+		listModel2.addElement(user);
 	}
 }
