@@ -2,6 +2,7 @@ package xv.GUI;
 
 import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,10 +18,10 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 import xv.Tools.Tools;
 
 public class ToolWindow extends JFrame implements ActionListener{
-	JToggleButton btn_pen = new JToggleButton("Pen");
-	JToggleButton btn_bezier = new JToggleButton("Bezier");
-	JToggleButton btn_fill = new JToggleButton("Fill");
-	JButton btn_color = new JButton("Color");
+	JToggleButton btn_pen = new JToggleButton();
+	JToggleButton btn_bezier = new JToggleButton();
+	JToggleButton btn_fill = new JToggleButton();
+	JButton btn_color = new JButton();
 	JButton btn_color_alt = new JButton();
 	DrawWindow win;
 	
@@ -33,29 +34,34 @@ public class ToolWindow extends JFrame implements ActionListener{
 	 */
 	public ToolWindow(DrawWindow win){
 		this.win = win;
-		int x = 120, y = 90;
+		int x = 120, y = 120;
 	
-		this.setLayout(null);
+		this.setLayout(new GridLayout(4, 2, 5, 5));
 		
-		btn_pen.setBounds(0, 0, 60, 40);
+		//btn_pen.setBounds(0, 0, 60, 40);
 		btn_pen.addActionListener(this);
 		btn_pen.setFocusPainted(false);
+		btn_pen.setIcon(win.listener.makeImageIcon("/icons/Brush.png"));
 		
-		btn_bezier.setBounds(61, 0, 60, 40);
+		//btn_bezier.setBounds(61, 0, 60, 40);
 		btn_bezier.addActionListener(this);
 		btn_bezier.setFocusPainted(false);
+		btn_bezier.setIcon(win.listener.makeImageIcon("/icons/Curve_points.png"));
 		
-		btn_fill.setBounds(0, 41, 60, 40);
+		//btn_fill.setBounds(0, 41, 60, 40);
 		btn_fill.addActionListener(this);
 		btn_fill.setFocusPainted(false);
+		btn_fill.setIcon(win.listener.makeImageIcon("/icons/Fill.png"));
 		
-		btn_color.setBounds(0, 82, 60, 40);
+		//btn_color.setBounds(0, 82, 60, 40);
 		btn_color.addActionListener(this);
 		btn_color.setFocusPainted(false);
+		btn_color.setIcon(win.listener.makeImageIcon("/icons/Color.png"));
 		
-		btn_color_alt.setBounds(61, 82, 60, 40);
+		//btn_color_alt.setBounds(61, 82, 60, 40);
 		btn_color_alt.addActionListener(this);
 		btn_color_alt.setFocusPainted(false);
+		
 		
 		add(btn_pen);
 		add(btn_bezier);
@@ -72,8 +78,9 @@ public class ToolWindow extends JFrame implements ActionListener{
 		this.setAlwaysOnTop(true);
 		this.setResizable(false);
 		this.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2+1280/2, Toolkit.getDefaultToolkit().getScreenSize().height/2-y/2);
-		this.setSize(x + 6, y + 28);
+		//this.setSize(x + 6, y + 28);
 		this.setVisible(true);
+		pack();
 	}
 
 	@Override
