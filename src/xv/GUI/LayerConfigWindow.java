@@ -67,10 +67,13 @@ public class LayerConfigWindow extends JDialog implements ActionListener {
         toppanel.add(lbl_txt, gbc1);
 		
         for(String name: win.net.usersList) {
-        	if(!name.matches(win.net.username)) {
-		        listOfCheckBox.add(new JCheckBox(name));
-		        indexer++;
+        	listOfCheckBox.add(new JCheckBox(name));
+        	if(name.matches(win.net.username)) {
+        		listOfCheckBox.get(indexer).setText(name + " (you)");
+        		listOfCheckBox.get(indexer).setSelected(true);
+        		listOfCheckBox.get(indexer).setEnabled(false);
         	}
+		    indexer++;
         }
 
         GridBagConstraints checkBoxConstraints = new GridBagConstraints();
