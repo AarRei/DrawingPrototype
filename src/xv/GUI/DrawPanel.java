@@ -127,7 +127,7 @@ public class DrawPanel extends JPanel{
 				g2.setColor(b.getColor());
 				for (t = k; t <= 1 + k; t += k) {
 					
-					// Bernstein polynomials
+					// Bernstein Polynom
 					x2=(b.getPoints()[0].x+t*(-b.getPoints()[0].x*3+t*(3*b.getPoints()[0].x-
 							b.getPoints()[0].x*t)))+t*(3*b.getPoints()[1].x+t*(-6*b.getPoints()[1].x+
 							b.getPoints()[1].x*3*t))+t*t*(b.getPoints()[2].x*3-b.getPoints()[2].x*3*t)+

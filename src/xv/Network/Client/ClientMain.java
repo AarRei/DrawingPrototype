@@ -69,32 +69,13 @@ public class ClientMain {
         	socket = new Socket(hostName, portNumber);
          	out = new PrintWriter(socket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            /*BufferedReader stdIn =
-                new BufferedReader(new InputStreamReader(System.in));
-            String fromUser;*/
             
             Thread t = new MessageReceiveThread(in,win);
 			t.setDaemon( true );
 		    t.start();
 		    
-		    /*ImageIcon icon = win.listener.makeImageIcon("/images/hunter.png");
-		    BufferedImage bi = new BufferedImage(icon.getIconWidth(), icon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
-		    Graphics g = bi.createGraphics();
-		    icon.paintIcon(null, g, 0,0);
-		    g.dispose();
-		    
-		    out.println(bi.toString());*/
-		    
 		    sendMessage("JOIN "+username);
-		    //sendMessage("{\"action\": \"JOIN\", \"username\": \""+username+"\"}");
 		    
-            /*while (true) {                
-                fromUser = stdIn.readLine();
-                if (fromUser != null) {
-                    //System.out.println("Client: " + fromUser);
-                    out.println(fromUser);
-                }
-            }*/
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
             System.exit(1);
@@ -126,17 +107,4 @@ public class ClientMain {
 			e.printStackTrace();
 		}
     }
-
-    /*public void pingTest(String ip) throws Exception {
-        String ipAddress = "127.0.0.1";
-        InetAddress inet = InetAddress.getByName(ipAddress);
-
-        System.out.println("Sending Ping Request to " + ipAddress);
-        System.out.println(inet.isReachable(5000) ? "Host is reachable" : "Host is NOT reachable");
-
-        inet = InetAddress.getByName(ip);
-
-        System.out.println("Sending Ping Request to " + ip);
-        System.out.println(inet.isReachable(5000) ? "Host is reachable" : "Host is NOT reachable");
-    }*/
 }

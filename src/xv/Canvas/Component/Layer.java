@@ -229,8 +229,6 @@ public class Layer extends BufferedImage{
 			float xgap = rfpart(x0 + 0.5f);
 			int xpxl1 = (int)xend;
 			int ypxl1 = ipart(yend);
-			//plot(xpxl1, ypxl1, rfpart(yend)*xgap, color);
-			//plot(xpxl1, ypxl1+1, fpart(yend)*xgap, color);
 			float intery = yend +gradient;
 			
 			xend = round(x1);
@@ -238,8 +236,6 @@ public class Layer extends BufferedImage{
 			xgap = fpart(x1+0.5f);
 			int xpxl2 = (int)xend;
 			int ypxl2 = ipart(yend);
-			//plot(xpxl2, ypxl2, rfpart(yend)*xgap, color);
-			//plot(xpxl2, ypxl2+1, fpart(yend)*xgap, color);
 			
 			int x;
 			for(x = xpxl1 + 1; x <= xpxl2 /*- 1*/;x++){
@@ -263,8 +259,6 @@ public class Layer extends BufferedImage{
 			float ygap = rfpart(y0 + 0.5f);
 			int ypxl1 = (int)yend;
 			int xpxl1 = ipart(xend);
-			//plot(xpxl1, ypxl1, rfpart(xend)*ygap, color);
-			//plot(xpxl1, ypxl1+1, fpart(xend)*ygap, color);
 			float interx = xend +gradient;
 			
 			yend = round(y1);
@@ -272,8 +266,6 @@ public class Layer extends BufferedImage{
 			ygap = fpart(y1+0.5f);
 			int ypxl2 = (int)yend;
 			int xpxl2 = ipart(xend);
-			//plot(xpxl2, ypxl2, rfpart(xend)*ygap, color);
-			//plot(xpxl2, ypxl2+1, fpart(xend)*ygap, color);
 			
 			int y;
 			for(y = ypxl1 + 1; y <=ypxl2 /*- 1*/; y++){
@@ -286,10 +278,6 @@ public class Layer extends BufferedImage{
 		
 	}
 	
-	/*private void plotGS(int x, int y, double c, Color color){
-		System.out.println((int)(color.getAlpha() * (1-(c*2/3) )));
-		setRGB(x, y, new Color(color.getRed(),color.getGreen(), color.getBlue(), (int)(color.getAlpha() * (1-(c*2/3) ))).getRGB());
-	}*/
 	
 	/**
 	 * Draws a line (or not).
@@ -303,10 +291,8 @@ public class Layer extends BufferedImage{
 	 * @param color pen color
 	 */
 	private void IntensifyPixel(int x, int y, double c, Color color){
-		//double intensity = Filter(Math.round(Math.abs(c)));
 		System.out.println(c);
 		double intensity = Math.abs(c);
-		//System.out.println(intensity);
 		setRGB(x, y, new Color(color.getRed(),color.getGreen(), color.getBlue(), (int)(color.getAlpha() * intensity)).getRGB());
 	}
 	
@@ -343,20 +329,16 @@ public class Layer extends BufferedImage{
 	public void plotLineWidth(int x0, int y0, int x1, int y1, float wd, Color color) {
 		int dx = Math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
 		int dy = Math.abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
-		int err = dx - dy, e2, x2, y2; /* error value e_xy */
+		int err = dx - dy, e2, x2, y2; 
 		double ed = dx + dy == 0 ? 1 : Math.sqrt((double) dx * dx + (double) dy * dy);
 
-		for (wd = (wd + 1) / 2;;) { /* pixel loop */
+		for (wd = (wd + 1) / 2;;) { 
 			int col = (int) (255*(Math.abs(err-dx+dy)/ed-wd+1));
 			setRGB(x0, y0, new Color(color.getRed(), color.getGreen(), color.getBlue(),(col < 0)?255:255-col).getRGB());
-			// setPixelColor(x0,y0,Math.max(0,255*(Math.abs(err-dx+dy)/ed-wd+1));
-			//System.out.println(255*(Math.abs(err-dx+dy)/ed-wd+1));
 			e2 = err;
 			x2 = x0;
-			if (2 * e2 >= -dx) { /* x step */
+			if (2 * e2 >= -dx) {
 				for (e2 += dy, y2 = y0; e2 < ed * wd && (y1 != y2 || dx > dy); e2 += dx){
-					// setPixelColor(x0, y2 += sy,
-					// Math.max(0,255*(Math.abs(e2)/ed-wd+1));
 					int temp = (int) (255 * (Math.abs(e2) / ed - wd + 1));
 					setRGB(x0, y2 += sy, new Color(color.getRed(), color.getGreen(), color.getBlue(),(temp < 0)?255:255-temp ).getRGB());
 				}
@@ -366,10 +348,7 @@ public class Layer extends BufferedImage{
 				err -= dy;
 				x0 += sx;
 			}
-			if (2 * e2 <= dy) { /* y step */
-				for (e2 = dx - e2; e2 < ed * wd && (x1 != x2 || dx < dy); e2 += dy){
-					// setPixelColor(x2 += sx, y0,
-					// Math.max(0,255*(Math.abs(e2)/ed-wd+1));
+			if (2 * e2 <= dy) { 				for (e2 = dx - e2; e2 < ed * wd && (x1 != x2 || dx < dy); e2 += dy){
 					int temp = (int) (255 * (Math.abs(e2) / ed - wd + 1));
 					setRGB(x2 += sx, y0, new Color(color.getRed(), color.getGreen(), color.getBlue(),(temp < 0)?255:255-temp ).getRGB());
 				}
@@ -380,28 +359,6 @@ public class Layer extends BufferedImage{
 			}
 		}
 	}
-	
-//	public void fill(int x, int y, Color c, Color n){
-//		//System.out.println("x: "+x+" y: "+y);
-//		//if(new Color(getRGB(x, y)).equals(c)&& !c.equals(n)){
-//			setRGB(x,y,n.getRGB());
-//			
-//			System.out.println(getRGB(x, y));
-//			if(x+1 < getWidth() && new Color(getRGB(x+1, y)).equals(c)){
-//				fill(x+1,y,c,n);
-//			}
-//			if(x-1 >= 0 && new Color(getRGB(x-1, y)).equals(c)){
-//				fill(x-1,y,c,n);
-//			}
-//			if(y-1 >= 0 && new Color(getRGB(x, y-1)).equals(c)){
-//				fill(x,y-1,c,n);
-//			}
-//			if(y+1 < getHeight() && new Color(getRGB(x, y+1)).equals(c)){
-//				fill(x,y+1,c,n);
-//			}
-//		//}
-//		System.out.println("recursion end");
-//	}
 	
 	public void fill(int initial_x, int initial_y, Color c, Color n){
 		//System.out.println("x: "+x+" y: "+y);
@@ -427,70 +384,6 @@ public class Layer extends BufferedImage{
 	        }
 	    }
 	}
-
-	/*public void guptasproull(int x0, int y0, int x1, int y1, Color color){
-		int addr = (y0*640*x0)*4;
-		int dx = x1 - x0;
-		int dy = y1 - y0;
-		
-		boolean steep = Math.abs(y1 - y0) > Math.abs(x1 - x0);
-		
-		int du, dv, u, v, uincr, vincr;
-		
-		if(Math.abs(dx)>Math.abs(dy)){
-			du = Math.abs(dx);
-			dv = Math.abs(dy);
-			u = x1;
-			v = y1;
-			uincr = 1;
-			vincr = 1;
-			if(dx < 0)
-				uincr = -uincr;
-			if(dy < 0)
-				vincr = -vincr;
-		}else{
-			du = Math.abs(dy);
-			dv = Math.abs(dx);
-			u = y1;
-			v = x1;
-			uincr = 1;
-			vincr = 1;
-			if(dy < 0)
-				uincr = -uincr;
-			if(dx < 0)
-				vincr = -vincr;
-		}
-		int uend = u + 2 *du;
-		int d = (2 * dv) - du;
-		int incrS = 2 * dv;	
-		int incrD = 2 * (dv - du);	
-		int twovdu = 0;	
-		double invD = 1.0 / (2.0*Math.sqrt(du*du + dv*dv));   
-		double invD2du = 2.0 * (du*invD);  
-		do{
-			if(steep){
-				plotGS(x0, y0, twovdu*invD, color);
-				plotGS(x0 + uincr, y0, invD2du - twovdu*invD, color);
-				plotGS(x0 - uincr, y0, invD2du + twovdu*invD, color);
-			}else{
-				plotGS(x0, y0, twovdu*invD, color);
-				plotGS(x0, y0+vincr, invD2du - twovdu*invD, color);
-				plotGS(x0, y0-vincr, invD2du + twovdu*invD, color);
-			}
-			
-			if(d < 0){
-				twovdu = d + du;
-				d = d + incrS;
-			}else{
-				twovdu = d - du;
-				d = d + incrD;
-				v = v+1;
-				y0 = y0 + vincr;
-			}
-			u = u+1;
-			x0 = x0 + uincr;
-		}while(u < uend);
-	}*/
 	
 	/**
 	 * Returns the name of the layer.

@@ -53,9 +53,8 @@ public class LayerWindow extends JFrame implements MouseListener{
 		for(int i = 0; i < canvas.layerList.size();i++)
 			listModel.add(i,canvas.layerList.get(i).getName());
 		
-		list = new JList(listModel); //data has type Object[]
+		list = new JList(listModel); 
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		//list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		list.setVisibleRowCount(-1);
 		list.setSelectedIndex(0);
 		
@@ -83,7 +82,6 @@ public class LayerWindow extends JFrame implements MouseListener{
 		add(btn_remove);
 		add(btn_setting);
 		
-		//pack();
 		
 		this.setTitle("Layers");
 		this.setAlwaysOnTop(true);

@@ -28,7 +28,6 @@ import javax.swing.JScrollPane;
 
 public class LayerConfigWindow extends JDialog implements ActionListener {
 	
-	//List<String> connected_users = new ArrayList<String>();
 	DrawWindow win;
 	JLabel lbl_txt = new JLabel();
 	JScrollPane userScroll;
@@ -47,9 +46,6 @@ public class LayerConfigWindow extends JDialog implements ActionListener {
 		
 		lbl_txt.setText("Select users who will be able to edit Layer " + id);
 		
-//		connected_users.add("User1");
-//		connected_users.add("User2");
-//		connected_users.add("User3");
 		
 		this.setLayout(new BorderLayout(5, 5));
 		

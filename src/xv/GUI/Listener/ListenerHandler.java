@@ -169,7 +169,6 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 					win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.add(new Dimension(x, y));
 					message+="{\"x\": "+x+", \"y\": "+y+"},";
 				}
-				//System.out.println(win.canvas.layerList.get(0).pointList.size());
 			}
 		}
 				
@@ -245,7 +244,6 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		}else if(win.chatWindow != null){
 			if (e.getSource().equals(win.chatWindow.btn_send)){
 				if(!win.chatWindow.txt_send.getText().equals("")){
-					//win.net.sendMessage("CHAT " + win.chatWindow.txt_send.getText());
 					win.net.sendMessage("{\"action\": \"CHAT\",\"user\": \""+win.net.username+"\",\"text\": \""+win.chatWindow.txt_send.getText()+"\"}");
 					win.chatWindow.txt_send.setText("");
 					win.chatWindow.txt_send.grabFocus();
@@ -333,8 +331,6 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	 */
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// (x - center_x)^2 + (y - center_y)^2 < radius^2
-		// TODO Auto-generated method stub
 		if(win.tools.getSelectedTool()==Tools.PEN ||win.tools.getSelectedTool()==Tools.ERASER){
 			mouseDown = true;
 			message ="{\"action\": \"LINE\","
@@ -431,7 +427,7 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 			int x = (int)((int) (b.getX()-win.drawPanel.getLocationOnScreen().x)/win.zoom);
 			int y = (int)((int) (b.getY()-win.drawPanel.getLocationOnScreen().y)/win.zoom);
 			System.out.println("x: "+x+" y: "+y);
-			//System.out.println(new Color(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getRGB(x, y)).toString() + " a="+new Color(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getRGB(x, y)).getAlpha());
+			
 			win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).fill(x, y, new Color(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getRGB(x, y),true), win.pen.getColor());
 			
 			if(win.net != null){

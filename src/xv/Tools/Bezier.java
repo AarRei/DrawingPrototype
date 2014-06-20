@@ -64,10 +64,6 @@ public class Bezier {
 	public Point[] getPoints() {
 		return points;
 	}
-
-//	public void setPoints(Point[] points) {
-//		this.points = points;
-//	}
 	
 	public int getLayerId() {
 		return layerId;

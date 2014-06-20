@@ -41,7 +41,6 @@ public class CanvasCreationDialog extends JDialog implements ActionListener{
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		if(e.getSource().equals(ok)){
 			win.createCanvas(Integer.parseInt(width.getText()), Integer.parseInt(height.getText()));
 			this.dispose();

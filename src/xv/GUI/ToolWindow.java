@@ -44,22 +44,18 @@ public class ToolWindow extends JFrame implements ActionListener{
 		this.setIconImage(win.listener.makeImageIcon("/icons/Graphic_tools.png").getImage());
 		this.setLayout(new GridLayout(3, 2, 0, 0));
 		
-		//btn_pen.setBounds(0, 0, 60, 40);
 		btn_pen.addActionListener(this);
 		btn_pen.setFocusPainted(false);
 		btn_pen.setIcon(win.listener.makeImageIcon("/icons/Pen.png"));
 		
-		//btn_bezier.setBounds(61, 0, 60, 40);
 		btn_bezier.addActionListener(this);
 		btn_bezier.setFocusPainted(false);
 		btn_bezier.setIcon(win.listener.makeImageIcon("/icons/Curve_points.png"));
 		
-		//btn_fill.setBounds(0, 41, 60, 40);
 		btn_fill.addActionListener(this);
 		btn_fill.setFocusPainted(false);
 		btn_fill.setIcon(win.listener.makeImageIcon("/icons/Fill.png"));
 		
-		//btn_color.setBounds(0, 82, 60, 40);
 		btn_color.addActionListener(this);
 		btn_color.setFocusPainted(false);
 		btn_color.setIcon(win.listener.makeImageIcon("/icons/Color.png"));
@@ -78,8 +74,6 @@ public class ToolWindow extends JFrame implements ActionListener{
 		add(btn_colorpicker);
 		add(btn_eraser);
 		add(btn_color);
-		
-		//pack();
 
 		btn_pen.setSelected(true);
 		
@@ -96,7 +90,6 @@ public class ToolWindow extends JFrame implements ActionListener{
 		this.setAlwaysOnTop(true);
 		this.setResizable(false);
 		this.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2+1280/2, Toolkit.getDefaultToolkit().getScreenSize().height/2-y/2);
-		//this.setSize(x + 6, y + 28);
 		this.setVisible(true);
 		pack();
 	}

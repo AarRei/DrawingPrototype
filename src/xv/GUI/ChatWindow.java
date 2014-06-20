@@ -60,12 +60,9 @@ public class ChatWindow extends JFrame{
 		this.setLayout(null);
 		
 		listModel = new DefaultListModel();
-		/*for(int i = 0; i < canvas.layerList.size();i++)
-			listModel.add(i,canvas.layerList.get(i).getName());*/
 		
-		list = new JList(listModel); //data has type Object[]
+		list = new JList(listModel); 
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		//list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		list.setVisibleRowCount(-1);
 		
 		listScroller = new JScrollPane(list);
@@ -98,7 +95,6 @@ public class ChatWindow extends JFrame{
 		add(listScroller2);
 		add(lbl_connected);
 		
-		//pack();
 		
 		this.setTitle("Chat");
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -149,7 +145,7 @@ public class ChatWindow extends JFrame{
 		
 	}
 
-	/*
+	/**
 	 * Toggles Window visibility
 	 * 
 	 * @return true if visible, false if not  
