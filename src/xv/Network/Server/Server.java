@@ -64,7 +64,13 @@ public class Server {
 				Thread t = new ClientThread(clientSocket,messageList,actionList,clientList);
 				t.setDaemon( true );
 			    t.start();
+			    for(int i = 0; i < clientList.size();i++){
+			    	if(!clientList.get(i).isAlive()){
+			    		clientList.remove(i);
+			    	}
+			    }
 			    clientList.add((ClientThread)t);
+			    
 			    
 				System.out.println("Accepted "+ clientSocket.getInetAddress().getHostAddress()+" ...");
 			}
