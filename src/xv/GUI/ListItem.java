@@ -12,7 +12,7 @@ public class ListItem {
 		if(tool != null) {
 			switch(tool) {
 			case "Pen":
-				toolpic = "/icons/Brush.png";
+				toolpic = "/icons/Pen.png";
 				break;
 			case "Bézier-Tool":
 				toolpic = "/icons/Curve_points.png";
@@ -22,6 +22,9 @@ public class ListItem {
 				break;
 			case "Pick-Tool":
 				toolpic = "/icons/Pickcolor.png";
+				break;
+			case "Eraser":
+				toolpic = "/icons/Eraser.png";
 				break;
 			}
 		}

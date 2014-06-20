@@ -179,8 +179,8 @@ public class MessageReceiveThread extends Thread{
 						for(int i = 0;i< users.size();i++){
 							JSONObject temp = (JSONObject)users.get(i);
 							win.net.usersList.add((String)temp.get("user"));
-							win.chatWindow.refreshUsers();
 						}
+						win.chatWindow.refreshUsers();
 						break;
 					case "TOOL":
 						String user = (String) unitsJson.get("user");
