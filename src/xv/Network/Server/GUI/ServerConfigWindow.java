@@ -60,7 +60,8 @@ public class ServerConfigWindow extends JFrame implements ActionListener{
 		// TODO Auto-generated method stub
 		if(e.getSource().equals(btn_ok)){
 			this.dispose();
-			new Server(Integer.parseInt(txt_port.getText()), cb_webcolors.isSelected(), Integer.parseInt(txt_width.getText()), Integer.parseInt(txt_height.getText()));
+			Server s = new Server(Integer.parseInt(txt_port.getText()), cb_webcolors.isSelected(), Integer.parseInt(txt_width.getText()), Integer.parseInt(txt_height.getText()));
+			new ServerClose(s);
 		}
 	}
 }
