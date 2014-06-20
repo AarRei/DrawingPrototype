@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.awt.Point;
 import java.io.BufferedReader;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import xv.GUI.DrawWindow;
 import xv.Network.Server.ClientThread;
@@ -51,6 +53,7 @@ public class MessageReceiveThread extends Thread{
 			while ((fromServer = in.readLine()) != null) {
 				unitsObj = parser.parse(fromServer);
 				unitsJson  = (JSONObject) unitsObj;
+				System.out.println(fromServer);
 				switch((String)unitsJson.get("action")){
 					case "CHAT":
 						win.chatWindow.addMessage("<"+(String) unitsJson.get("user")+">: "+(String) unitsJson.get("text"));
@@ -149,6 +152,18 @@ public class MessageReceiveThread extends Thread{
 					case "FILL":
 						break;
 					case "USER":
+						win.net.usersList.clear();
+						Object usersParser = null;
+						try {
+							usersParser = parser.parse(unitsJson.get("users").toString());
+						} catch (ParseException e) {
+							e.printStackTrace(); 
+						}
+						JSONArray users = (JSONArray) usersParser;
+						for(int i = 0;i< users.size();i++){
+							JSONObject temp = (JSONObject)users.get(i);
+							win.net.usersList.add((String)temp.get("user"));
+						}
 						break;
 					default:
 						break;

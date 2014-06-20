@@ -27,6 +27,7 @@ import xv.Tools.Bezier;
 public class ClientMain {
 	
 	PrintWriter out;
+	BufferedReader in;
 	public String username;
 	DrawWindow win;
 	public List<String> usersList = Collections.synchronizedList(new ArrayList<String>());
@@ -65,7 +66,7 @@ public class ClientMain {
         try{
         	socket = new Socket(hostName, portNumber);
          	out = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             /*BufferedReader stdIn =
                 new BufferedReader(new InputStreamReader(System.in));
             String fromUser;*/
@@ -115,6 +116,8 @@ public class ClientMain {
     
     public void closeSocket(){
     	try {
+    		in.close();
+    		out.close();
 			socket.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
