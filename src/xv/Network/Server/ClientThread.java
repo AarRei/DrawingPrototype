@@ -46,7 +46,7 @@ public class ClientThread extends Thread{
 	 * for messages from the client.
 	 */
 	public void run() {
-		try {
+		try {			
 			out = new PrintWriter(clientSocket.getOutputStream(), true);
 			BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
@@ -68,7 +68,6 @@ public class ClientThread extends Thread{
 			}
 				
 			while ((inputLine = in.readLine()) != null) {
-				
 				messageList.add(inputLine);
 				actionList.add(inputLine);
 			}

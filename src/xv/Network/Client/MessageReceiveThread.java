@@ -148,6 +148,8 @@ public class MessageReceiveThread extends Thread{
 						break;
 					case "FILL":
 						break;
+					case "USER":
+						break;
 					default:
 						break;
 				}

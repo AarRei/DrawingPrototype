@@ -65,6 +65,15 @@ public class Server {
 				t.setDaemon( true );
 			    t.start();
 			    clientList.add((ClientThread)t);
+			    
+			    String users = "{\"action\": \"USER\"," + "\"users\": [";
+			    for(ClientThread c : clientList){
+			    	users += "\"user\": \""+c.username+"\",";
+			    }
+			    users = users.substring(0, users.length()-1);
+			    users += "]}";
+			    messageList.add(users);
+			    
 				System.out.println("Accepted "+ clientSocket.getInetAddress().getHostAddress()+" ...");
 			}
 		} catch (IOException e) {
