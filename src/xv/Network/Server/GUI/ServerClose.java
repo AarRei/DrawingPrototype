@@ -7,11 +7,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import xv.Network.Server.Server;
-
 public class ServerClose implements ActionListener {
 
-	public ServerClose(Server server) {
+	public ServerClose() {
 		JFrame frame = new JFrame();
 		frame.setLayout(new FlowLayout());
 		JButton btn = new JButton("Close Server");
