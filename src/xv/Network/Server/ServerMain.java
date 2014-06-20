@@ -25,7 +25,6 @@ public class ServerMain {
 	public static void main(String[] args) {
 		if(args.length == 0){
 			new ServerConfigWindow();
-			new ServerClose();
 		}else if(args[0].equals("-nogui")){
 			//java -jar Server.jar -nogui -7777 -wc/nowc -1280 -720
 			if(args.length < 5){
