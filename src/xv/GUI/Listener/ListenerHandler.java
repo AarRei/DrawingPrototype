@@ -418,7 +418,6 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 			}
 			win.drawPanel.repaint();
 		}else if(win.tools.getSelectedTool()==Tools.FILL){
-			System.out.println("Hallo");
 			a = MouseInfo.getPointerInfo();
 			b = a.getLocation();
 			int x = (int)((int) (b.getX()-win.drawPanel.getLocationOnScreen().x)/win.zoom);
@@ -426,18 +425,19 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 			System.out.println("x: "+x+" y: "+y);
 			//System.out.println(new Color(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getRGB(x, y)).toString() + " a="+new Color(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getRGB(x, y)).getAlpha());
 			win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).fill(x, y, new Color(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getRGB(x, y),true), win.pen.getColor());
-			String fillSend = "{ \"action\": \"FILL\", "
-					+ "\"user\": \""+win.net.username+"\", "
-					+ "\"user_id\": 0, "
-					+ "\"layer_id\":"+win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId()+", "
-					+ "\"color\": {  "
-						+ "\"R\": "+win.pen.getColor().getRed()+",  "
-						+ "\"G\": "+win.pen.getColor().getGreen()+",  "
-						+ "\"B\": "+win.pen.getColor().getBlue()+",  "
-						+ "\"A\": "+win.pen.getColor().getAlpha()+" }, "
-					+ "\"x\": "+x+", "
-					+ "\"y\": "+y+"  }";
+			
 			if(win.net != null){
+				String fillSend = "{ \"action\": \"FILL\", "
+						+ "\"user\": \""+win.net.username+"\", "
+						+ "\"user_id\": 0, "
+						+ "\"layer_id\":"+win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId()+", "
+						+ "\"color\": {  "
+							+ "\"R\": "+win.pen.getColor().getRed()+",  "
+							+ "\"G\": "+win.pen.getColor().getGreen()+",  "
+							+ "\"B\": "+win.pen.getColor().getBlue()+",  "
+							+ "\"A\": "+win.pen.getColor().getAlpha()+" }, "
+						+ "\"x\": "+x+", "
+						+ "\"y\": "+y+"  }";
 				win.net.sendMessage(fillSend);
 			}
 			win.drawPanel.repaint();
@@ -465,7 +465,8 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		}
 		else if(win.tools.getSelectedTool()==Tools.BEZIER){
 			if(moveflag < 5){
-				String bezierChangeSend = "{\"action\": \"BEZC\","
+				if(win.net != null){
+					String bezierChangeSend = "{\"action\": \"BEZC\","
 						+ "\"user\": \""+win.net.username+"\","
 						+ "\"user_id\": 0,"
 						+ "\"layer_id\": "+choosenBezier.getLayerId()+","
@@ -478,7 +479,6 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 						+ "\"start_man_y\": "+choosenBezier.getPoints()[2].y+","
 						+ "\"end_man_x\": "+choosenBezier.getPoints()[3].x+","
 						+ "\"end_man_y\": "+choosenBezier.getPoints()[3].y+"}";
-				if(win.net != null){
 					win.net.sendMessage(bezierChangeSend);
 				}
 			}

@@ -87,13 +87,25 @@ public class ClientThread extends Thread{
 		    users = users.substring(0, users.length()-1);
 		    users += "]}";
 		    messageList.add(users);
-				
+		    
+		    JSONParser parser = new JSONParser();
+	        Object unitsObj = null;
+	        JSONObject unitsJson;
+
 			while ((inputLine = in.readLine()) != null) {
 				if(inputLine.equals("quit")){
 					break;
 				}
-				messageList.add(inputLine);
-				actionList.add(inputLine);
+				unitsObj = parser.parse(inputLine);
+				unitsJson  = (JSONObject) unitsObj;
+				
+				if(((String)unitsJson.get("action")).equals("TOOL")){
+					messageList.add(inputLine);
+				}
+				else{
+					messageList.add(inputLine);
+					actionList.add(inputLine);
+				}
 			}
 			
 			users = "{\"action\": \"USER\"," + "\"users\": [";
