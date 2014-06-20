@@ -14,6 +14,7 @@ import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousSocketChannel;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
@@ -31,6 +32,7 @@ public class ClientMain {
 	public String username;
 	DrawWindow win;
 	public List<String> usersList = Collections.synchronizedList(new ArrayList<String>());
+	public HashMap<String, String> toolsList = new HashMap<>();
 	private Socket socket;
 	
 	/**

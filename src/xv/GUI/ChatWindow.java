@@ -95,6 +95,7 @@ public class ChatWindow extends JFrame{
 		list2 = new JList(listModel2);
 		list2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list2.setVisibleRowCount(-1);
+		list2.setCellRenderer(new UserListRenderer());
 		
 		listScroller2 = new JScrollPane(list2);
 		listScroller2.setSize(new Dimension(200, 300));
@@ -138,7 +139,6 @@ public class ChatWindow extends JFrame{
 		//pack();
 		
 		this.setTitle("Chat");
-		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowAdapter() {
 
@@ -174,10 +174,15 @@ public class ChatWindow extends JFrame{
 		    Thread.currentThread().interrupt();
 		}
 		for(String name: listener.win.net.usersList) {
+			String tool = listener.win.net.toolsList.get(name);
+			if(tool == null || tool == "") {
+				tool = "/icons/Brush.png";
+			}
         	if(name.matches(listener.win.net.username)) {
-        		listModel2.addElement(name + " (you)");
+        		
+        		listModel2.addElement(new ListItem(tool, name + " (you)"));
         	} else {
-        		listModel2.addElement(name);
+        		listModel2.addElement(new ListItem(tool, name));
         	}
         }
 	}

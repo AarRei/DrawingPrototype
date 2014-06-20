@@ -184,6 +184,8 @@ public class MessageReceiveThread extends Thread{
 					case "TOOL":
 						String user = (String) unitsJson.get("user");
 						String tool = (String) unitsJson.get("tool");
+						win.net.toolsList.put(user, tool);
+						win.chatWindow.refreshUsers();
 						break;
 					default:
 						break;

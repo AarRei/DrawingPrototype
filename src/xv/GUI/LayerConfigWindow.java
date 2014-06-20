@@ -28,7 +28,7 @@ import javax.swing.JScrollPane;
 
 public class LayerConfigWindow extends JDialog implements ActionListener {
 	
-	List<String> connected_users = new ArrayList<String>();
+	//List<String> connected_users = new ArrayList<String>();
 	DrawWindow win;
 	JLabel lbl_txt = new JLabel();
 	JScrollPane userScroll;
