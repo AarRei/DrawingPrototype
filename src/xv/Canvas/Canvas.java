@@ -25,6 +25,7 @@ public class Canvas {
 		this.width = width;
 		this.height = height;
 		layerList.add(new Layer(width,height,"Layer 0", layernumber));
+		layerList.get(0).setOwner("");
 		layerIDList.add(layerList.get(0));
 		layernumber++;
 	}

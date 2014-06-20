@@ -155,7 +155,7 @@ public class DrawWindow extends JFrame{
 		x = width;
 		y = height;
 		canvas = new Canvas(width,height);
-		layerWindow = new LayerWindow(canvas,listener);
+		layerWindow = new LayerWindow(this,canvas,listener);
 		toolWindow = new ToolWindow(this);
 		
 		window_tools.setEnabled(true);

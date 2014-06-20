@@ -163,6 +163,18 @@ public class ToolWindow extends JFrame implements ActionListener{
 		btn_fill.setSelected(false);
 		win.drawPanel.repaint();
 	}
+	
+	public void setDisabled(){
+		btn_pen.setEnabled(false);
+		btn_bezier.setEnabled(false);
+		btn_fill.setEnabled(false);
+	}
+	
+	public void setEnabled(){
+		btn_pen.setEnabled(true);
+		btn_bezier.setEnabled(true);
+		btn_fill.setEnabled(true);
+	}
 
 	/*
 	 * Toggles Window visibility

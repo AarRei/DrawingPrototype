@@ -146,6 +146,7 @@
 	"action": "LAYR",
 	"user": "<user>",
 	"user_id": 0,
+	"layer_id": 0,
 	"users": [
 		{"user": "<username>"}
 	]

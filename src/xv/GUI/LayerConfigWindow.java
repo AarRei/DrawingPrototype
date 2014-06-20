@@ -39,7 +39,7 @@ public class LayerConfigWindow extends JDialog implements ActionListener {
 	Integer indexer = 0;
 	Integer layer_id;
     List<JCheckBox> listOfCheckBox = new ArrayList<JCheckBox>();
-
+    
 	public LayerConfigWindow(DrawWindow win, int id) {
 		
 		this.layer_id = id;
@@ -68,10 +68,15 @@ public class LayerConfigWindow extends JDialog implements ActionListener {
 		
         for(String name: win.net.usersList) {
         	listOfCheckBox.add(new JCheckBox(name));
-        	if(name.matches(win.net.username)) {
-        		listOfCheckBox.get(indexer).setText(name + " (you)");
-        		listOfCheckBox.get(indexer).setSelected(true);
+        	if(!win.canvas.layerIDList.get(id).getOwner().equals(win.net.username)){
         		listOfCheckBox.get(indexer).setEnabled(false);
+        	}
+        	else{
+        		if(name.matches(win.net.username)) {
+            		listOfCheckBox.get(indexer).setText(name + " (you)");
+            		listOfCheckBox.get(indexer).setSelected(true);
+            		listOfCheckBox.get(indexer).setEnabled(false);
+            	}
         	}
 		    indexer++;
         }
@@ -105,7 +110,19 @@ public class LayerConfigWindow extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(btn_apply)) {
-			System.out.println(getChecked());
+			win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).collaborateurList = getChecked();
+			String rightsSend = "{\"action\": \"LAYR\","
+					+ "\"user\": \""+win.net.username+"\","
+					+ "\"user_id\": 0,"
+					+ "\"layer_id\": "+layer_id+","
+					+ "\"users\": [";
+			
+			for(String coll :win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).collaborateurList){
+				rightsSend += "{\"user\": \""+coll+"\"},";
+			}
+			rightsSend = rightsSend.substring(0, rightsSend.length()-1);
+			rightsSend += "]}";
+			win.net.sendMessage(rightsSend);
 			this.dispose();
 		} else if(e.getSource().equals(btn_cancel)) {
 			this.dispose();

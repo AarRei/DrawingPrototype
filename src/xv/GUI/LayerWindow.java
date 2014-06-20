@@ -18,10 +18,12 @@ import javax.swing.ListSelectionModel;
 
 import xv.Canvas.Canvas;
 import xv.GUI.Listener.ListenerHandler;
+import xv.Tools.Tools;
 
 public class LayerWindow extends JFrame implements MouseListener{
 	
 	Canvas canvas;
+	DrawWindow win;
 	public JList list;
 	DefaultListModel listModel;
 	
@@ -39,8 +41,9 @@ public class LayerWindow extends JFrame implements MouseListener{
 	 * @param listener the ListenerHandler
 	 */
 	
-	public LayerWindow(Canvas canvas, final ListenerHandler listener){
+	public LayerWindow(DrawWindow win, Canvas canvas, final ListenerHandler listener){
 		this.canvas = canvas;
+		this.win = win;
 		int x = 200, y = 500;
 		
 		this.setLayout(null);
@@ -130,7 +133,34 @@ public class LayerWindow extends JFrame implements MouseListener{
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
-		canvas.setSelectedLayer(list.getSelectedIndex());
+		canvas.setSelectedLayer(listModel.size()-1-list.getSelectedIndex());
+		if(win.net != null){
+			if(!win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getOwner().equals(win.net.username) && !win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getOwner().equals("")){
+				boolean allowed=false;
+				for (String coll : win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).collaborateurList){
+					if(coll.equals(win.net.username))
+						allowed = true;
+				}
+				if(!allowed){
+					win.toolWindow.setDisabled();
+					if(win.tools.getSelectedTool() != Tools.NOTHING)
+						win.tools.setPreviousTool(win.tools.getSelectedTool());
+					win.tools.setSelectedTool(Tools.NOTHING);
+				}
+				else{
+					win.toolWindow.setEnabled();
+					if(win.tools.getSelectedTool() == Tools.NOTHING){
+						win.tools.setSelectedTool(win.tools.getPreviousTool());
+					}
+				}
+			}
+			else{
+				win.toolWindow.setEnabled();
+				if(win.tools.getSelectedTool() == Tools.NOTHING){
+					win.tools.setSelectedTool(win.tools.getPreviousTool());
+				}
+			}
+		}
 	}
 
 	@Override

@@ -16,6 +16,8 @@ public class Layer extends BufferedImage{
 	 * List of actions.
 	 */
 	public List<String> actionList = Collections.synchronizedList(new ArrayList<String>());
+	public List<String> collaborateurList = Collections.synchronizedList(new ArrayList<String>());
+	String owner;
 	
 	String name;
 	int id;
@@ -168,6 +170,14 @@ public class Layer extends BufferedImage{
 		
 	}
 	
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
 	private void plot(int x, int y, float c, Color color){
 		setRGB(x, y, new Color(color.getRed(),color.getGreen(), color.getBlue(), (int)(color.getAlpha() * c)).getRGB());
 	}

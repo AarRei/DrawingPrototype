@@ -69,6 +69,7 @@ public class MessageReceiveThread extends Thread{
 							tempLayer = win.layerWindow.list.getSelectedIndex();
 						}
 						win.canvas.addLayer(id.intValue());
+						win.canvas.layerList.get(id.intValue()).setOwner((String)unitsJson.get("user"));
 						win.layerWindow.fillList();
 						if(((String) unitsJson.get("user")).equals(win.net.username)){
 							win.layerWindow.list.setSelectedIndex(id.intValue());
@@ -186,6 +187,23 @@ public class MessageReceiveThread extends Thread{
 						String tool = (String) unitsJson.get("tool");
 						win.net.toolsList.put(user, tool);
 						win.chatWindow.refreshUsers();
+						break;
+					case "LAYR":
+						Long lay_id;
+						lay_id = (Long)unitsJson.get("layer_id");
+						
+						Object collabParser = null;
+						try {
+							collabParser = parser.parse(unitsJson.get("users").toString());
+						} catch (ParseException e) {
+							e.printStackTrace(); 
+						}
+						JSONArray collabs = (JSONArray) collabParser;
+						for(int i = 0;i< collabs.size();i++){
+							JSONObject temp = (JSONObject)collabs.get(i);
+							win.canvas.layerIDList.get(lay_id.intValue()).collaborateurList.add((String)temp.get("user"));
+						}
+						
 						break;
 					default:
 						break;
