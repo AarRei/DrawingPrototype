@@ -46,6 +46,7 @@ import org.json.simple.parser.ParseException;
 import xv.Canvas.Component.Drawer;
 import xv.GUI.CanvasCreationDialog;
 import xv.GUI.DrawWindow;
+import xv.GUI.LayerConfigWindow;
 import xv.GUI.NetworkConnectionDialog;
 import xv.Network.Client.ReceivingDrawer;
 import xv.Network.Server.GUI.ServerConfigWindow;
@@ -226,6 +227,8 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 				}				
 				win.drawPanel.repaint();
 			}
+		}else if (e.getSource().equals(win.layerWindow.btn_setting)) {
+			new LayerConfigWindow(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId());			
 		}else if(win.chatWindow != null){
 			if (e.getSource().equals(win.chatWindow.btn_send)){
 				if(!win.chatWindow.txt_send.getText().equals("")){

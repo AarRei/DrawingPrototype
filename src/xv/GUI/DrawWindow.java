@@ -3,6 +3,9 @@ package xv.GUI;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -11,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -53,6 +57,7 @@ public class DrawWindow extends JFrame{
 	public int x = 1280, y=720;
 	
 	public double zoom = 1;
+	private WindowListener exitListener;
 	
 	
 	/**
@@ -63,7 +68,7 @@ public class DrawWindow extends JFrame{
 	 */
 	
 	public DrawWindow(){
-		
+
 		setJMenuBar(menu);
 
 		file.add(newc);
@@ -99,9 +104,22 @@ public class DrawWindow extends JFrame{
 		t.setDaemon( true );
 	    t.start();
 	    
+	    exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int confirm = JOptionPane.showOptionDialog(null, "Are You Sure to Close Application?", "Exit Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                if (confirm == 0) {
+                	//
+                	System.exit(0);
+                }
+            }
+        };
 		
-		this.setTitle("ExtraVisual");
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE); //TODO: Custom close operation (close socket, kill stuff)
+		this.setTitle("eXtraVisual");
+		//this.setDefaultCloseOperation(EXIT_ON_CLOSE); //TODO: Custom close operation (close socket, kill stuff)
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(exitListener);
 		this.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2-x/2, Toolkit.getDefaultToolkit().getScreenSize().height/2-y/2);
 		this.setSize(x + 6, y + 28 + 21); //6 windows border, 28 windows frame, 21 Menu Bar
 		this.setVisible(true);
