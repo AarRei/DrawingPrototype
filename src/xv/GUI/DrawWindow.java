@@ -45,6 +45,9 @@ public class DrawWindow extends JFrame{
 	public JMenuItem save = new JMenuItem("Save...");
 	public JMenuItem exit = new JMenuItem("Exit");
 	public JCheckBox backg = new JCheckBox("Display Background Grid");
+	public JCheckBox window_tools = new JCheckBox("Show Tool Window");
+	public JCheckBox window_layers = new JCheckBox("Show Layer Window");
+	public JCheckBox window_chat = new JCheckBox("Show Chat Window");
 	public JMenuItem connect = new JMenuItem("Connect...");
 	public JMenuItem host = new JMenuItem("Host Server...");
 	
@@ -74,9 +77,16 @@ public class DrawWindow extends JFrame{
 		file.add(newc);
 		file.add(save);
 		file.add(exit);
+		window.add(window_tools);
+		window.add(window_layers);
+		window.add(window_chat);
 		view.add(backg);
 		network.add(connect);
 		network.add(host);
+		
+		window_tools.setEnabled(false);
+		window_layers.setEnabled(false);
+		window_chat.setEnabled(false);
 		
 		backg.setSelected(true);
 
@@ -84,6 +94,9 @@ public class DrawWindow extends JFrame{
 		save.addActionListener(listener);
 		exit.addActionListener(listener);
 		backg.addActionListener(listener);
+		window_tools.addActionListener(listener);
+		window_layers.addActionListener(listener);
+		window_chat.addActionListener(listener);
 		connect.addActionListener(listener);
 		host.addActionListener(listener);
 		
@@ -110,7 +123,9 @@ public class DrawWindow extends JFrame{
             public void windowClosing(WindowEvent e) {
                 int confirm = JOptionPane.showOptionDialog(null, "Are You Sure to Close Application?", "Exit Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if (confirm == 0) {
-                	//
+                	if(net != null) {
+                		net.closeSocket();
+                	}
                 	System.exit(0);
                 }
             }
@@ -141,6 +156,13 @@ public class DrawWindow extends JFrame{
 		canvas = new Canvas(width,height);
 		layerWindow = new LayerWindow(canvas,listener);
 		toolWindow = new ToolWindow(this);
+		
+		window_tools.setEnabled(true);
+		window_layers.setEnabled(true);
+		window_chat.setEnabled(true);
+		window_tools.setSelected(true);
+		window_layers.setSelected(true);
+		window_chat.setSelected(true);
 		
 		drawPanel = new DrawPanel(width,height,canvas,this);
 
