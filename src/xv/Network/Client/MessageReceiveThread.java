@@ -199,6 +199,7 @@ public class MessageReceiveThread extends Thread{
 							e.printStackTrace(); 
 						}
 						JSONArray collabs = (JSONArray) collabParser;
+						win.canvas.layerIDList.get(lay_id.intValue()).collaborateurList.clear();
 						for(int i = 0;i< collabs.size();i++){
 							JSONObject temp = (JSONObject)collabs.get(i);
 							win.canvas.layerIDList.get(lay_id.intValue()).collaborateurList.add((String)temp.get("user"));

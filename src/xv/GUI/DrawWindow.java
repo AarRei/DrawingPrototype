@@ -45,10 +45,12 @@ public class DrawWindow extends JFrame{
 	public JMenuItem save = new JMenuItem("Save...");
 	public JMenuItem exit = new JMenuItem("Exit");
 	public JCheckBox backg = new JCheckBox("Display Background Grid");
+	public JCheckBox dmouse = new JCheckBox("Display Mouse Pointers");
 	public JCheckBox window_tools = new JCheckBox("Show Tool Window");
 	public JCheckBox window_layers = new JCheckBox("Show Layer Window");
 	public JCheckBox window_chat = new JCheckBox("Show Chat Window");
 	public JMenuItem connect = new JMenuItem("Connect...");
+	public JCheckBox smouse = new JCheckBox("Send Mouse Pointers");
 	public JMenuItem host = new JMenuItem("Host Server...");
 	
 	public PenSettings pen = new PenSettings();
@@ -81,7 +83,9 @@ public class DrawWindow extends JFrame{
 		window.add(window_layers);
 		window.add(window_chat);
 		view.add(backg);
+		view.add(dmouse);
 		network.add(connect);
+		network.add(smouse);
 		network.add(host);
 		
 		window_tools.setEnabled(false);
@@ -94,10 +98,12 @@ public class DrawWindow extends JFrame{
 		save.addActionListener(listener);
 		exit.addActionListener(listener);
 		backg.addActionListener(listener);
+		dmouse.addActionListener(listener);
 		window_tools.addActionListener(listener);
 		window_layers.addActionListener(listener);
 		window_chat.addActionListener(listener);
 		connect.addActionListener(listener);
+		smouse.addActionListener(listener);
 		host.addActionListener(listener);
 		
 		menu.add(file);

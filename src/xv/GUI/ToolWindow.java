@@ -27,6 +27,7 @@ public class ToolWindow extends JFrame implements ActionListener{
 	JToggleButton btn_fill = new JToggleButton();
 	JButton btn_color = new JButton();
 	JToggleButton btn_colorpicker = new JToggleButton();
+	JToggleButton btn_eraser = new JToggleButton();
 	DrawWindow win;
 	
 	/**
@@ -41,7 +42,7 @@ public class ToolWindow extends JFrame implements ActionListener{
 		int x = 80, y = 120;
 	
 		this.setIconImage(win.listener.makeImageIcon("/icons/Graphic_tools.png").getImage());
-		this.setLayout(new GridLayout(2, 2, 0, 0));
+		this.setLayout(new GridLayout(3, 2, 0, 0));
 		
 		//btn_pen.setBounds(0, 0, 60, 40);
 		btn_pen.addActionListener(this);
@@ -63,16 +64,20 @@ public class ToolWindow extends JFrame implements ActionListener{
 		btn_color.setFocusPainted(false);
 		btn_color.setIcon(win.listener.makeImageIcon("/icons/Color.png"));
 		
-		btn_color.addActionListener(this);
-		btn_color.setFocusPainted(false);
-		btn_color.setIcon(win.listener.makeImageIcon("/icons/Pickcolor.png"));
-		
+		btn_colorpicker.addActionListener(this);
+		btn_colorpicker.setFocusPainted(false);
+		btn_colorpicker.setIcon(win.listener.makeImageIcon("/icons/Pickcolor.png"));
+
+		btn_eraser.addActionListener(this);
+		btn_eraser.setFocusPainted(false);
+		btn_eraser.setIcon(win.listener.makeImageIcon("/icons/Eraser.png"));
 		
 		add(btn_pen);
 		add(btn_bezier);
 		add(btn_fill);
-		add(btn_color);
 		add(btn_colorpicker);
+		add(btn_eraser);
+		add(btn_color);
 		
 		//pack();
 
@@ -173,6 +178,8 @@ public class ToolWindow extends JFrame implements ActionListener{
 		btn_pen.setSelected(false);
 		btn_bezier.setSelected(false);
 		btn_fill.setSelected(false);
+		btn_colorpicker.setSelected(false);
+		btn_eraser.setSelected(false);
 		win.drawPanel.repaint();
 	}
 	
@@ -180,12 +187,14 @@ public class ToolWindow extends JFrame implements ActionListener{
 		btn_pen.setEnabled(false);
 		btn_bezier.setEnabled(false);
 		btn_fill.setEnabled(false);
+		btn_eraser.setEnabled(false);
 	}
 	
 	public void setEnabled(){
 		btn_pen.setEnabled(true);
 		btn_bezier.setEnabled(true);
 		btn_fill.setEnabled(true);
+		btn_eraser.setEnabled(true);
 	}
 
 	/*
