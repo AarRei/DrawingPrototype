@@ -4,12 +4,15 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
@@ -26,6 +29,7 @@ public class LayerWindow extends JFrame implements MouseListener{
 	public JButton btn_remove = new JButton();
 	public JButton btn_setting = new JButton();
 	JScrollPane listScroller;
+	private WindowAdapter exitListener;
 	
 	/**
 	 * Constructs the LayerWindow
@@ -36,10 +40,10 @@ public class LayerWindow extends JFrame implements MouseListener{
 	 * @param listener the ListenerHandler
 	 */
 	
-	public LayerWindow(Canvas canvas, ListenerHandler listener){
+	public LayerWindow(Canvas canvas, final ListenerHandler listener){
 		this.canvas = canvas;
 		int x = 200, y = 500;
-
+		
 		this.setLayout(null);
 		
 		listModel = new DefaultListModel();
@@ -78,7 +82,15 @@ public class LayerWindow extends JFrame implements MouseListener{
 		
 		this.setTitle("Layers");
 		this.setAlwaysOnTop(true);
-		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+            	listener.win.window_layers.setSelected(false);
+            	//super.setVisible(false);
+            }
+		});
 		this.setResizable(false);
 		this.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2+1280/2, Toolkit.getDefaultToolkit().getScreenSize().height/2-y/2);
 		this.setSize(x + 6, y + 28);
@@ -124,5 +136,15 @@ public class LayerWindow extends JFrame implements MouseListener{
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	/*
+	 * Toggles Window visibility
+	 * 
+	 * @return true if visible, false if not  
+	 */
+	public boolean toggle() {
+		this.setVisible(!this.isVisible());
+		return this.isVisible();		
 	}
 }

@@ -6,6 +6,9 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
@@ -24,6 +27,7 @@ public class ToolWindow extends JFrame implements ActionListener{
 	JButton btn_color = new JButton();
 	JButton btn_color_alt = new JButton();
 	DrawWindow win;
+	private WindowListener exitListener;
 	
 	/**
 	 * Constructs the ToolWindow.
@@ -32,11 +36,11 @@ public class ToolWindow extends JFrame implements ActionListener{
 	 * 
 	 * @param win the parent DrawWindow
 	 */
-	public ToolWindow(DrawWindow win){
+	public ToolWindow(final DrawWindow win){
 		this.win = win;
 		int x = 120, y = 120;
 	
-		this.setLayout(new GridLayout(4, 2, 5, 5));
+		this.setLayout(new GridLayout(2, 2, 5, 5));
 		
 		//btn_pen.setBounds(0, 0, 60, 40);
 		btn_pen.addActionListener(this);
@@ -67,7 +71,7 @@ public class ToolWindow extends JFrame implements ActionListener{
 		add(btn_bezier);
 		add(btn_fill);
 		add(btn_color);
-		add(btn_color_alt);
+		//add(btn_color_alt);
 		
 		//pack();
 
@@ -75,6 +79,14 @@ public class ToolWindow extends JFrame implements ActionListener{
 		
 		this.setTitle("Tools");
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		this.addWindowListener(exitListener);
+		exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+            	win.window_tools.setSelected(false);
+            }
+        };
 		this.setAlwaysOnTop(true);
 		this.setResizable(false);
 		this.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2+1280/2, Toolkit.getDefaultToolkit().getScreenSize().height/2-y/2);
@@ -129,5 +141,15 @@ public class ToolWindow extends JFrame implements ActionListener{
 		btn_bezier.setSelected(false);
 		btn_fill.setSelected(false);
 		win.drawPanel.repaint();
+	}
+
+	/*
+	 * Toggles Window visibility
+	 * 
+	 * @return true if visible, false if not  
+	 */
+	public boolean toggle() {
+		this.setVisible(!this.isVisible());
+		return this.isVisible();		
 	}
 }

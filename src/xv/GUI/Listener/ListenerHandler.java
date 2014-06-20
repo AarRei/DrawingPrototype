@@ -33,6 +33,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.Timer;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
@@ -55,7 +56,7 @@ import xv.Tools.Tools;
 
 public class ListenerHandler extends MouseMotionAdapter implements MouseListener, KeyListener, ActionListener, ChangeListener, CaretListener, MouseMotionListener, ItemListener, AdjustmentListener, ComponentListener, MouseWheelListener {
 
-	DrawWindow win;
+	public DrawWindow win;
 	Timer drawing = new Timer(1000/200,this);
 	List<Dimension> pointList = Collections.synchronizedList(new ArrayList<Dimension>());
 	public List<Bezier> bezierList = Collections.synchronizedList(new ArrayList<Bezier>());
@@ -183,6 +184,18 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		}else if(e.getSource().equals(win.host)){
 		}else if(e.getSource().equals(win.backg)){
 			win.drawPanel.repaint();
+		}else if(e.getSource().equals(win.window_tools)){
+			if(e.getSource() instanceof JCheckBox) {
+				((JCheckBox) e.getSource()).setSelected(win.toolWindow.toggle());
+			}
+		}else if(e.getSource().equals(win.window_layers)){
+			if(e.getSource() instanceof JCheckBox) {
+				((JCheckBox) e.getSource()).setSelected(win.layerWindow.toggle());
+			}
+		}else if(e.getSource().equals(win.window_chat)){
+			if(e.getSource() instanceof JCheckBox) {
+				((JCheckBox) e.getSource()).setSelected(win.chatWindow.toggle());
+			}
 		}
 		
 		else if(e.getSource().equals(win.layerWindow.btn_add) && layerAdded){

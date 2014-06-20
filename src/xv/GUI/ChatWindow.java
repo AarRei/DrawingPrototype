@@ -5,6 +5,9 @@ import java.awt.Toolkit;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -35,6 +38,7 @@ public class ChatWindow extends JFrame{
 	JLabel lbl_connected = new JLabel("Connected User:");
 	JTextField txt_user = new JTextField();
 	JScrollPane listScroller;
+	private WindowListener exitListener;
 	
 	/**
 	 * Constructs the ChatWindow.
@@ -43,7 +47,7 @@ public class ChatWindow extends JFrame{
 	 * 
 	 * @param listener the ListenerHandler
 	 */
-	public ChatWindow(ListenerHandler listener){
+	public ChatWindow(final ListenerHandler listener){
 		this.canvas = canvas;
 		int x = 500, y = 340;
 
@@ -132,6 +136,14 @@ public class ChatWindow extends JFrame{
 		
 		this.setTitle("Chat");
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		this.addWindowListener(exitListener);
+		exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+            	listener.win.window_layers.setSelected(false);
+            }
+        };
 		this.setResizable(false);
 		this.setAlwaysOnTop(true);
 		this.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2+1280/2, Toolkit.getDefaultToolkit().getScreenSize().height/2-y/2);
@@ -152,5 +164,15 @@ public class ChatWindow extends JFrame{
 	
 	public void addUser(String user){
 		listModel2.addElement(user);
+	}
+
+	/*
+	 * Toggles Window visibility
+	 * 
+	 * @return true if visible, false if not  
+	 */
+	public boolean toggle() {
+		this.setVisible(!this.isVisible());
+		return this.isVisible();		
 	}
 }
