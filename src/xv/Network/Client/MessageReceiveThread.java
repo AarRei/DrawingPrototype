@@ -163,6 +163,7 @@ public class MessageReceiveThread extends Thread{
 						for(int i = 0;i< users.size();i++){
 							JSONObject temp = (JSONObject)users.get(i);
 							win.net.usersList.add((String)temp.get("user"));
+							win.chatWindow.refreshUsers();
 						}
 						break;
 					default:
