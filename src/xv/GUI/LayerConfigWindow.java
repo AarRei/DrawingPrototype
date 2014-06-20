@@ -11,6 +11,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -27,25 +29,27 @@ import javax.swing.JScrollPane;
 public class LayerConfigWindow extends JDialog implements ActionListener {
 	
 	List<String> connected_users = new ArrayList<String>();
+	DrawWindow win;
 	JLabel lbl_txt = new JLabel();
 	JScrollPane userScroll;
 	JPanel toppanel = new JPanel();
 	JButton btn_apply = new JButton("Apply");
 	JButton btn_cancel = new JButton("Cancel");
 	JPanel buttonpanel = new JPanel();
-	static Integer indexer = 0;
+	Integer indexer = 0;
 	Integer layer_id;
-    static List<JCheckBox> listOfCheckBox = new ArrayList<JCheckBox>();
+    List<JCheckBox> listOfCheckBox = new ArrayList<JCheckBox>();
 
-	public LayerConfigWindow(int id) {
+	public LayerConfigWindow(DrawWindow win, int id) {
 		
 		this.layer_id = id;
+		this.win = win;
 		
 		lbl_txt.setText("Select users who will be able to edit Layer " + id);
 		
-		connected_users.add("User1");
-		connected_users.add("User2");
-		connected_users.add("User3");
+//		connected_users.add("User1");
+//		connected_users.add("User2");
+//		connected_users.add("User3");
 		
 		this.setLayout(new BorderLayout(5, 5));
 		
@@ -62,9 +66,11 @@ public class LayerConfigWindow extends JDialog implements ActionListener {
        
         toppanel.add(lbl_txt, gbc1);
 		
-        for(String name: connected_users) {
-	        listOfCheckBox.add(new JCheckBox(name));
-	        indexer++;
+        for(String name: win.net.usersList) {
+        	if(!name.matches(win.net.username)) {
+		        listOfCheckBox.add(new JCheckBox(name));
+		        indexer++;
+        	}
         }
 
         GridBagConstraints checkBoxConstraints = new GridBagConstraints();
@@ -87,7 +93,7 @@ public class LayerConfigWindow extends JDialog implements ActionListener {
         
         pack();
 
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		this.setVisible(true);
 		

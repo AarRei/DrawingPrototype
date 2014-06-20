@@ -241,7 +241,7 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 				win.drawPanel.repaint();
 			}
 		}else if (e.getSource().equals(win.layerWindow.btn_setting)) {
-			new LayerConfigWindow(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId());			
+			new LayerConfigWindow(win, win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId());			
 		}else if(win.chatWindow != null){
 			if (e.getSource().equals(win.chatWindow.btn_send)){
 				if(!win.chatWindow.txt_send.getText().equals("")){

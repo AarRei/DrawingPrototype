@@ -66,9 +66,11 @@ public class LayerWindow extends JFrame implements MouseListener{
 		btn_remove.addActionListener(listener);
 		btn_remove.setIcon(new ImageIcon(getClass().getResource("/icons/Delete.png")));
 		
-		btn_setting.setBounds(150, 410, 50, 50);
-		btn_setting.addActionListener(listener);
-		btn_setting.setIcon(new ImageIcon(getClass().getResource("/icons/Settings.png")));
+		if(listener.win.net != null) {
+			btn_setting.setBounds(150, 410, 50, 50);
+			btn_setting.addActionListener(listener);
+			btn_setting.setIcon(new ImageIcon(getClass().getResource("/icons/Settings.png")));
+		}
 		
 		list.addMouseListener(this);
 		
