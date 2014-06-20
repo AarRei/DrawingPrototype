@@ -150,6 +150,21 @@ public class MessageReceiveThread extends Thread{
 						win.drawPanel.repaint();
 						break;
 					case "FILL":
+						Long x, y, re, gr, bl, al,lay;
+						x = (Long) unitsJson.get("x");
+						y = (Long) unitsJson.get("y");
+						
+						JSONObject col = (JSONObject) unitsJson.get("color");
+						re = (Long) col.get("R");
+						gr = (Long) col.get("G");
+						bl = (Long) col.get("B");
+						al = (Long) col.get("A");
+						lay = (Long) unitsJson.get("layer_id");
+						
+						win.canvas.layerIDList.get(lay.intValue()).fill(x.intValue(), y.intValue(), 
+								new Color(win.canvas.layerIDList.get(lay.intValue()).getRGB(x.intValue(), y.intValue()),true), 
+								new Color(re.intValue(),gr.intValue(),bl.intValue(),al.intValue()));
+						win.drawPanel.repaint();
 						break;
 					case "USER":
 						win.net.usersList.clear();
