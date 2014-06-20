@@ -8,9 +8,12 @@ public class ListItem {
 	private String text;
 
 	public ListItem(String tool, String text) {
-		String toolpic = "/icons/Brush.png";
+		String toolpic = "/icons/Nothing.png";
 		if(tool != null) {
 			switch(tool) {
+			case "Pen":
+				toolpic = "/icons/Brush.png";
+				break;
 			case "Bézier-Tool":
 				toolpic = "/icons/Curve_points.png";
 				break;

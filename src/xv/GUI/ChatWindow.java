@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -53,6 +54,7 @@ public class ChatWindow extends JFrame{
 		int x = 500, y = 340;
 		
 		this.listener = listener;
+		this.setIconImage(listener.makeImageIcon("/icons/Comment.png").getImage());
 
 		this.setLayout(null);
 		
@@ -67,28 +69,7 @@ public class ChatWindow extends JFrame{
 		
 		listScroller = new JScrollPane(list);
 		listScroller.setSize(new Dimension(300, 300));
-		listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		listModel.addListDataListener(new ListDataListener() {
-			
-			@Override
-			public void intervalRemoved(ListDataEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void intervalAdded(ListDataEvent e) {
-				// TODO Auto-generated method stub
-				listScroller.getVerticalScrollBar().setValue(350);
-				
-			}
-			
-			@Override
-			public void contentsChanged(ListDataEvent e) {
-				// TODO Auto-generated method stub
-			}
-		});
-		
+		listScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);		
 		
 		listModel2 = new DefaultListModel();
 		
@@ -100,26 +81,6 @@ public class ChatWindow extends JFrame{
 		listScroller2 = new JScrollPane(list2);
 		listScroller2.setSize(new Dimension(200, 300));
 		listScroller2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		listModel2.addListDataListener(new ListDataListener() {
-			
-			@Override
-			public void intervalRemoved(ListDataEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void intervalAdded(ListDataEvent e) {
-				// TODO Auto-generated method stub
-				listScroller2.getVerticalScrollBar().setValue(350);
-				
-			}
-			
-			@Override
-			public void contentsChanged(ListDataEvent e) {
-				// TODO Auto-generated method stub
-			}
-		});
 		
 		btn_send.setBounds(220, 310, 80, 25);
 		btn_send.addActionListener(listener);
@@ -164,6 +125,9 @@ public class ChatWindow extends JFrame{
 	 */
 	public void addMessage(String message){
 		listModel.addElement(message);
+		
+		list.ensureIndexIsVisible(listModel.getSize()-1);
+
 	}
 	
 	public void refreshUsers(){
