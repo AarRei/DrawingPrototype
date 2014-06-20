@@ -74,6 +74,12 @@ public class ClientThread extends Thread{
 				out.println(i);
 			}
 			
+			for(int i = 0; i < clientList.size();i++){
+		    	if(!clientList.get(i).isAlive()){
+		    		clientList.remove(i);
+		    	}
+		    }
+			
 			String users = "{\"action\": \"USER\"," + "\"users\": [";
 		    for(ClientThread c : clientList){
 		    	users += "{\"user\": \""+c.username+"\"},";

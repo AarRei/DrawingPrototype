@@ -166,6 +166,10 @@ public class MessageReceiveThread extends Thread{
 							win.chatWindow.refreshUsers();
 						}
 						break;
+					case "TOOL":
+						String user = (String) unitsJson.get("user");
+						String tool = (String) unitsJson.get("tool");
+						break;
 					default:
 						break;
 				}

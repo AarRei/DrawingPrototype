@@ -1,6 +1,7 @@
 package xv.GUI;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
@@ -37,9 +38,9 @@ public class ToolWindow extends JFrame implements ActionListener{
 	 */
 	public ToolWindow(final DrawWindow win){
 		this.win = win;
-		int x = 120, y = 120;
+		int x = 80, y = 120;
 	
-		this.setLayout(new GridLayout(2, 2, 5, 5));
+		this.setLayout(new GridLayout(2, 2, 0, 0));
 		
 		//btn_pen.setBounds(0, 0, 60, 40);
 		btn_pen.addActionListener(this);
@@ -124,14 +125,35 @@ public class ToolWindow extends JFrame implements ActionListener{
 			win.tools.setSelectedTool(Tools.PEN);
 			untoggel();
 			btn_pen.setSelected(true);
+			if(win.net != null){
+				String tool = "{\"action\": \"TOOL\","
+						+ "\"user\": \""+win.net.username+"\","
+						+ "\"user_id\": 0,"
+						+ "\"tool\": \"Pen\"}";
+				win.net.sendMessage(tool);
+			}
 		} else if(e.getSource().equals(btn_bezier)) {
 			win.tools.setSelectedTool(Tools.BEZIER);
 			untoggel();
 			btn_bezier.setSelected(true);
+			if(win.net != null){
+				String tool = "{\"action\": \"TOOL\","
+						+ "\"user\": \""+win.net.username+"\","
+						+ "\"user_id\": 0,"
+						+ "\"tool\": \"Bézier-Tool\"}";
+				win.net.sendMessage(tool);
+			}
 		}else if(e.getSource().equals(btn_fill)) {
 			win.tools.setSelectedTool(Tools.FILL);
 			untoggel();
 			btn_fill.setSelected(true);
+			if(win.net != null){
+				String tool = "{\"action\": \"TOOL\","
+						+ "\"user\": \""+win.net.username+"\","
+						+ "\"user_id\": 0,"
+						+ "\"tool\": \"Fill-Tool\"}";
+				win.net.sendMessage(tool);
+			}
 		}
 	}
 	
