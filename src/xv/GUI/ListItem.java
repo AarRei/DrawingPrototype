@@ -20,6 +20,9 @@ public class ListItem {
 			case "Fill-Tool":
 				toolpic = "/icons/Fill.png";
 				break;
+			case "Pick-Tool":
+				toolpic = "/icons/Pickcolor.png";
+				break;
 			}
 		}
 		this.icon = new ImageIcon(getClass().getResource(toolpic));
