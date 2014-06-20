@@ -7,6 +7,7 @@ public class Tools {
 	public static final int BEZIER = 2;
 	public static final int FILL = 3;
 	public static final int ERASER = 4;
+	public static final int PICKER = 5;
 	public static final int NOTHING = 99;
 
 	private int selectedTool = 0;
