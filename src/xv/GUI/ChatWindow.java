@@ -19,6 +19,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 
@@ -132,15 +133,20 @@ public class ChatWindow extends JFrame{
 	
 	public void refreshUsers(){
 		listModel2.removeAllElements();
-		for(String name: listener.win.net.usersList) {
-			String tool = listener.win.net.toolsList.get(name);
-        	if(name.matches(listener.win.net.username)) {
-        		
-        		listModel2.addElement(new ListItem(tool, name + " (you)"));
-        	} else {
-        		listModel2.addElement(new ListItem(tool, name));
-        	}
-        }
+		SwingUtilities.invokeLater(new Runnable() {
+		    public void run() {
+		    	for(String name: listener.win.net.usersList) {
+					String tool = listener.win.net.toolsList.get(name);
+		        	if(name.matches(listener.win.net.username)) {
+		        		
+		        		listModel2.addElement(new ListItem(tool, name + " (you)"));
+		        	} else {
+		        		listModel2.addElement(new ListItem(tool, name));
+		        	}
+		        }
+		    }
+		  });
+		
 	}
 
 	/*
