@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.text.ParseException;
 import java.util.Date;
@@ -104,8 +105,8 @@ public class ClientThread extends Thread{
 		    out.close();
 		    clientSocket.close();
 		    
-		}catch(SocketTimeoutException e){
-			System.out.println("User "+username+" ("+ clientSocket.getInetAddress().getHostAddress()+") has quit. Timeout.");
+		}catch(SocketException e){
+			System.out.println("User "+username+" ("+ clientSocket.getInetAddress().getHostAddress()+") has quit. Interrupted connection.");
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
