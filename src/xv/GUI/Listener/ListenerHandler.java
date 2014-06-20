@@ -320,7 +320,11 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 		// TODO Auto-generated method stub
 		if(win.tools.getSelectedTool()==Tools.PEN){
 			mouseDown = true;
-			message ="{\"action\": \"LINE\",\"user\": \""+((win.net==null)?"user":win.net.username)+"\",\"layer_id\": "+win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId()+", \"color\": {"
+			message ="{\"action\": \"LINE\","
+					+ "\"user\": \""+((win.net==null)?"user":win.net.username)
+					+"\",\"layer_id\": "+win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId()
+					+", \"thickness\": "+win.pen.getThickness()
+					+", \"color\": {"
 					+ "\"R\": "+win.pen.getColor().getRed()+","
 					+ "\"G\": "+win.pen.getColor().getGreen()+","
 					+ "\"B\": "+win.pen.getColor().getBlue()+","
@@ -364,6 +368,25 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 			} else {
 				bezierList.get(bezierList.size()-1).setSecond(point.x, point.y);
 				newBezier = !newBezier;
+				if(win.net != null){
+					String bezierSend = "{\"action\": \"BEZR\","
+							+ "\"user\": \""+win.net.username+"\","
+							+ "\"user_id\": 0,"
+							+ "\"layer_id\": "+bezierList.get(bezierList.size()-1).getLayerId()+","
+							+ "\"color\": "
+									+ "{\"R\": "+bezierList.get(bezierList.size()-1).getColor().getRed()+","
+									+ "\"G\": "+bezierList.get(bezierList.size()-1).getColor().getGreen()+","
+									+ "\"B\": "+bezierList.get(bezierList.size()-1).getColor().getBlue()+","
+									+ "\"A\": "+bezierList.get(bezierList.size()-1).getColor().getAlpha()+"},"
+							+ "\"start_x\": "+bezierList.get(bezierList.size()-1).getPoints()[0].x+","
+							+ "\"start_y\": "+bezierList.get(bezierList.size()-1).getPoints()[0].y+","
+							+ "\"end_x\": "+bezierList.get(bezierList.size()-1).getPoints()[1].x+","
+							+ "\"end_y\": "+bezierList.get(bezierList.size()-1).getPoints()[1].y+","
+							+ "\"start_man_x\": "+bezierList.get(bezierList.size()-1).getPoints()[2].x+","
+							+ "\"start_man_y\": "+bezierList.get(bezierList.size()-1).getPoints()[2].y+","
+							+ "\"end_man_x\": "+bezierList.get(bezierList.size()-1).getPoints()[3].x+","
+							+ "\"end_man_y\": "+bezierList.get(bezierList.size()-1).getPoints()[3].y+"}";
+				}
 			}
 			win.drawPanel.repaint();
 		}else if(win.tools.getSelectedTool()==Tools.FILL){
