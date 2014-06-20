@@ -139,7 +139,6 @@ public class DrawWindow extends JFrame{
         };
 		
 		this.setTitle("eXtraVisual");
-		//this.setDefaultCloseOperation(EXIT_ON_CLOSE); //TODO: Custom close operation (close socket, kill stuff)
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(exitListener);
 		this.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2-x/2, Toolkit.getDefaultToolkit().getScreenSize().height/2-y/2);
@@ -215,7 +214,6 @@ public class DrawWindow extends JFrame{
 			chatWindow = new ChatWindow(listener);
 			net = new ClientMain(InetAddress.getByName(host), port, username,this);
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

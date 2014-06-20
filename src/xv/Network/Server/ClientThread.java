@@ -46,12 +46,8 @@ public class ClientThread extends Thread{
 			BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
 			String inputLine, outputLine = "{\"action\": \"CHAT\",\"user\": \"SERVER\",\"text\": \"Verbindung hergestellt.\"}";
-
-			// Initiate conversation with client
-			out.println(outputLine);
 			
-			/*String o = in.readLine();
-			System.out.println(o);*/
+			out.println(outputLine);
 			
 			inputLine = in.readLine();
 			if(inputLine.substring(0, 4).equals("JOIN")){

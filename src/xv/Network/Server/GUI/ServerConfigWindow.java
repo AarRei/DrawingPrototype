@@ -30,10 +30,8 @@ public class ServerConfigWindow extends JFrame implements ActionListener{
 	public ServerConfigWindow(){
 		int x = 300, y = 210;
 
-		//this.setLayout(null);
 		setLayout(new GridLayout(0,1));
 				
-		//btn_ok.setBounds(0, 410, 100, 25);
 		btn_ok.addActionListener(this);
 
 		add(lb_port);
@@ -44,8 +42,6 @@ public class ServerConfigWindow extends JFrame implements ActionListener{
 		add(lb_height);
 		add(txt_height);
 		add(btn_ok);
-		
-		//pack();
 		
 		this.setTitle("Server Setup");
 		this.setAlwaysOnTop(true);

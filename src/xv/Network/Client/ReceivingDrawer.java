@@ -56,10 +56,6 @@ public class ReceivingDrawer extends Thread {
 		Long t=(Long)json_line.get("thickness");
 		Long type=(Long)json_line.get("type");
 		Long r=(Long)color.get("R"), g=(Long)color.get("G"), b=(Long)color.get("B"), a=(Long)color.get("A");
-		/*Graphics2D g2;
-		g2 = win.canvas.layerIDList.get(p.intValue()).createGraphics();
-		
-		g2.setColor(new Color(r.intValue(), g.intValue(),b.intValue(),a.intValue()));*/
 
 		JSONObject temporary = (JSONObject)points.get(0);
 		Long x = (Long)temporary.get("x"), y=(Long)temporary.get("y");
@@ -74,9 +70,7 @@ public class ReceivingDrawer extends Thread {
 			Long x1 = (Long)temp.get("x"), y1=(Long)temp.get("y"), x2=(Long)temp2.get("x"), y2=(Long)temp2.get("y");
 			win.canvas.layerIDList.get(p.intValue()).bresenham(x1.intValue(),y1.intValue(),x2.intValue(),y2.intValue(), t.intValue(),
 					(type.intValue() == Tools.PEN)?new Color(r.intValue(), g.intValue(),b.intValue(),a.intValue()):new Color(0,0,0,0));
-			//g2.drawLine(x1.intValue(),y1.intValue(),x2.intValue(),y2.intValue());
 		}
-		//g2.dispose();
 		win.drawPanel.repaint();
 		return;
 	}
