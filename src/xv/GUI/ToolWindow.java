@@ -40,7 +40,7 @@ public class ToolWindow extends JFrame implements ActionListener{
 		this.win = win;
 		int x = 80, y = 120;
 	
-		this.setIconImage(win.listener.makeImageIcon("/icons/Grapic_tool.png").getImage());
+		this.setIconImage(win.listener.makeImageIcon("/icons/Graphic_tools.png").getImage());
 		this.setLayout(new GridLayout(2, 2, 0, 0));
 		
 		//btn_pen.setBounds(0, 0, 60, 40);

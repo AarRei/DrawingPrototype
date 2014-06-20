@@ -67,7 +67,11 @@ public class LayerConfigWindow extends JDialog implements ActionListener {
         toppanel.add(lbl_txt, gbc1);
 		
         for(String name: win.net.usersList) {
-        	listOfCheckBox.add(new JCheckBox(name));
+        	JCheckBox c = new JCheckBox(name);
+        	if(win.canvas.layerIDList.get(id).collaborateurList.contains(name)) {
+        		c.setSelected(true);
+        	}
+        	listOfCheckBox.add(c);
         	if(!win.canvas.layerIDList.get(id).getOwner().equals(win.net.username)){
         		listOfCheckBox.get(indexer).setEnabled(false);
         	}
