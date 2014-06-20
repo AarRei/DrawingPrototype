@@ -121,7 +121,7 @@ public class DrawWindow extends JFrame{
 
             @Override
             public void windowClosing(WindowEvent e) {
-                int confirm = JOptionPane.showOptionDialog(null, "Are You Sure to Close Application?", "Exit Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+                int confirm = JOptionPane.showOptionDialog(null, "Are you sure you want to exit the application?", "Exit Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
                 if (confirm == 0) {
                 	if(net != null) {
                 		net.sendMessage("quit");

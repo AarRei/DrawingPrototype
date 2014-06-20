@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -97,11 +98,15 @@ public class ClientThread extends Thread{
 		    users += "]}";
 		    messageList.add(users);
 		    
+			System.out.println("User "+username+" ("+ clientSocket.getInetAddress().getHostAddress()+") has quit. Disconnect by user.");
+		    
 		    in.close();
 		    out.close();
 		    clientSocket.close();
 		    
-		} catch (Exception e) {
+		}catch(SocketTimeoutException e){
+			System.out.println("User "+username+" ("+ clientSocket.getInetAddress().getHostAddress()+") has quit. Timeout.");
+		}catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
