@@ -11,6 +11,7 @@ import java.awt.event.WindowListener;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -38,6 +39,7 @@ public class ChatWindow extends JFrame{
 	JLabel lbl_connected = new JLabel("Connected User:");
 	JTextField txt_user = new JTextField();
 	JScrollPane listScroller;
+	private ListenerHandler listener;
 	
 	/**
 	 * Constructs the ChatWindow.
@@ -49,6 +51,8 @@ public class ChatWindow extends JFrame{
 	public ChatWindow(final ListenerHandler listener){
 		this.canvas = canvas;
 		int x = 500, y = 340;
+		
+		this.listener = listener;
 
 		this.setLayout(null);
 		
@@ -162,8 +166,15 @@ public class ChatWindow extends JFrame{
 		listModel.addElement(message);
 	}
 	
-	public void addUser(String user){
-		listModel2.addElement(user);
+	public void refreshUsers(){
+		listModel2.clear();
+		for(String name: listener.win.net.usersList) {
+        	if(name.matches(listener.win.net.username)) {
+        		listModel2.addElement(name + " (you)");
+        	} else {
+        		listModel2.addElement(name);
+        	}
+        }
 	}
 
 	/*
