@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 
 import xv.GUI.DrawWindow;
 import xv.GUI.Listener.ListenerHandler;
+import xv.Tools.Tools;
 
 public class Drawer extends Thread {
 	DrawWindow win;
@@ -34,8 +35,12 @@ public class Drawer extends Thread {
 			while (listener.isMouseDown() || win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.size()>=2) {
 				
 				if(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.size()>=2){
-					win.canvas.layerList.get(win.canvas.getSelectedLayer()).bresenham(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(0).width, win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(0).height, 
-							win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(1).width, win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(1).height,win.pen.getThickness() ,win.pen.getColor());
+					if(win.tools.getSelectedTool() == Tools.PEN)
+						win.canvas.layerList.get(win.canvas.getSelectedLayer()).bresenham(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(0).width, win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(0).height, 
+								win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(1).width, win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(1).height,win.pen.getThickness() ,win.pen.getColor());
+					else
+						win.canvas.layerList.get(win.canvas.getSelectedLayer()).bresenham(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(0).width, win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(0).height, 
+								win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(1).width, win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(1).height,win.pen.getThickness() ,new Color(0,0,0,0));
 					win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.remove(0);
 				}
 

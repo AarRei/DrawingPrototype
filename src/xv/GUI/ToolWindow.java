@@ -47,7 +47,7 @@ public class ToolWindow extends JFrame implements ActionListener{
 		//btn_pen.setBounds(0, 0, 60, 40);
 		btn_pen.addActionListener(this);
 		btn_pen.setFocusPainted(false);
-		btn_pen.setIcon(win.listener.makeImageIcon("/icons/Brush.png"));
+		btn_pen.setIcon(win.listener.makeImageIcon("/icons/Pen.png"));
 		
 		//btn_bezier.setBounds(61, 0, 60, 40);
 		btn_bezier.addActionListener(this);
@@ -169,6 +169,17 @@ public class ToolWindow extends JFrame implements ActionListener{
 						+ "\"user\": \""+win.net.username+"\","
 						+ "\"user_id\": 0,"
 						+ "\"tool\": \"Pick-Tool\"}";
+				win.net.sendMessage(tool);
+			}
+		}else if(e.getSource().equals(btn_eraser)) {
+			win.tools.setSelectedTool(Tools.ERASER);
+			untoggle();
+			btn_eraser.setSelected(true);
+			if(win.net != null){
+				String tool = "{\"action\": \"TOOL\","
+						+ "\"user\": \""+win.net.username+"\","
+						+ "\"user_id\": 0,"
+						+ "\"tool\": \"Eraser\"}";
 				win.net.sendMessage(tool);
 			}
 		}

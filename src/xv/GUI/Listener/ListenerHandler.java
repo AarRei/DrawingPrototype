@@ -335,11 +335,12 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	public void mousePressed(MouseEvent e) {
 		// (x - center_x)^2 + (y - center_y)^2 < radius^2
 		// TODO Auto-generated method stub
-		if(win.tools.getSelectedTool()==Tools.PEN){
+		if(win.tools.getSelectedTool()==Tools.PEN ||win.tools.getSelectedTool()==Tools.ERASER){
 			mouseDown = true;
 			message ="{\"action\": \"LINE\","
 					+ "\"user\": \""+((win.net==null)?"user":win.net.username)
 					+"\",\"layer_id\": "+win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId()
+					+", \"type\": "+win.tools.getSelectedTool()
 					+", \"thickness\": "+win.pen.getThickness()
 					+", \"color\": {"
 					+ "\"R\": "+win.pen.getColor().getRed()+","
@@ -457,7 +458,7 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(win.tools.getSelectedTool()==Tools.PEN){
+		if(win.tools.getSelectedTool()==Tools.PEN||win.tools.getSelectedTool()==Tools.ERASER){
 			mouseDown = false;
 			drawing.stop();
 			message = message.substring(0, message.length()-1);
