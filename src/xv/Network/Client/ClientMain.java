@@ -12,6 +12,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousSocketChannel;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 
@@ -19,12 +22,15 @@ import javax.swing.ImageIcon;
 
 import xv.GUI.DrawWindow;
 import xv.Network.Server.ClientThread;
+import xv.Tools.Bezier;
 
 public class ClientMain {
 	
 	PrintWriter out;
 	public String username;
 	DrawWindow win;
+	public List<String> usersList = Collections.synchronizedList(new ArrayList<String>());
+	private Socket socket;
 	
 	/**
 	 * Creates the ClientMain.
@@ -57,7 +63,7 @@ public class ClientMain {
         int portNumber = port;
 
         try{
-        	Socket socket = new Socket(hostName, portNumber);
+        	socket = new Socket(hostName, portNumber);
          	out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             /*BufferedReader stdIn =
@@ -105,6 +111,15 @@ public class ClientMain {
      */
     public void sendMessage(String message){
     	out.println(message);
+    }
+    
+    public void closeSocket(){
+    	try {
+			socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     /*public void pingTest(String ip) throws Exception {
