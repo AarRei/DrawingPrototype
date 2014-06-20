@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -53,6 +54,7 @@ public class ChatWindow extends JFrame{
 		int x = 500, y = 340;
 		
 		this.listener = listener;
+		this.setIconImage(listener.makeImageIcon("/icons/Comment.png").getImage());
 
 		this.setLayout(null);
 		
