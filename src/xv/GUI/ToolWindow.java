@@ -26,7 +26,7 @@ public class ToolWindow extends JFrame implements ActionListener{
 	JToggleButton btn_bezier = new JToggleButton();
 	JToggleButton btn_fill = new JToggleButton();
 	JButton btn_color = new JButton();
-	JButton btn_color_alt = new JButton();
+	JToggleButton btn_colorpicker = new JToggleButton();
 	DrawWindow win;
 	
 	/**
@@ -63,16 +63,16 @@ public class ToolWindow extends JFrame implements ActionListener{
 		btn_color.setFocusPainted(false);
 		btn_color.setIcon(win.listener.makeImageIcon("/icons/Color.png"));
 		
-		//btn_color_alt.setBounds(61, 82, 60, 40);
-		btn_color_alt.addActionListener(this);
-		btn_color_alt.setFocusPainted(false);
+		btn_color.addActionListener(this);
+		btn_color.setFocusPainted(false);
+		btn_color.setIcon(win.listener.makeImageIcon("/icons/Pickcolor.png"));
 		
 		
 		add(btn_pen);
 		add(btn_bezier);
 		add(btn_fill);
 		add(btn_color);
-		//add(btn_color_alt);
+		add(btn_colorpicker);
 		
 		//pack();
 
@@ -124,7 +124,7 @@ public class ToolWindow extends JFrame implements ActionListener{
 			
 		} else if(e.getSource().equals(btn_pen)) {
 			win.tools.setSelectedTool(Tools.PEN);
-			untoggel();
+			untoggle();
 			btn_pen.setSelected(true);
 			if(win.net != null){
 				String tool = "{\"action\": \"TOOL\","
@@ -135,7 +135,7 @@ public class ToolWindow extends JFrame implements ActionListener{
 			}
 		} else if(e.getSource().equals(btn_bezier)) {
 			win.tools.setSelectedTool(Tools.BEZIER);
-			untoggel();
+			untoggle();
 			btn_bezier.setSelected(true);
 			if(win.net != null){
 				String tool = "{\"action\": \"TOOL\","
@@ -146,7 +146,7 @@ public class ToolWindow extends JFrame implements ActionListener{
 			}
 		}else if(e.getSource().equals(btn_fill)) {
 			win.tools.setSelectedTool(Tools.FILL);
-			untoggel();
+			untoggle();
 			btn_fill.setSelected(true);
 			if(win.net != null){
 				String tool = "{\"action\": \"TOOL\","
@@ -155,10 +155,21 @@ public class ToolWindow extends JFrame implements ActionListener{
 						+ "\"tool\": \"Fill-Tool\"}";
 				win.net.sendMessage(tool);
 			}
+		}else if(e.getSource().equals(btn_colorpicker)) {
+			win.tools.setSelectedTool(Tools.PICKER);
+			untoggle();
+			btn_colorpicker.setSelected(true);
+			if(win.net != null){
+				String tool = "{\"action\": \"TOOL\","
+						+ "\"user\": \""+win.net.username+"\","
+						+ "\"user_id\": 0,"
+						+ "\"tool\": \"Pick-Tool\"}";
+				win.net.sendMessage(tool);
+			}
 		}
 	}
 	
-	private void untoggel(){
+	private void untoggle(){
 		btn_pen.setSelected(false);
 		btn_bezier.setSelected(false);
 		btn_fill.setSelected(false);
