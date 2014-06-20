@@ -119,3 +119,18 @@
 	"user_id": 0,
 	"tool": "<Toolname>"
 }
+
+{
+	"action": "FILL",
+	"user": "<Name>",
+	"user_id": 0,
+	"layer_id": 0,
+	"color": {
+		"R": 255,
+		"G": 255,
+		"B": 255,
+		"A": 255
+	},
+	"x": 0,
+	"y": 0
+}

@@ -49,7 +49,7 @@ public class ServerConfigWindow extends JFrame implements ActionListener{
 		
 		this.setTitle("Server Setup");
 		this.setAlwaysOnTop(true);
-		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2+1280/2, Toolkit.getDefaultToolkit().getScreenSize().height/2-y/2);
 		this.setSize(x + 6, y + 28);

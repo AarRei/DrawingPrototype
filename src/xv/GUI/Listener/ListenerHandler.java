@@ -58,6 +58,7 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	Timer drawing = new Timer(1000/200,this);
 	List<Dimension> pointList = Collections.synchronizedList(new ArrayList<Dimension>());
 	public List<Bezier> bezierList = Collections.synchronizedList(new ArrayList<Bezier>());
+	public Bezier tempBezier;
 	
 	PointerInfo a;
 	Point b;
@@ -363,29 +364,40 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 					bezier.setColor(win.pen.getColor());
 					bezier.setFirst(point.x, point.y);
 					newBezier = !newBezier;
-					bezierList.add(bezier);
+					if(win.net != null){
+						tempBezier = bezier;
+					}else{
+						bezierList.add(bezier);
+					}
 				}
 			} else {
-				bezierList.get(bezierList.size()-1).setSecond(point.x, point.y);
+				if(win.net != null){
+					tempBezier.setSecond(point.x, point.y);
+				}else{
+					bezierList.get(bezierList.size()-1).setSecond(point.x, point.y);
+				}
+				
 				newBezier = !newBezier;
 				if(win.net != null){
 					String bezierSend = "{\"action\": \"BEZR\","
 							+ "\"user\": \""+win.net.username+"\","
 							+ "\"user_id\": 0,"
-							+ "\"layer_id\": "+bezierList.get(bezierList.size()-1).getLayerId()+","
+							+ "\"layer_id\": "+tempBezier.getLayerId()+","
 							+ "\"color\": "
-									+ "{\"R\": "+bezierList.get(bezierList.size()-1).getColor().getRed()+","
-									+ "\"G\": "+bezierList.get(bezierList.size()-1).getColor().getGreen()+","
-									+ "\"B\": "+bezierList.get(bezierList.size()-1).getColor().getBlue()+","
-									+ "\"A\": "+bezierList.get(bezierList.size()-1).getColor().getAlpha()+"},"
-							+ "\"start_x\": "+bezierList.get(bezierList.size()-1).getPoints()[0].x+","
-							+ "\"start_y\": "+bezierList.get(bezierList.size()-1).getPoints()[0].y+","
-							+ "\"end_x\": "+bezierList.get(bezierList.size()-1).getPoints()[1].x+","
-							+ "\"end_y\": "+bezierList.get(bezierList.size()-1).getPoints()[1].y+","
-							+ "\"start_man_x\": "+bezierList.get(bezierList.size()-1).getPoints()[2].x+","
-							+ "\"start_man_y\": "+bezierList.get(bezierList.size()-1).getPoints()[2].y+","
-							+ "\"end_man_x\": "+bezierList.get(bezierList.size()-1).getPoints()[3].x+","
-							+ "\"end_man_y\": "+bezierList.get(bezierList.size()-1).getPoints()[3].y+"}";
+									+ "{\"R\": "+tempBezier.getColor().getRed()+","
+									+ "\"G\": "+tempBezier.getColor().getGreen()+","
+									+ "\"B\": "+tempBezier.getColor().getBlue()+","
+									+ "\"A\": "+tempBezier.getColor().getAlpha()+"},"
+							+ "\"start_x\": "+tempBezier.getPoints()[0].x+","
+							+ "\"start_y\": "+tempBezier.getPoints()[0].y+","
+							+ "\"end_x\": "+tempBezier.getPoints()[1].x+","
+							+ "\"end_y\": "+tempBezier.getPoints()[1].y+","
+							+ "\"start_man_x\": "+tempBezier.getPoints()[2].x+","
+							+ "\"start_man_y\": "+tempBezier.getPoints()[2].y+","
+							+ "\"end_man_x\": "+tempBezier.getPoints()[3].x+","
+							+ "\"end_man_y\": "+tempBezier.getPoints()[3].y+"}";
+					win.net.sendMessage(bezierSend);
+					System.out.println("curve send");
 				}
 			}
 			win.drawPanel.repaint();
@@ -398,6 +410,20 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 			System.out.println("x: "+x+" y: "+y);
 			//System.out.println(new Color(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getRGB(x, y)).toString() + " a="+new Color(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getRGB(x, y)).getAlpha());
 			win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).fill(x, y, new Color(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getRGB(x, y),true), win.pen.getColor());
+			String fillSend = "{ \"action\": \"FILL\", "
+					+ "\"user\": \""+win.net.username+"\", "
+					+ "\"user_id\": 0, "
+					+ "\"layer_id\":"+win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId()+", "
+					+ "\"color\": {  "
+						+ "\"R\": "+win.pen.getColor().getRed()+",  "
+						+ "\"G\": "+win.pen.getColor().getGreen()+",  "
+						+ "\"B\": "+win.pen.getColor().getBlue()+",  "
+						+ "\"A\": "+win.pen.getColor().getAlpha()+" }, "
+					+ "\"x\": "+x+", "
+					+ "\"y\": "+y+"  }";
+			if(win.net != null){
+				win.net.sendMessage(fillSend);
+			}
 			win.drawPanel.repaint();
 		}
 	}
@@ -421,29 +447,49 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 			}
 			win.drawPanel.repaint();
 		}
-		
-		moveflag = 5;
-		
+		else if(win.tools.getSelectedTool()==Tools.BEZIER){
+			if(moveflag < 5){
+				String bezierChangeSend = "{\"action\": \"BEZC\","
+						+ "\"user\": \""+win.net.username+"\","
+						+ "\"user_id\": 0,"
+						+ "\"layer_id\": "+choosenBezier.getLayerId()+","
+						+ "\"bezier_id\": "+choosenBezier.getID()+","
+						+ "\"start_x\": "+choosenBezier.getPoints()[0].x+","
+						+ "\"start_y\": "+choosenBezier.getPoints()[0].y+","
+						+ "\"end_x\": "+choosenBezier.getPoints()[1].x+","
+						+ "\"end_y\": "+choosenBezier.getPoints()[1].y+","
+						+ "\"start_man_x\": "+choosenBezier.getPoints()[2].x+","
+						+ "\"start_man_y\": "+choosenBezier.getPoints()[2].y+","
+						+ "\"end_man_x\": "+choosenBezier.getPoints()[3].x+","
+						+ "\"end_man_y\": "+choosenBezier.getPoints()[3].y+"}";
+				if(win.net != null){
+					win.net.sendMessage(bezierChangeSend);
+				}
+			}
+			moveflag = 5;
+		}
 	}
 
 	public void mouseDragged(MouseEvent e) {
-		if(moveflag < 5) {
-			
-			int posX = e.getX();
-			int posY = e.getY();
-			
-			if(e.getX() < 0)
-				posX = 0;
-			if(e.getX() > win.drawPanel.width)
-				posX = win.drawPanel.width;
-			if(e.getY() < 0)
-				posY = 0;
-			if(e.getY() > win.drawPanel.height)
-				posY = win.drawPanel.height;
-			choosenBezier.getPoints()[moveflag].move(posX, posY);
-
-			win.drawPanel.repaint();
-		}	
+		if(win.tools.getSelectedTool()==Tools.BEZIER){
+			if(moveflag < 5) {
+				
+				int posX = e.getX();
+				int posY = e.getY();
+				
+				if(e.getX() < 0)
+					posX = 0;
+				if(e.getX() > win.drawPanel.width)
+					posX = win.drawPanel.width;
+				if(e.getY() < 0)
+					posY = 0;
+				if(e.getY() > win.drawPanel.height)
+					posY = win.drawPanel.height;
+				choosenBezier.getPoints()[moveflag].move(posX, posY);
+	
+				win.drawPanel.repaint();
+			}	
+		}
 	}
 
 	@Override
@@ -498,6 +544,8 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 						win.zoom -= 0.2;
 					else
 						win.zoom -= 0.1;
+					
+					System.out.println("Zoom: "+win.zoom);
 					win.drawPanel.setSize((int)(win.x * win.zoom),(int)( win.y*win.zoom));
 					win.backgroundPanel.setPreferredSize(new Dimension((int)(win.x * win.zoom), (int)( win.y*win.zoom)));
 					win.backgroundPanel.revalidate();
@@ -514,6 +562,7 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 				else
 					win.zoom += 0.1;
 				
+				System.out.println("Zoom: "+win.zoom);
 				win.drawPanel.setSize((int)(win.x * win.zoom),(int)( win.y*win.zoom));
 				win.backgroundPanel.setPreferredSize(new Dimension((int)(win.x * win.zoom), (int)( win.y*win.zoom)));
 				win.backgroundPanel.revalidate();

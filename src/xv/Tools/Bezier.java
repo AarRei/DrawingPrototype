@@ -11,6 +11,7 @@ public class Bezier {
 	private Point[] points;
 	private int numpoints = 0;
 	private int layerId;
+	private int id;
 	private Color color;
 	
 	public Bezier(int layerId) {
@@ -19,6 +20,17 @@ public class Bezier {
 		this.layerId = layerId;
 		this.color = Color.BLACK;
 		
+	}
+	
+	public Bezier(int layerId, Color color, Point p1, Point p2, Point p3, Point p4){
+		points = new Point[4];
+		points[0] = p1;
+		points[1] = p2;
+		points[2] = p3;
+		points[3] = p4;
+		this.color = color;
+		this.layerId = layerId;
+		numpoints = 4;
 	}
 
 	public void setFirst(int x, int y) {
@@ -67,6 +79,14 @@ public class Bezier {
 	
 	public Color getColor() {
 		return this.color;
+	}
+	
+	public int getID(){
+		return this.id;
+	}
+	
+	public void setID(int id){
+		this.id = id;
 	}
 	
 	
