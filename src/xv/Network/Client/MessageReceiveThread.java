@@ -10,7 +10,6 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import xv.GUI.DrawWindow;
-import xv.Network.Server.ClientThread;
 import xv.Tools.Bezier;
 
 public class MessageReceiveThread extends Thread{

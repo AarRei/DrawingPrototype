@@ -1,8 +1,6 @@
 package xv.Network.Client;
 
 import java.awt.Color;
-import java.awt.Graphics2D;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

@@ -1,14 +1,9 @@
 package xv.main;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import xv.Canvas.Canvas;
 import xv.GUI.DrawWindow;
-import xv.Network.Client.ClientMain;
 
 /**
  * 

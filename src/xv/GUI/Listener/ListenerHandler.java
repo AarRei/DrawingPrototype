@@ -50,7 +50,6 @@ import xv.GUI.DrawWindow;
 import xv.GUI.LayerConfigWindow;
 import xv.GUI.NetworkConnectionDialog;
 import xv.Network.Client.ReceivingDrawer;
-import xv.Network.Server.GUI.ServerConfigWindow;
 import xv.Tools.Bezier;
 import xv.Tools.Tools;
 

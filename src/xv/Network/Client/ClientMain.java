@@ -1,29 +1,17 @@
 package xv.Network.Client;
 
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
-import java.nio.channels.AsynchronousSocketChannel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
-
-import javax.swing.ImageIcon;
-
 import xv.GUI.DrawWindow;
-import xv.Network.Server.ClientThread;
-import xv.Tools.Bezier;
 
 public class ClientMain {
 	

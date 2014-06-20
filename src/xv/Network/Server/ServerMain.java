@@ -50,6 +50,9 @@ public class ServerMain {
 			}
 		}else{
 			new ServerConfigWindow();
+			System.out.println("Press any key to stop");
+			scan.next();
+			System.exit(0);
 		}
 	}
 	
