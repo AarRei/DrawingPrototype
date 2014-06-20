@@ -47,6 +47,7 @@ public class LayerWindow extends JFrame implements MouseListener{
 		int x = 200, y = 500;
 		
 		this.setLayout(null);
+		this.setIconImage(listener.makeImageIcon("/icons/Layers.png").getImage());
 		
 		listModel = new DefaultListModel();
 		for(int i = 0; i < canvas.layerList.size();i++)
