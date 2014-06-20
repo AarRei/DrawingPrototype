@@ -168,6 +168,11 @@ public class ChatWindow extends JFrame{
 	
 	public void refreshUsers(){
 		listModel2.clear();
+		try {
+		    Thread.sleep(100);
+		} catch(InterruptedException ex) {
+		    Thread.currentThread().interrupt();
+		}
 		for(String name: listener.win.net.usersList) {
         	if(name.matches(listener.win.net.username)) {
         		listModel2.addElement(name + " (you)");
