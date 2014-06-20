@@ -421,7 +421,9 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 			a = MouseInfo.getPointerInfo();
 			b = a.getLocation();
 			Point point = new Point((int) ((int) (b.getX()-win.drawPanel.getLocationOnScreen().x)/win.zoom),(int) (int) ((int) (b.getY()-win.drawPanel.getLocationOnScreen().y)/win.zoom));
-			win.pen.setColor(new Color(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getRGB(point.x, point.y)));
+			Color picked = new Color(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getRGB(point.x, point.y));
+			System.out.println(picked);
+			win.pen.setColor(picked);
 		}else if(win.tools.getSelectedTool()==Tools.FILL){
 			a = MouseInfo.getPointerInfo();
 			b = a.getLocation();
