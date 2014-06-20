@@ -167,17 +167,9 @@ public class ChatWindow extends JFrame{
 	}
 	
 	public void refreshUsers(){
-		listModel2.clear();
-		/*try {
-		    Thread.sleep(100);
-		} catch(InterruptedException ex) {
-		    Thread.currentThread().interrupt();
-		}*/
+		listModel2.removeAllElements();
 		for(String name: listener.win.net.usersList) {
 			String tool = listener.win.net.toolsList.get(name);
-			if(tool == null || tool == "") {
-				tool = "/icons/Brush.png";
-			}
         	if(name.matches(listener.win.net.username)) {
         		
         		listModel2.addElement(new ListItem(tool, name + " (you)"));
