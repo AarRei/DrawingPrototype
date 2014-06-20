@@ -40,6 +40,12 @@ public class MessageReceiveThread extends Thread{
 	 * ADDL: adding a layer
 	 * RMVL: removing a layer
 	 * SVCF: server configuration data
+	 * BEZR: creates a bézier curve
+	 * BEZC: changes a bézier curve
+	 * FILL: fills a region of the canvas
+	 * USER: updates the currently connected users
+	 * TOOL: updates the used tool of a user
+	 * LAYR: updates layer rights
 	 */
 	public void run(){
 		String fromServer;

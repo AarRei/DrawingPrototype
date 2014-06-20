@@ -106,6 +106,14 @@ public class DrawPanel extends JPanel{
 		g.drawImage(buffer, 0, 0,(int) (width*win.zoom), (int) (height*win.zoom), 0, 0, width, height, this);
 	}
 	
+	/**
+	 * Draws a bézier curve.
+	 * 
+	 * Draws a bézier curve with specific parameters on the chosen graphic.
+	 * 
+	 * @param b a Bezier object
+	 * @param g2 destination Graphics2D
+	 */
 	private void drawBezier(Bezier b, Graphics2D g2){
 		double t;
 		

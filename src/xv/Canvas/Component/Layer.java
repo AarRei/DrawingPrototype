@@ -326,6 +326,19 @@ public class Layer extends BufferedImage{
 		}
 	}
 	
+	/**
+	 * Draws an anti-aliased line.
+	 * 
+	 * Draws an anti-aliased line of a certain thickness.
+	 * 
+	 * @param x0 start x
+	 * @param y0 start y
+	 * @param x1 end x
+	 * @param y1 end y
+	 * @param wd brush thickness
+	 * @param color brush color
+	 */
+	
 	public void plotLineWidth(int x0, int y0, int x1, int y1, float wd, Color color) {
 		int dx = Math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
 		int dy = Math.abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
@@ -359,6 +372,17 @@ public class Layer extends BufferedImage{
 			}
 		}
 	}
+	
+	/**
+	 * Fills an enclosed region of space.
+	 * 
+	 * Fills an enclosed region of the canvas with the currently chosen color.
+	 * 
+	 * @param initial_x x-component of the start position
+	 * @param initial_y y-component of the start position
+	 * @param c color to be replaced
+	 * @param n new color
+	 */
 	
 	public void fill(int initial_x, int initial_y, Color c, Color n){
 		//System.out.println("x: "+x+" y: "+y);
