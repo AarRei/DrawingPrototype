@@ -22,6 +22,7 @@ public class ClientThread extends Thread{
 	public PrintWriter out;
 	List<String> messageList;
 	List<String> actionList;
+	List<ClientThread> clientList;
 	public String username;
 	
 	/**
@@ -33,10 +34,11 @@ public class ClientThread extends Thread{
 	 * @param list list of messages to be relayed
 	 * @param listA list of all actions
 	 */
-	public ClientThread(Socket socket, List<String> list, List<String> listA){
+	public ClientThread(Socket socket, List<String> list, List<String> listA,List<ClientThread> listC){
 		clientSocket = socket;
 		messageList = list;
 		actionList = listA;
+		clientList = listC;
 	}
 	
 	/**
@@ -63,14 +65,42 @@ public class ClientThread extends Thread{
 				username = inputLine.substring(5,inputLine.length());
 				System.out.println(username+" ("+clientSocket.getInetAddress().getHostAddress()+") has joined the Server.");
 			}
+			
+			
+			
 			for(String i : actionList){
 				out.println(i);
 			}
+			
+			String users = "{\"action\": \"USER\"," + "\"users\": [";
+		    for(ClientThread c : clientList){
+		    	users += "{\"user\": \""+c.username+"\"},";
+		    }
+		    users = users.substring(0, users.length()-1);
+		    users += "]}";
+		    messageList.add(users);
 				
 			while ((inputLine = in.readLine()) != null) {
+				if(inputLine.equals("quit")){
+					break;
+				}
 				messageList.add(inputLine);
 				actionList.add(inputLine);
 			}
+			
+			users = "{\"action\": \"USER\"," + "\"users\": [";
+		    for(ClientThread c : clientList){
+		    	if(!c.username.equals(username))
+		    		users += "{\"user\": \""+c.username+"\"},";
+		    }
+		    users = users.substring(0, users.length()-1);
+		    users += "]}";
+		    messageList.add(users);
+		    
+		    in.close();
+		    out.close();
+		    clientSocket.close();
+		    
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
