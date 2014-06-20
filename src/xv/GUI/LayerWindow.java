@@ -29,7 +29,6 @@ public class LayerWindow extends JFrame implements MouseListener{
 	public JButton btn_remove = new JButton();
 	public JButton btn_setting = new JButton();
 	JScrollPane listScroller;
-	private WindowAdapter exitListener;
 	
 	/**
 	 * Constructs the LayerWindow
@@ -88,7 +87,7 @@ public class LayerWindow extends JFrame implements MouseListener{
             @Override
             public void windowClosing(WindowEvent e) {
             	listener.win.window_layers.setSelected(false);
-            	//super.setVisible(false);
+            	setVisible(false);
             }
 		});
 		this.setResizable(false);

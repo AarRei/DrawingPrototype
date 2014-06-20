@@ -38,7 +38,6 @@ public class ChatWindow extends JFrame{
 	JLabel lbl_connected = new JLabel("Connected User:");
 	JTextField txt_user = new JTextField();
 	JScrollPane listScroller;
-	private WindowListener exitListener;
 	
 	/**
 	 * Constructs the ChatWindow.
@@ -136,14 +135,15 @@ public class ChatWindow extends JFrame{
 		
 		this.setTitle("Chat");
 		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
-		this.addWindowListener(exitListener);
-		exitListener = new WindowAdapter() {
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter() {
 
             @Override
             public void windowClosing(WindowEvent e) {
-            	listener.win.window_layers.setSelected(false);
+            	listener.win.window_chat.setSelected(false);
+            	setVisible(false);
             }
-        };
+		});
 		this.setResizable(false);
 		this.setAlwaysOnTop(true);
 		this.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2+1280/2, Toolkit.getDefaultToolkit().getScreenSize().height/2-y/2);

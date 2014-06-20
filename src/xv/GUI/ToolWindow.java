@@ -27,7 +27,6 @@ public class ToolWindow extends JFrame implements ActionListener{
 	JButton btn_color = new JButton();
 	JButton btn_color_alt = new JButton();
 	DrawWindow win;
-	private WindowListener exitListener;
 	
 	/**
 	 * Constructs the ToolWindow.
@@ -78,15 +77,15 @@ public class ToolWindow extends JFrame implements ActionListener{
 		btn_pen.setSelected(true);
 		
 		this.setTitle("Tools");
-		this.setDefaultCloseOperation(HIDE_ON_CLOSE);
-		this.addWindowListener(exitListener);
-		exitListener = new WindowAdapter() {
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter() {
 
             @Override
             public void windowClosing(WindowEvent e) {
             	win.window_tools.setSelected(false);
+            	setVisible(false);
             }
-        };
+		});
 		this.setAlwaysOnTop(true);
 		this.setResizable(false);
 		this.setLocation(Toolkit.getDefaultToolkit().getScreenSize().width/2+1280/2, Toolkit.getDefaultToolkit().getScreenSize().height/2-y/2);
