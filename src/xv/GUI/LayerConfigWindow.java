@@ -116,7 +116,7 @@ public class LayerConfigWindow extends JDialog implements ActionListener {
 		List<String> users = new ArrayList<String>();
 		for(JCheckBox c: listOfCheckBox) {
 			if(c.isSelected()) {
-				users.add(c.getText());
+				users.add(c.getText().replace(" (you)", ""));
 			}
 		}
 		return users;
