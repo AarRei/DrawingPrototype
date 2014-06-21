@@ -29,21 +29,21 @@ public class Drawer extends Thread {
 	public void run() {
 		try {
 			//Graphics2D g2;
-			while (listener.isMouseDown() || win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.size()>=2) {
+			while (listener.isMouseDown() || win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.size()>=2) {
 				
-				if(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.size()>=2){
+				if(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.size()>=2){
 					if(win.tools.getSelectedTool() == Tools.PEN)
-						win.canvas.layerList.get(win.canvas.getSelectedLayer()).bresenham(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(0).width, win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(0).height, 
-								win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(1).width, win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(1).height,win.pen.getThickness() ,win.pen.getColor());
+						win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).bresenham(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.get(0).width, win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.get(0).height, 
+								win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.get(1).width, win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.get(1).height,win.pen.getThickness() ,win.pen.getColor());
 					else
-						win.canvas.layerList.get(win.canvas.getSelectedLayer()).bresenham(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(0).width, win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(0).height, 
-								win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(1).width, win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(1).height,win.pen.getThickness() ,new Color(0,0,0,0));
-					win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.remove(0);
+						win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).bresenham(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.get(0).width, win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.get(0).height, 
+								win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.get(1).width, win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.get(1).height,win.pen.getThickness() ,new Color(0,0,0,0));
+					win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.remove(0);
 				}
 
 				sleep(5);
 			}
-			win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.remove(0);
+			win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.remove(0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

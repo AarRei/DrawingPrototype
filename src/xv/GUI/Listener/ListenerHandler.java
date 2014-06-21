@@ -158,14 +158,14 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 				if(y > lowest)
 					lowest = y;
 				
-				if(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.size() == 0){
-					win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.add(new Dimension(x, y));
+				if(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.size() == 0){
+					win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.add(new Dimension(x, y));
 					message+="{\"x\": "+x+", \"y\": "+y+"},";
-				}else if(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.size()-1).width == x &&
-						win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.get(win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.size()-1).height == y){	
+				}else if(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.get(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.size()-1).width == x &&
+						win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.get(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.size()-1).height == y){	
 					//do nothing
 				}else{
-					win.canvas.layerList.get(win.canvas.getSelectedLayer()).pointList.add(new Dimension(x, y));
+					win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).pointList.add(new Dimension(x, y));
 					message+="{\"x\": "+x+", \"y\": "+y+"},";
 				}
 			}
