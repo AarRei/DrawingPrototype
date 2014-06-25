@@ -124,7 +124,7 @@ public class DrawPanel extends JPanel{
 				if(b.getNumpoints()>1 && i<(b.getNumpoints()-1) && i != 1) {	
 					g2.setColor(Color.gray);
 					g2.drawLine(b.getPoints()[i].x,b.getPoints()[i].y, b.getPoints()[i+1].x,b.getPoints()[i+1].y);
-					g2.setColor(win.pen.getColor());
+					g2.setColor(win.tools.getColor());
 				}
 			}
 			

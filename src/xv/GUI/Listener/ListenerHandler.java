@@ -124,7 +124,15 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 	@Override
 	public void stateChanged(ChangeEvent e) {
 		// TODO Auto-generated method stub
-
+		if(e.getSource().equals(win.pen_size)){
+			if(win.tools.getSelectedTool() == Tools.PEN){
+				win.l_pen_size.setText("Pen Size: "+win.pen_size.getValue());
+				win.pen.setThickness(win.pen_size.getValue());
+			}else{
+				win.l_pen_size.setText("Eraser Size: "+win.pen_size.getValue());
+				win.eraser.setThickness(win.pen_size.getValue());
+			}
+		}
 	}
 	
 	/**
@@ -336,12 +344,12 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 					+ "\"user\": \""+((win.net==null)?"user":win.net.username)
 					+"\",\"layer_id\": "+win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId()
 					+", \"type\": "+win.tools.getSelectedTool()
-					+", \"thickness\": "+win.pen.getThickness()
+					+", \"thickness\": "+ ((win.tools.getSelectedTool() == Tools.PEN)?win.pen.getThickness():win.eraser.getThickness())
 					+", \"color\": {"
-					+ "\"R\": "+win.pen.getColor().getRed()+","
-					+ "\"G\": "+win.pen.getColor().getGreen()+","
-					+ "\"B\": "+win.pen.getColor().getBlue()+","
-					+ "\"A\": "+win.pen.getColor().getAlpha()+"},\"points\": [";
+					+ "\"R\": "+win.tools.getColor().getRed()+","
+					+ "\"G\": "+win.tools.getColor().getGreen()+","
+					+ "\"B\": "+win.tools.getColor().getBlue()+","
+					+ "\"A\": "+win.tools.getColor().getAlpha()+"},\"points\": [";
 			
 			a = MouseInfo.getPointerInfo();
 			b = a.getLocation();
@@ -373,7 +381,7 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 				if(moveflag == 5) {
 					System.out.println(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId());
 					Bezier bezier = new Bezier(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId());
-					bezier.setColor(win.pen.getColor());
+					bezier.setColor(win.tools.getColor());
 					bezier.setFirst(point.x, point.y);
 					newBezier = !newBezier;
 					if(win.net != null){
@@ -419,7 +427,7 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 			Point point = new Point((int) ((int) (b.getX()-win.drawPanel.getLocationOnScreen().x)/win.zoom),(int) (int) ((int) (b.getY()-win.drawPanel.getLocationOnScreen().y)/win.zoom));
 			Color picked = new Color(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getRGB(point.x, point.y));
 			System.out.println(picked);
-			win.pen.setColor(picked);
+			win.tools.setColor(picked);
 		}else if(win.tools.getSelectedTool()==Tools.FILL){
 			a = MouseInfo.getPointerInfo();
 			b = a.getLocation();
@@ -427,7 +435,7 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 			int y = (int)((int) (b.getY()-win.drawPanel.getLocationOnScreen().y)/win.zoom);
 			System.out.println("x: "+x+" y: "+y);
 			
-			win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).fill(x, y, new Color(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getRGB(x, y),true), win.pen.getColor());
+			win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).fill(x, y, new Color(win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getRGB(x, y),true), win.tools.getColor());
 			
 			if(win.net != null){
 				String fillSend = "{ \"action\": \"FILL\", "
@@ -435,10 +443,10 @@ public class ListenerHandler extends MouseMotionAdapter implements MouseListener
 						+ "\"user_id\": 0, "
 						+ "\"layer_id\":"+win.canvas.layerList.get(win.layerWindow.list.getSelectedIndex()).getId()+", "
 						+ "\"color\": {  "
-							+ "\"R\": "+win.pen.getColor().getRed()+",  "
-							+ "\"G\": "+win.pen.getColor().getGreen()+",  "
-							+ "\"B\": "+win.pen.getColor().getBlue()+",  "
-							+ "\"A\": "+win.pen.getColor().getAlpha()+" }, "
+							+ "\"R\": "+win.tools.getColor().getRed()+",  "
+							+ "\"G\": "+win.tools.getColor().getGreen()+",  "
+							+ "\"B\": "+win.tools.getColor().getBlue()+",  "
+							+ "\"A\": "+win.tools.getColor().getAlpha()+" }, "
 						+ "\"x\": "+x+", "
 						+ "\"y\": "+y+"  }";
 				win.net.sendMessage(fillSend);

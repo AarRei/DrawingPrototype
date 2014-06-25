@@ -8,15 +8,19 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 
 import xv.Canvas.Canvas;
 import xv.Canvas.Component.Painter;
@@ -38,12 +42,15 @@ public class DrawWindow extends JFrame{
 	public ListenerHandler listener = new ListenerHandler(this);
 	JMenuBar menu = new JMenuBar();
 	JMenu file = new JMenu("File"),
+			settings = new JMenu("Settings"),
 			view = new JMenu("View"),
 			window = new JMenu("Window"),
 			network = new JMenu("Network");
 	public JMenuItem newc = new JMenuItem("New...");
 	public JMenuItem save = new JMenuItem("Save...");
 	public JMenuItem exit = new JMenuItem("Exit");
+	public JLabel l_pen_size = new JLabel("Pen Size: 1");
+	public JSlider pen_size = new JSlider(1,50);
 	public JCheckBox backg = new JCheckBox("Display Background Grid");
 	public JCheckBox dmouse = new JCheckBox("Display Mouse Pointers");
 	public JCheckBox window_tools = new JCheckBox("Show Tool Window");
@@ -54,6 +61,7 @@ public class DrawWindow extends JFrame{
 	public JMenuItem host = new JMenuItem("Host Server...");
 	
 	public PenSettings pen = new PenSettings();
+	public PenSettings eraser = new PenSettings();
 	public JPanel backgroundPanel = new JPanel();
 	public JScrollPane scrollPane;
 	
@@ -73,12 +81,27 @@ public class DrawWindow extends JFrame{
 	 */
 	
 	public DrawWindow(){
+		Hashtable labelTable = new Hashtable();
+		labelTable.put( new Integer( 1 ), new JLabel("1") );
+		labelTable.put( new Integer( 10 ), new JLabel("10") );
+		labelTable.put( new Integer( 20 ), new JLabel("20") );
+		labelTable.put( new Integer( 30 ), new JLabel("30") );
+		labelTable.put( new Integer( 40 ), new JLabel("40") );
+		labelTable.put( new Integer( 50 ), new JLabel("50") );
+		
+		pen_size.setMajorTickSpacing(10);
+		pen_size.setLabelTable(labelTable);
+		pen_size.setValue(1);
+		pen_size.setPaintLabels(true);
+		pen_size.addChangeListener(listener);
 
 		setJMenuBar(menu);
 
 		file.add(newc);
 		file.add(save);
 		file.add(exit);
+		settings.add(l_pen_size);
+		settings.add(pen_size);
 		window.add(window_tools);
 		window.add(window_layers);
 		window.add(window_chat);
@@ -107,6 +130,7 @@ public class DrawWindow extends JFrame{
 		host.addActionListener(listener);
 		
 		menu.add(file);
+		menu.add(settings);
 		menu.add(view);
 		menu.add(window);
 		menu.add(network);

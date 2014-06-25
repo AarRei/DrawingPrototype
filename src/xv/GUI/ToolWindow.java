@@ -93,7 +93,7 @@ public class ToolWindow extends JFrame implements ActionListener{
 		if(e.getSource().equals(btn_color)){
 			if(win.net != null){
 				if(win.webcolors == false){
-					win.pen.setColor(JColorChooser.showDialog(this, "Palette", win.pen.getColor()));
+					win.tools.setColor(JColorChooser.showDialog(this, "Palette", win.tools.getColor()));
 				}
 				else{
 					JColorChooser cc = new JColorChooser();
@@ -106,14 +106,15 @@ public class ToolWindow extends JFrame implements ActionListener{
 		                	cc.removeChooserPanel(accp);
 		                }
 		            }
-		            win.pen.setColor(JColorChooser.showDialog(this, "Palette", win.pen.getColor()));
+		            win.tools.setColor(JColorChooser.showDialog(this, "Palette", win.tools.getColor()));
 		           // win.pen.setColor(cc.showDialog(this, "Palette", win.pen.getColor()));
 				}
 			}else{
-				win.pen.setColor(JColorChooser.showDialog(this, "Palette", win.pen.getColor()));
+				win.tools.setColor(JColorChooser.showDialog(this, "Palette", win.tools.getColor()));
 			}
 			
 		} else if(e.getSource().equals(btn_pen)) {
+			
 			win.tools.setSelectedTool(Tools.PEN);
 			untoggle();
 			btn_pen.setSelected(true);
@@ -124,6 +125,9 @@ public class ToolWindow extends JFrame implements ActionListener{
 						+ "\"tool\": \"Pen\"}";
 				win.net.sendMessage(tool);
 			}
+
+			win.pen_size.setValue(win.pen.getThickness());
+			win.l_pen_size.setText("Pen Size: "+win.pen_size.getValue());
 		} else if(e.getSource().equals(btn_bezier)) {
 			win.tools.setSelectedTool(Tools.BEZIER);
 			untoggle();
@@ -158,6 +162,7 @@ public class ToolWindow extends JFrame implements ActionListener{
 				win.net.sendMessage(tool);
 			}
 		}else if(e.getSource().equals(btn_eraser)) {
+			
 			win.tools.setSelectedTool(Tools.ERASER);
 			untoggle();
 			btn_eraser.setSelected(true);
@@ -168,6 +173,9 @@ public class ToolWindow extends JFrame implements ActionListener{
 						+ "\"tool\": \"Eraser\"}";
 				win.net.sendMessage(tool);
 			}
+
+			win.pen_size.setValue(win.eraser.getThickness());
+			win.l_pen_size.setText("Eraser Size: "+win.pen_size.getValue());
 		}
 	}
 	

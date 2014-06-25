@@ -5,14 +5,12 @@ import java.awt.Color;
 public class PenSettings {
 	
 	int thickness;
-	Color color;
 	
 	/**
 	 * Creates a PenSettings object.
 	 */
 	public PenSettings(){
 		thickness = 1;
-		color = new Color(0f, 0f, 0f, 1f);
 	}
 	
 	/**
@@ -31,24 +29,6 @@ public class PenSettings {
 	 */
 	public void setThickness(int thickness) {
 		this.thickness = thickness;
-	}
-	
-	/**
-	 * Returns the color of the pen.
-	 * 
-	 * @return pen color
-	 */
-	public Color getColor() {
-		return color;
-	}
-	
-	/**
-	 * Sets the color of the pen.
-	 * 
-	 * @param color pen color
-	 */
-	public void setColor(Color color) {
-		this.color = color;
 	}
 	
 }
